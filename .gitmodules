@@ -1,0 +1,6 @@
+[submodule "katana-v3-contracts"]
+	path = katana-v3-contracts
+	url = https://github.com/ronin-chain/katana-v3-contracts
+[submodule "katana-operation-contracts"]
+	path = katana-operation-contracts
+	url = https://github.com/ronin-chain/katana-operation-contracts
