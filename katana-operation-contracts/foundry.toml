@@ -1,0 +1,39 @@
+[profile.default]
+src = "src"
+out = "out"
+script = "script"
+libs = ["lib"]
+ffi = true
+
+# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
+
+optimizer_runs = 1_000_000
+via_ir=true
+evm_version = 'istanbul'
+use_literal_content = true
+extra_output = ["devdoc", "userdoc", "storagelayout"]
+fs_permissions = [{ access = "read-write", path = "./" }]
+
+[fmt]
+tab_width = 2
+line_length = 120
+bracket_spacing = true
+
+[rpc_endpoints]
+localhost = "http://localhost:8545"
+ethereum = "https://eth.llamarpc.com"
+ronin-mainnet = "https://api.roninchain.com/rpc"
+goerli = "https://ethereum-goerli.publicnode.com"
+ronin-testnet = "https://saigon-archive.roninchain.com/rpc"
+
+[fuzz]
+runs = 256
+
+[invariant]
+runs = 256
+
+[dependencies]
+"@openzeppelin-contracts" = { version = "4.7.0", url = "https://github.com/OpenZeppelin/openzeppelin-contracts/archive/refs/tags/v4.7.0.zip" }
+
+[soldeer]
+remappings_generate = false

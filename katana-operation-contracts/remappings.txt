@@ -1,0 +1,9 @@
+@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/
+@openzeppelin/contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/contracts/
+@openzeppelin-contracts-4.7.0/=dependencies/@openzeppelin-contracts-4.7.0/
+openzeppelin-contracts/=lib/permit2x/lib/openzeppelin-contracts/
+solmate/=lib/solmate/src/
+permit2/=lib/permit2x/
+@katana/v3-contracts/=lib/katana-v3-contracts/src/
+@katana/operation-contracts/=src/
+forge-std/=lib/katana-v3-contracts/lib/forge-std/src/

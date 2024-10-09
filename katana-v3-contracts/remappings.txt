@@ -1,0 +1,3 @@
+@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/
+@uniswap/lib/contracts/=lib/solidity-lib/contracts/
+base64-sol/=lib/base64/
