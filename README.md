@@ -28,7 +28,7 @@ _Note for C4 wardens: Anything included in this `Automated Findings / Publicly K
 
 - **Previous audits:**  
   - ✅ SCOUTS: If there are multiple report links, please format them in a list.
-- **Documentation:** 
+- **Documentation:** [docs.roninchain.com/apps/katana](https://docs.roninchain.com/apps/katana) (Please note, this documentation is for the current version (Katana V2), not the version in scope for this audit. However, reading the docs is recommended for context.)
 - **Website:** [welcome.skymavis.com](https://welcome.skymavis.com/)
 - **X/Twitter:** [AxieInfinity](https://x.com/AxieInfinity)
 - **Discord:** [discord.com/invite/axie](https://discord.com/invite/axie)
