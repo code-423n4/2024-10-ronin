@@ -29,9 +29,9 @@ _Note for C4 wardens: Anything included in this `Automated Findings / Publicly K
 - **Previous audits:**  
   - ✅ SCOUTS: If there are multiple report links, please format them in a list.
 - **Documentation:** 
-- **Website:** 🐺 CA: add a link to the sponsor's website
-- **X/Twitter:** 🐺 CA: add a link to the sponsor's Twitter
-- **Discord:** 🐺 CA: add a link to the sponsor's Discord
+- **Website:** [welcome.skymavis.com](https://welcome.skymavis.com/)
+- **X/Twitter:** [AxieInfinity](https://x.com/AxieInfinity)
+- **Discord:** [discord.com/invite/axie](https://discord.com/invite/axie)
 
 ---
 
