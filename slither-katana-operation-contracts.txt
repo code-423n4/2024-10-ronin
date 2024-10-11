@@ -1,0 +1,219 @@
+INFO:Detectors:
+Payments.wrapETH(address,uint256) (src/aggregate-router/modules/Payments.sol#75-87) sends eth to arbitrary user
+	Dangerous calls:
+	- WETH9.deposit{value: amount}() (src/aggregate-router/modules/Payments.sol#82)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+INFO:Detectors:
+Payments.wrapETH(address,uint256) (src/aggregate-router/modules/Payments.sol#75-87) ignores return value by WETH9.transfer(recipient,amount) (src/aggregate-router/modules/Payments.sol#84)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+INFO:Detectors:
+KatanaGovernance.initialize(address,address).allowedPlaceHolder (src/governance/KatanaGovernance.sol#58) is a local variable never initialized
+KatanaGovernance.initialize(address,address).statusesPlaceHolder (src/governance/KatanaGovernance.sol#57) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+INFO:Detectors:
+V2SwapRouter._v2Swap(address[],address,address) (src/aggregate-router/modules/katana/v2/V2SwapRouter.sol#20-46) ignores return value by (token0,None) = KatanaV2Library.sortTokens(path[0],path[1]) (src/aggregate-router/modules/katana/v2/V2SwapRouter.sol#27)
+V2SwapRouter._v2Swap(address[],address,address) (src/aggregate-router/modules/katana/v2/V2SwapRouter.sol#20-46) ignores return value by (reserve0,reserve1,None) = IKatanaV2Pair(pair).getReserves() (src/aggregate-router/modules/katana/v2/V2SwapRouter.sol#32)
+KatanaV2Library.pairAndReservesFor(address,bytes32,address,address) (src/aggregate-router/modules/katana/v2/KatanaV2Library.sol#72-81) ignores return value by (reserve0,reserve1,None) = IKatanaV2Pair(pair).getReserves() (src/aggregate-router/modules/katana/v2/KatanaV2Library.sol#79)
+V3Path.decodeFirstPool(bytes) (src/aggregate-router/modules/katana/v3/V3Path.sol#23-25) ignores return value by path.toPool() (src/aggregate-router/modules/katana/v3/V3Path.sol#24)
+KatanaGovernance._setPermission(address,uint40,address[],bool[]) (src/governance/KatanaGovernance.sol#353-368) ignores return value by _tokens.add(token) (src/governance/KatanaGovernance.sol#361)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+INFO:Detectors:
+BytesLib.toBytes(bytes,uint256).res (src/aggregate-router/modules/katana/v3/BytesLib.sol#61) is written in both
+	res = length (src/aggregate-router/modules/katana/v3/BytesLib.sol#64)
+	res = offset (src/aggregate-router/modules/katana/v3/BytesLib.sol#65)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#write-after-write
+INFO:Detectors:
+KatanaGovernance.initializeV2(address,address,address,address,address).positionManager (src/governance/KatanaGovernance.sol#70) lacks a zero-check on :
+		- _positionManager = positionManager (src/governance/KatanaGovernance.sol#76)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+INFO:Detectors:
+V3SwapRouter.v3SwapExactInput(address,uint256,uint256,bytes,address) (src/aggregate-router/modules/katana/v3/V3SwapRouter.sol#78-117) has external calls inside a loop: amountIn = ERC20(tokenIn).balanceOf(address(this)) (src/aggregate-router/modules/katana/v3/V3SwapRouter.sol#88)
+V3SwapRouter._swap(int256,address,bytes,address,bool) (src/aggregate-router/modules/katana/v3/V3SwapRouter.sol#155-166) has external calls inside a loop: (amount0Delta,amount1Delta) = IKatanaV3Pool(computePoolAddress(tokenIn,tokenOut,fee)).swap(recipient,zeroForOne,amount,MIN_SQRT_RATIO + 1,abi.encode(path,payer)) (src/aggregate-router/modules/katana/v3/V3SwapRouter.sol#163-165)
+V3SwapRouter._swap(int256,address,bytes,address,bool) (src/aggregate-router/modules/katana/v3/V3SwapRouter.sol#155-166) has external calls inside a loop: (amount0Delta,amount1Delta) = IKatanaV3Pool(computePoolAddress(tokenIn,tokenOut,fee)).swap(recipient,zeroForOne,amount,MAX_SQRT_RATIO - 1,abi.encode(path,payer)) (src/aggregate-router/modules/katana/v3/V3SwapRouter.sol#163-165)
+V3SwapRouter.checkAuthorizedV3Path(bytes) (src/aggregate-router/modules/katana/v3/V3SwapRouter.sol#143-151) has external calls inside a loop: ! IKatanaGovernance(KATANA_GOVERNANCE).isAuthorized(tokens,msg.sender) (src/aggregate-router/modules/katana/v3/V3SwapRouter.sol#150)
+Permit2Payments.permit2TransferFrom(address,address,address,uint160) (src/aggregate-router/modules/Permit2Payments.sol#20-22) has external calls inside a loop: PERMIT2.transferFrom(from,to,amount,token) (src/aggregate-router/modules/Permit2Payments.sol#21)
+Dispatcher.dispatch(bytes1,bytes) (src/aggregate-router/base/Dispatcher.sol#28-203) has external calls inside a loop: PERMIT2.permit(lockedBy,permitBatch,data) (src/aggregate-router/base/Dispatcher.sol#84)
+Payments.sweep(address,address,uint256) (src/aggregate-router/modules/Payments.sol#59-70) has external calls inside a loop: balance = ERC20(token).balanceOf(address(this)) (src/aggregate-router/modules/Payments.sol#66)
+Payments.pay(address,address,uint256) (src/aggregate-router/modules/Payments.sol#26-36) has external calls inside a loop: value = ERC20(token).balanceOf(address(this)) (src/aggregate-router/modules/Payments.sol#31)
+Payments.payPortion(address,address,uint256) (src/aggregate-router/modules/Payments.sol#42-53) has external calls inside a loop: balance_scope_0 = ERC20(token).balanceOf(address(this)) (src/aggregate-router/modules/Payments.sol#49)
+V2SwapRouter.v2SwapExactInput(address,uint256,uint256,address[],address) (src/aggregate-router/modules/katana/v2/V2SwapRouter.sol#54-75) has external calls inside a loop: balanceBefore = tokenOut.balanceOf(recipient) (src/aggregate-router/modules/katana/v2/V2SwapRouter.sol#69)
+V2SwapRouter._v2Swap(address[],address,address) (src/aggregate-router/modules/katana/v2/V2SwapRouter.sol#20-46) has external calls inside a loop: ! IKatanaGovernance(KATANA_GOVERNANCE).isAuthorized(path,msg.sender) (src/aggregate-router/modules/katana/v2/V2SwapRouter.sol#21)
+V2SwapRouter._v2Swap(address[],address,address) (src/aggregate-router/modules/katana/v2/V2SwapRouter.sol#20-46) has external calls inside a loop: (reserve0,reserve1,None) = IKatanaV2Pair(pair).getReserves() (src/aggregate-router/modules/katana/v2/V2SwapRouter.sol#32)
+V2SwapRouter._v2Swap(address[],address,address) (src/aggregate-router/modules/katana/v2/V2SwapRouter.sol#20-46) has external calls inside a loop: amountInput = ERC20(input).balanceOf(pair) - reserveInput (src/aggregate-router/modules/katana/v2/V2SwapRouter.sol#34)
+V2SwapRouter._v2Swap(address[],address,address) (src/aggregate-router/modules/katana/v2/V2SwapRouter.sol#20-46) has external calls inside a loop: IKatanaV2Pair(pair).swap(amount0Out,amount1Out,nextPair,new bytes(0)) (src/aggregate-router/modules/katana/v2/V2SwapRouter.sol#42)
+V2SwapRouter.v2SwapExactInput(address,uint256,uint256,address[],address) (src/aggregate-router/modules/katana/v2/V2SwapRouter.sol#54-75) has external calls inside a loop: amountOut = tokenOut.balanceOf(recipient) - balanceBefore (src/aggregate-router/modules/katana/v2/V2SwapRouter.sol#73)
+KatanaV2Library.pairAndReservesFor(address,bytes32,address,address) (src/aggregate-router/modules/katana/v2/KatanaV2Library.sol#72-81) has external calls inside a loop: (reserve0,reserve1,None) = IKatanaV2Pair(pair).getReserves() (src/aggregate-router/modules/katana/v2/KatanaV2Library.sol#79)
+Dispatcher.dispatch(bytes1,bytes) (src/aggregate-router/base/Dispatcher.sol#28-203) has external calls inside a loop: PERMIT2.permit(lockedBy,permitSingle,data_scope_23) (src/aggregate-router/base/Dispatcher.sol#163)
+Payments.wrapETH(address,uint256) (src/aggregate-router/modules/Payments.sol#75-87) has external calls inside a loop: WETH9.deposit{value: amount}() (src/aggregate-router/modules/Payments.sol#82)
+Payments.wrapETH(address,uint256) (src/aggregate-router/modules/Payments.sol#75-87) has external calls inside a loop: WETH9.transfer(recipient,amount) (src/aggregate-router/modules/Payments.sol#84)
+Payments.unwrapWETH9(address,uint256) (src/aggregate-router/modules/Payments.sol#92-103) has external calls inside a loop: value = WETH9.balanceOf(address(this)) (src/aggregate-router/modules/Payments.sol#93)
+Payments.unwrapWETH9(address,uint256) (src/aggregate-router/modules/Payments.sol#92-103) has external calls inside a loop: WETH9.withdraw(value) (src/aggregate-router/modules/Payments.sol#98)
+Permit2Payments.permit2TransferFrom(IAllowanceTransfer.AllowanceTransferDetails[],address) (src/aggregate-router/modules/Permit2Payments.sol#26-34) has external calls inside a loop: PERMIT2.transferFrom(batchDetails) (src/aggregate-router/modules/Permit2Payments.sol#33)
+Dispatcher.dispatch(bytes1,bytes) (src/aggregate-router/base/Dispatcher.sol#28-203) has external calls inside a loop: success = (ERC20(token_scope_28).balanceOf(owner) >= minBalance) (src/aggregate-router/base/Dispatcher.sol#196)
+KatanaGovernance.initialize(address,address) (src/governance/KatanaGovernance.sol#51-66) has external calls inside a loop: pair = IKatanaV2Pair(IKatanaV2Factory(factory).allPairs(i)) (src/governance/KatanaGovernance.sol#62)
+KatanaGovernance.initialize(address,address) (src/governance/KatanaGovernance.sol#51-66) has external calls inside a loop: _setPermission(pair.token0(),until,allowedPlaceHolder,statusesPlaceHolder) (src/governance/KatanaGovernance.sol#63)
+KatanaGovernance.initialize(address,address) (src/governance/KatanaGovernance.sol#51-66) has external calls inside a loop: _setPermission(pair.token1(),until,allowedPlaceHolder,statusesPlaceHolder) (src/governance/KatanaGovernance.sol#64)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+INFO:Detectors:
+Reentrancy in KatanaGovernance.createPairAndSetPermission(address,address,uint40,address[],bool[]) (src/governance/KatanaGovernance.sol#132-142):
+	External calls:
+	- pair = _v2Factory.createPair(tokenA,tokenB) (src/governance/KatanaGovernance.sol#139)
+	State variables written after the call(s):
+	- _setPermission(tokenA,whitelistUntil,alloweds,statuses) (src/governance/KatanaGovernance.sol#140)
+		- $.whitelistUntil = whitelistUntil (src/governance/KatanaGovernance.sol#360)
+		- $.allowed[alloweds[i]] = statuses[i] (src/governance/KatanaGovernance.sol#364)
+	- _setPermission(tokenB,whitelistUntil,alloweds,statuses) (src/governance/KatanaGovernance.sol#141)
+		- $.whitelistUntil = whitelistUntil (src/governance/KatanaGovernance.sol#360)
+		- $.allowed[alloweds[i]] = statuses[i] (src/governance/KatanaGovernance.sol#364)
+Reentrancy in V3SwapRouter.v3SwapExactOutput(address,uint256,uint256,bytes,address) (src/aggregate-router/modules/katana/v3/V3SwapRouter.sol#125-141):
+	External calls:
+	- (amount0Delta,amount1Delta,zeroForOne) = _swap(- amountOut.toInt256(),recipient,path,payer,false) (src/aggregate-router/modules/katana/v3/V3SwapRouter.sol#133-134)
+		- (amount0Delta,amount1Delta) = IKatanaV3Pool(computePoolAddress(tokenIn,tokenOut,fee)).swap(recipient,zeroForOne,amount,MIN_SQRT_RATIO + 1,abi.encode(path,payer)) (src/aggregate-router/modules/katana/v3/V3SwapRouter.sol#163-165)
+		- (amount0Delta,amount1Delta) = IKatanaV3Pool(computePoolAddress(tokenIn,tokenOut,fee)).swap(recipient,zeroForOne,amount,MAX_SQRT_RATIO - 1,abi.encode(path,payer)) (src/aggregate-router/modules/katana/v3/V3SwapRouter.sol#163-165)
+	State variables written after the call(s):
+	- maxAmountInCached = DEFAULT_MAX_AMOUNT_IN (src/aggregate-router/modules/katana/v3/V3SwapRouter.sol#140)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+INFO:Detectors:
+Reentrancy in KatanaGovernance.createPairAndSetPermission(address,address,uint40,address[],bool[]) (src/governance/KatanaGovernance.sol#132-142):
+	External calls:
+	- pair = _v2Factory.createPair(tokenA,tokenB) (src/governance/KatanaGovernance.sol#139)
+	Event emitted after the call(s):
+	- PermissionUpdated(_msgSender(),token,whitelistUntil,alloweds,statuses) (src/governance/KatanaGovernance.sol#367)
+		- _setPermission(tokenB,whitelistUntil,alloweds,statuses) (src/governance/KatanaGovernance.sol#141)
+	- PermissionUpdated(_msgSender(),token,whitelistUntil,alloweds,statuses) (src/governance/KatanaGovernance.sol#367)
+		- _setPermission(tokenA,whitelistUntil,alloweds,statuses) (src/governance/KatanaGovernance.sol#140)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+INFO:Detectors:
+KatanaGovernance.getWhitelistedTokensFor(address) (src/governance/KatanaGovernance.sol#279-310) uses timestamp for comparisons
+	Dangerous comparisons:
+	- block.timestamp < whitelistUntil && $.allowed[account] (src/governance/KatanaGovernance.sol#298)
+KatanaGovernance._isAuthorized(IKatanaGovernance.Permission,address) (src/governance/KatanaGovernance.sol#375-381) uses timestamp for comparisons
+	Dangerous comparisons:
+	- expiry == AUTHORIZED || block.timestamp > expiry (src/governance/KatanaGovernance.sol#378)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+INFO:Detectors:
+Dispatcher.dispatch(bytes1,bytes) (src/aggregate-router/base/Dispatcher.sol#28-203) uses assembly
+	- INLINE ASM (src/aggregate-router/base/Dispatcher.sol#41-47)
+	- INLINE ASM (src/aggregate-router/base/Dispatcher.sol#58-64)
+	- INLINE ASM (src/aggregate-router/base/Dispatcher.sol#74-78)
+	- INLINE ASM (src/aggregate-router/base/Dispatcher.sol#90-94)
+	- INLINE ASM (src/aggregate-router/base/Dispatcher.sol#101-105)
+	- INLINE ASM (src/aggregate-router/base/Dispatcher.sol#112-116)
+	- INLINE ASM (src/aggregate-router/base/Dispatcher.sol#130-136)
+	- INLINE ASM (src/aggregate-router/base/Dispatcher.sol#146-152)
+	- INLINE ASM (src/aggregate-router/base/Dispatcher.sol#159-161)
+	- INLINE ASM (src/aggregate-router/base/Dispatcher.sol#168-171)
+	- INLINE ASM (src/aggregate-router/base/Dispatcher.sol#177-180)
+	- INLINE ASM (src/aggregate-router/base/Dispatcher.sol#191-195)
+Dispatcher.getValueAndData(bytes) (src/aggregate-router/base/Dispatcher.sol#215-220) uses assembly
+	- INLINE ASM (src/aggregate-router/base/Dispatcher.sol#216-218)
+BytesLib.toAddress(bytes) (src/aggregate-router/modules/katana/v3/BytesLib.sol#15-20) uses assembly
+	- INLINE ASM (src/aggregate-router/modules/katana/v3/BytesLib.sol#17-19)
+BytesLib.toPool(bytes) (src/aggregate-router/modules/katana/v3/BytesLib.sol#28-36) uses assembly
+	- INLINE ASM (src/aggregate-router/modules/katana/v3/BytesLib.sol#30-35)
+BytesLib.toLengthOffset(bytes,uint256) (src/aggregate-router/modules/katana/v3/BytesLib.sol#45-56) uses assembly
+	- INLINE ASM (src/aggregate-router/modules/katana/v3/BytesLib.sol#47-54)
+BytesLib.toBytes(bytes,uint256) (src/aggregate-router/modules/katana/v3/BytesLib.sol#61-67) uses assembly
+	- INLINE ASM (src/aggregate-router/modules/katana/v3/BytesLib.sol#63-66)
+BytesLib.toAddressArray(bytes,uint256) (src/aggregate-router/modules/katana/v3/BytesLib.sol#72-78) uses assembly
+	- INLINE ASM (src/aggregate-router/modules/katana/v3/BytesLib.sol#74-77)
+BytesLib.toBytesArray(bytes,uint256) (src/aggregate-router/modules/katana/v3/BytesLib.sol#83-89) uses assembly
+	- INLINE ASM (src/aggregate-router/modules/katana/v3/BytesLib.sol#85-88)
+KatanaGovernance.getWhitelistedTokensFor(address) (src/governance/KatanaGovernance.sol#279-310) uses assembly
+	- INLINE ASM (src/governance/KatanaGovernance.sol#305-308)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+INFO:Detectors:
+V3SwapRouter.v3SwapExactOutput(address,uint256,uint256,bytes,address) (src/aggregate-router/modules/katana/v3/V3SwapRouter.sol#125-141) has costly operations inside a loop:
+	- maxAmountInCached = amountInMaximum (src/aggregate-router/modules/katana/v3/V3SwapRouter.sol#132)
+V3SwapRouter.v3SwapExactOutput(address,uint256,uint256,bytes,address) (src/aggregate-router/modules/katana/v3/V3SwapRouter.sol#125-141) has costly operations inside a loop:
+	- maxAmountInCached = DEFAULT_MAX_AMOUNT_IN (src/aggregate-router/modules/katana/v3/V3SwapRouter.sol#140)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+INFO:Detectors:
+Dispatcher.dispatch(bytes1,bytes) (src/aggregate-router/base/Dispatcher.sol#28-203) has a high cyclomatic complexity (21).
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#cyclomatic-complexity
+INFO:Detectors:
+Dispatcher.getValueAndData(bytes) (src/aggregate-router/base/Dispatcher.sol#215-220) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+INFO:Detectors:
+Version constraint ^0.8.0 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- FullInlinerNonExpressionSplitArgumentEvaluationOrder
+	- MissingSideEffectsOnSelectorAccess
+	- AbiReencodingHeadOverflowWithStaticArrayCleanup
+	- DirtyBytesArrayToStorage
+	- DataLocationChangeInInternalOverride
+	- NestedCalldataArrayAbiReencodingSizeValidation
+	- SignedImmutables
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching.
+It is used by:
+	- ^0.8.0 (dependencies/@openzeppelin-contracts-4.7.0/contracts/token/ERC20/IERC20.sol#4)
+	- ^0.8.0 (src/aggregate-router/modules/katana/v3/BytesLib.sol#4)
+Version constraint ^0.8.4 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- FullInlinerNonExpressionSplitArgumentEvaluationOrder
+	- MissingSideEffectsOnSelectorAccess
+	- AbiReencodingHeadOverflowWithStaticArrayCleanup
+	- DirtyBytesArrayToStorage
+	- DataLocationChangeInInternalOverride
+	- NestedCalldataArrayAbiReencodingSizeValidation
+	- SignedImmutables.
+It is used by:
+	- ^0.8.4 (src/aggregate-router/interfaces/external/IWETH9.sol#2)
+Version constraint >=0.6.0 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- AbiReencodingHeadOverflowWithStaticArrayCleanup
+	- DirtyBytesArrayToStorage
+	- NestedCalldataArrayAbiReencodingSizeValidation
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- MissingEscapingInFormatting
+	- ArraySliceDynamicallyEncodedBaseType
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- YulOptimizerRedundantAssignmentBreakContinue.
+It is used by:
+	- >=0.6.0 (src/aggregate-router/modules/katana/v3/V3Path.sol#2)
+Version constraint ^0.8.23 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+.
+It is used by:
+	- ^0.8.23 (src/governance/KatanaGovernance.sol#2)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+INFO:Detectors:
+Variable PaymentsImmutables.WETH9 (src/aggregate-router/modules/PaymentsImmutables.sol#14) is not in mixedCase
+Variable PaymentsImmutables.PERMIT2 (src/aggregate-router/modules/PaymentsImmutables.sol#17) is not in mixedCase
+Variable KatanaImmutables.KATANA_GOVERNANCE (src/aggregate-router/modules/katana/KatanaImmutables.sol#14) is not in mixedCase
+Variable KatanaImmutables.KATANA_V2_FACTORY (src/aggregate-router/modules/katana/KatanaImmutables.sol#17) is not in mixedCase
+Variable KatanaImmutables.KATANA_V2_PAIR_INIT_CODE_HASH (src/aggregate-router/modules/katana/KatanaImmutables.sol#20) is not in mixedCase
+Variable KatanaImmutables.KATANA_V3_FACTORY (src/aggregate-router/modules/katana/KatanaImmutables.sol#23) is not in mixedCase
+Variable KatanaImmutables.KATANA_V3_POOL_INIT_CODE_HASH (src/aggregate-router/modules/katana/KatanaImmutables.sol#26) is not in mixedCase
+Parameter BytesLib.toAddress(bytes)._bytes (src/aggregate-router/modules/katana/v3/BytesLib.sol#15) is not in mixedCase
+Parameter BytesLib.toPool(bytes)._bytes (src/aggregate-router/modules/katana/v3/BytesLib.sol#28) is not in mixedCase
+Parameter BytesLib.toLengthOffset(bytes,uint256)._bytes (src/aggregate-router/modules/katana/v3/BytesLib.sol#45) is not in mixedCase
+Parameter BytesLib.toLengthOffset(bytes,uint256)._arg (src/aggregate-router/modules/katana/v3/BytesLib.sol#45) is not in mixedCase
+Parameter BytesLib.toBytes(bytes,uint256)._bytes (src/aggregate-router/modules/katana/v3/BytesLib.sol#61) is not in mixedCase
+Parameter BytesLib.toBytes(bytes,uint256)._arg (src/aggregate-router/modules/katana/v3/BytesLib.sol#61) is not in mixedCase
+Parameter BytesLib.toAddressArray(bytes,uint256)._bytes (src/aggregate-router/modules/katana/v3/BytesLib.sol#72) is not in mixedCase
+Parameter BytesLib.toAddressArray(bytes,uint256)._arg (src/aggregate-router/modules/katana/v3/BytesLib.sol#72) is not in mixedCase
+Parameter BytesLib.toBytesArray(bytes,uint256)._bytes (src/aggregate-router/modules/katana/v3/BytesLib.sol#83) is not in mixedCase
+Parameter BytesLib.toBytesArray(bytes,uint256)._arg (src/aggregate-router/modules/katana/v3/BytesLib.sol#83) is not in mixedCase
+Function KatanaGovernance.INIT_CODE_PAIR_HASH() (src/governance/KatanaGovernance.sol#214-216) is not in mixedCase
+Variable KatanaGovernance.__gap (src/governance/KatanaGovernance.sol#21) is not in mixedCase
+Function IKatanaV2Factory.INIT_CODE_PAIR_HASH() (src/governance/interfaces/IKatanaV2Factory.sol#21) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+INFO:Detectors:
+Constants.slitherConstructorConstantVariables() (src/aggregate-router/libraries/Constants.sol#8-40) uses literals with too many digits:
+	- CONTRACT_BALANCE = 0x8000000000000000000000000000000000000000000000000000000000000000 (src/aggregate-router/libraries/Constants.sol#11)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+INFO:Detectors:
+The following unused import(s) in src/aggregate-router/libraries/Constants.sol should be removed:
+	-import { IWETH9 } from "../interfaces/external/IWETH9.sol"; (src/aggregate-router/libraries/Constants.sol#4)
+The following unused import(s) in src/aggregate-router/modules/Permit2Payments.sol should be removed:
+	-import { Constants } from "../libraries/Constants.sol"; (src/aggregate-router/modules/Permit2Payments.sol#6)
+The following unused import(s) in src/governance/KatanaGovernance.sol should be removed:
+	-import { Address } from "@openzeppelin/contracts/utils/Address.sol"; (src/governance/KatanaGovernance.sol#6)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-imports
+INFO:Detectors:
+KatanaGovernance.__gap (src/governance/KatanaGovernance.sol#21) is never used in KatanaGovernance (src/governance/KatanaGovernance.sol#12-405)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-state-variable
+INFO:Slither:. analyzed (39 contracts with 94 detectors), 84 result(s) found

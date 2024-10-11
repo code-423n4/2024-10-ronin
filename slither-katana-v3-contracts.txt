@@ -1,0 +1,953 @@
+INFO:Detectors:
+PeripheryPayments.pay(address,address,address,uint256) (src/periphery/base/PeripheryPayments.sol#48-60) uses arbitrary from in transferFrom: TransferHelper.safeTransferFrom(token,payer,recipient,value) (src/periphery/base/PeripheryPayments.sol#58)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#arbitrary-from-in-transferfrom
+INFO:Detectors:
+Multicall.multicall(bytes[]) (src/periphery/base/Multicall.sol#11-27) has delegatecall inside a loop in a payable function: (success,result) = address(this).delegatecall(data[i]) (src/periphery/base/Multicall.sol#14)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#payable-functions-using-delegatecall-inside-a-loop
+INFO:Detectors:
+NFTDescriptor.constructTokenURI(NFTDescriptor.ConstructTokenURIParams) (src/periphery/libraries/NFTDescriptor.sol#44-78) calls abi.encodePacked() with multiple dynamic arguments:
+	- string(abi.encodePacked(data:application/json;base64,,Base64.encode(bytes(abi.encodePacked({"name":",name,", "description":",descriptionPartOne,descriptionPartTwo,", "image": ",data:image/svg+xml;base64,,image,"}))))) (src/periphery/libraries/NFTDescriptor.sol#58-77)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#abi-encodePacked-collision
+INFO:Detectors:
+FullMath.mulDiv(uint256,uint256,uint256) (src/core/libraries/FullMath.sol#14-102) has bitwise-xor operator ^ instead of the exponentiation operator **: 
+	 - inv = (3 * denominator) ^ 2 (src/core/libraries/FullMath.sol#83)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-exponentiation
+INFO:Detectors:
+PeripheryPayments.pay(address,address,address,uint256) (src/periphery/base/PeripheryPayments.sol#48-60) ignores return value by IWETH9(WETH9).transfer(recipient,value) (src/periphery/base/PeripheryPayments.sol#52)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+INFO:Detectors:
+FullMath.mulDiv(uint256,uint256,uint256) (src/core/libraries/FullMath.sol#14-102) performs a multiplication on the result of a division:
+	- denominator = denominator / twos (src/core/libraries/FullMath.sol#63)
+	- inv = (3 * denominator) ^ 2 (src/core/libraries/FullMath.sol#83)
+FullMath.mulDiv(uint256,uint256,uint256) (src/core/libraries/FullMath.sol#14-102) performs a multiplication on the result of a division:
+	- denominator = denominator / twos (src/core/libraries/FullMath.sol#63)
+	- inv *= 2 - denominator * inv (src/core/libraries/FullMath.sol#87)
+FullMath.mulDiv(uint256,uint256,uint256) (src/core/libraries/FullMath.sol#14-102) performs a multiplication on the result of a division:
+	- denominator = denominator / twos (src/core/libraries/FullMath.sol#63)
+	- inv *= 2 - denominator * inv (src/core/libraries/FullMath.sol#88)
+FullMath.mulDiv(uint256,uint256,uint256) (src/core/libraries/FullMath.sol#14-102) performs a multiplication on the result of a division:
+	- denominator = denominator / twos (src/core/libraries/FullMath.sol#63)
+	- inv *= 2 - denominator * inv (src/core/libraries/FullMath.sol#89)
+FullMath.mulDiv(uint256,uint256,uint256) (src/core/libraries/FullMath.sol#14-102) performs a multiplication on the result of a division:
+	- denominator = denominator / twos (src/core/libraries/FullMath.sol#63)
+	- inv *= 2 - denominator * inv (src/core/libraries/FullMath.sol#90)
+FullMath.mulDiv(uint256,uint256,uint256) (src/core/libraries/FullMath.sol#14-102) performs a multiplication on the result of a division:
+	- denominator = denominator / twos (src/core/libraries/FullMath.sol#63)
+	- inv *= 2 - denominator * inv (src/core/libraries/FullMath.sol#91)
+FullMath.mulDiv(uint256,uint256,uint256) (src/core/libraries/FullMath.sol#14-102) performs a multiplication on the result of a division:
+	- denominator = denominator / twos (src/core/libraries/FullMath.sol#63)
+	- inv *= 2 - denominator * inv (src/core/libraries/FullMath.sol#92)
+FullMath.mulDiv(uint256,uint256,uint256) (src/core/libraries/FullMath.sol#14-102) performs a multiplication on the result of a division:
+	- prod0 = prod0 / twos (src/core/libraries/FullMath.sol#68)
+	- result = prod0 * inv (src/core/libraries/FullMath.sol#100)
+Oracle.observeSingle(Oracle.Observation[65535],uint32,uint32,int24,uint16,uint128,uint16) (src/core/libraries/Oracle.sol#231-273) performs a multiplication on the result of a division:
+	- (beforeOrAt.tickCumulative + ((atOrAfter.tickCumulative - beforeOrAt.tickCumulative) / observationTimeDelta) * targetDelta,beforeOrAt.secondsPerLiquidityCumulativeX128 + uint160((uint256(atOrAfter.secondsPerLiquidityCumulativeX128 - beforeOrAt.secondsPerLiquidityCumulativeX128) * targetDelta) / observationTimeDelta)) (src/core/libraries/Oracle.sol#261-271)
+Tick.tickSpacingToMaxLiquidityPerTick(int24) (src/core/libraries/Tick.sol#44-49) performs a multiplication on the result of a division:
+	- minTick = (TickMath.MIN_TICK / tickSpacing) * tickSpacing (src/core/libraries/Tick.sol#45)
+Tick.tickSpacingToMaxLiquidityPerTick(int24) (src/core/libraries/Tick.sol#44-49) performs a multiplication on the result of a division:
+	- maxTick = (TickMath.MAX_TICK / tickSpacing) * tickSpacing (src/core/libraries/Tick.sol#46)
+TickMath.getSqrtRatioAtTick(int24) (src/core/libraries/TickMath.sol#23-54) performs a multiplication on the result of a division:
+	- ratio = (ratio * 0x48a170391f7dc42444e8fa2) >> 128 (src/core/libraries/TickMath.sol#46)
+	- ratio = type()(uint256).max / ratio (src/core/libraries/TickMath.sol#48)
+TickMath.getSqrtRatioAtTick(int24) (src/core/libraries/TickMath.sol#23-54) performs a multiplication on the result of a division:
+	- ratio = (ratio * 0x2216e584f5fa1ea926041bedfe98) >> 128 (src/core/libraries/TickMath.sol#45)
+	- ratio = type()(uint256).max / ratio (src/core/libraries/TickMath.sol#48)
+TickMath.getSqrtRatioAtTick(int24) (src/core/libraries/TickMath.sol#23-54) performs a multiplication on the result of a division:
+	- ratio = (ratio * 0x5d6af8dedb81196699c329225ee604) >> 128 (src/core/libraries/TickMath.sol#44)
+	- ratio = type()(uint256).max / ratio (src/core/libraries/TickMath.sol#48)
+TickMath.getSqrtRatioAtTick(int24) (src/core/libraries/TickMath.sol#23-54) performs a multiplication on the result of a division:
+	- ratio = (ratio * 0x9aa508b5b7a84e1c677de54f3e99bc9) >> 128 (src/core/libraries/TickMath.sol#43)
+	- ratio = type()(uint256).max / ratio (src/core/libraries/TickMath.sol#48)
+TickMath.getSqrtRatioAtTick(int24) (src/core/libraries/TickMath.sol#23-54) performs a multiplication on the result of a division:
+	- ratio = (ratio * 0x31be135f97d08fd981231505542fcfa6) >> 128 (src/core/libraries/TickMath.sol#42)
+	- ratio = type()(uint256).max / ratio (src/core/libraries/TickMath.sol#48)
+TickMath.getSqrtRatioAtTick(int24) (src/core/libraries/TickMath.sol#23-54) performs a multiplication on the result of a division:
+	- ratio = (ratio * 0x70d869a156d2a1b890bb3df62baf32f7) >> 128 (src/core/libraries/TickMath.sol#41)
+	- ratio = type()(uint256).max / ratio (src/core/libraries/TickMath.sol#48)
+TickMath.getSqrtRatioAtTick(int24) (src/core/libraries/TickMath.sol#23-54) performs a multiplication on the result of a division:
+	- ratio = (ratio * 0xa9f746462d870fdf8a65dc1f90e061e5) >> 128 (src/core/libraries/TickMath.sol#40)
+	- ratio = type()(uint256).max / ratio (src/core/libraries/TickMath.sol#48)
+TickMath.getSqrtRatioAtTick(int24) (src/core/libraries/TickMath.sol#23-54) performs a multiplication on the result of a division:
+	- ratio = (ratio * 0xd097f3bdfd2022b8845ad8f792aa5825) >> 128 (src/core/libraries/TickMath.sol#39)
+	- ratio = type()(uint256).max / ratio (src/core/libraries/TickMath.sol#48)
+TickMath.getSqrtRatioAtTick(int24) (src/core/libraries/TickMath.sol#23-54) performs a multiplication on the result of a division:
+	- ratio = (ratio * 0xe7159475a2c29b7443b29c7fa6e889d9) >> 128 (src/core/libraries/TickMath.sol#38)
+	- ratio = type()(uint256).max / ratio (src/core/libraries/TickMath.sol#48)
+TickMath.getSqrtRatioAtTick(int24) (src/core/libraries/TickMath.sol#23-54) performs a multiplication on the result of a division:
+	- ratio = (ratio * 0xf3392b0822b70005940c7a398e4b70f3) >> 128 (src/core/libraries/TickMath.sol#37)
+	- ratio = type()(uint256).max / ratio (src/core/libraries/TickMath.sol#48)
+TickMath.getSqrtRatioAtTick(int24) (src/core/libraries/TickMath.sol#23-54) performs a multiplication on the result of a division:
+	- ratio = (ratio * 0xf987a7253ac413176f2b074cf7815e54) >> 128 (src/core/libraries/TickMath.sol#36)
+	- ratio = type()(uint256).max / ratio (src/core/libraries/TickMath.sol#48)
+TickMath.getSqrtRatioAtTick(int24) (src/core/libraries/TickMath.sol#23-54) performs a multiplication on the result of a division:
+	- ratio = (ratio * 0xfcbe86c7900a88aedcffc83b479aa3a4) >> 128 (src/core/libraries/TickMath.sol#35)
+	- ratio = type()(uint256).max / ratio (src/core/libraries/TickMath.sol#48)
+TickMath.getSqrtRatioAtTick(int24) (src/core/libraries/TickMath.sol#23-54) performs a multiplication on the result of a division:
+	- ratio = (ratio * 0xfe5dee046a99a2a811c461f1969c3053) >> 128 (src/core/libraries/TickMath.sol#34)
+	- ratio = type()(uint256).max / ratio (src/core/libraries/TickMath.sol#48)
+TickMath.getSqrtRatioAtTick(int24) (src/core/libraries/TickMath.sol#23-54) performs a multiplication on the result of a division:
+	- ratio = (ratio * 0xff2ea16466c96a3843ec78b326b52861) >> 128 (src/core/libraries/TickMath.sol#33)
+	- ratio = type()(uint256).max / ratio (src/core/libraries/TickMath.sol#48)
+TickMath.getSqrtRatioAtTick(int24) (src/core/libraries/TickMath.sol#23-54) performs a multiplication on the result of a division:
+	- ratio = (ratio * 0xff973b41fa98c081472e6896dfb254c0) >> 128 (src/core/libraries/TickMath.sol#32)
+	- ratio = type()(uint256).max / ratio (src/core/libraries/TickMath.sol#48)
+TickMath.getSqrtRatioAtTick(int24) (src/core/libraries/TickMath.sol#23-54) performs a multiplication on the result of a division:
+	- ratio = (ratio * 0xffcb9843d60f6159c9db58835c926644) >> 128 (src/core/libraries/TickMath.sol#31)
+	- ratio = type()(uint256).max / ratio (src/core/libraries/TickMath.sol#48)
+TickMath.getSqrtRatioAtTick(int24) (src/core/libraries/TickMath.sol#23-54) performs a multiplication on the result of a division:
+	- ratio = (ratio * 0xffe5caca7e10e4e61c3624eaa0941cd0) >> 128 (src/core/libraries/TickMath.sol#30)
+	- ratio = type()(uint256).max / ratio (src/core/libraries/TickMath.sol#48)
+TickMath.getSqrtRatioAtTick(int24) (src/core/libraries/TickMath.sol#23-54) performs a multiplication on the result of a division:
+	- ratio = (ratio * 0xfff2e50f5f656932ef12357cf3c7fdcc) >> 128 (src/core/libraries/TickMath.sol#29)
+	- ratio = type()(uint256).max / ratio (src/core/libraries/TickMath.sol#48)
+TickMath.getSqrtRatioAtTick(int24) (src/core/libraries/TickMath.sol#23-54) performs a multiplication on the result of a division:
+	- ratio = (ratio * 0xfff97272373d413259a46990580e213a) >> 128 (src/core/libraries/TickMath.sol#28)
+	- ratio = type()(uint256).max / ratio (src/core/libraries/TickMath.sol#48)
+NFTDescriptor.tickToDecimalString(int24,int24,uint8,uint8,bool) (src/periphery/libraries/NFTDescriptor.sol#225-243) performs a multiplication on the result of a division:
+	- tick == (TickMath.MIN_TICK / tickSpacing) * tickSpacing (src/periphery/libraries/NFTDescriptor.sol#232)
+NFTDescriptor.tickToDecimalString(int24,int24,uint8,uint8,bool) (src/periphery/libraries/NFTDescriptor.sol#225-243) performs a multiplication on the result of a division:
+	- tick == (TickMath.MAX_TICK / tickSpacing) * tickSpacing (src/periphery/libraries/NFTDescriptor.sol#234)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+INFO:Detectors:
+KatanaV3Pool.initialize(uint160) (src/core/KatanaV3Pool.sol#246-267) uses a dangerous strict equality:
+	- require(bool,string)(slot0.sqrtPriceX96 == 0,AI) (src/core/KatanaV3Pool.sol#247)
+KatanaV3Pool.swap(address,bool,int256,uint160,bytes) (src/core/KatanaV3Pool.sol#552-744) uses a dangerous strict equality:
+	- state.sqrtPriceX96 == step.sqrtPriceNextX96 (src/core/KatanaV3Pool.sol#653)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+INFO:Detectors:
+Reentrancy in NonfungiblePositionManager.collect(INonfungiblePositionManager.CollectParams) (src/periphery/NonfungiblePositionManager.sol#347-416):
+	External calls:
+	- pool.burn(position.tickLower,position.tickUpper,0) (src/periphery/NonfungiblePositionManager.sol#370)
+	State variables written after the call(s):
+	- position.feeGrowthInside0LastX128 = feeGrowthInside0LastX128 (src/periphery/NonfungiblePositionManager.sol#385)
+	NonfungiblePositionManager._positions (src/periphery/NonfungiblePositionManager.sol#80) can be used in cross function reentrancies:
+	- NonfungiblePositionManager._approve(address,uint256) (src/periphery/NonfungiblePositionManager.sol#430-433)
+	- NonfungiblePositionManager._getAndIncrementNonce(uint256) (src/periphery/NonfungiblePositionManager.sol#418-420)
+	- NonfungiblePositionManager.collect(INonfungiblePositionManager.CollectParams) (src/periphery/NonfungiblePositionManager.sol#347-416)
+	- NonfungiblePositionManager.decreaseLiquidity(INonfungiblePositionManager.DecreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#297-344)
+	- NonfungiblePositionManager.getApproved(uint256) (src/periphery/NonfungiblePositionManager.sol#423-427)
+	- NonfungiblePositionManager.increaseLiquidity(INonfungiblePositionManager.IncreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#246-294)
+	- NonfungiblePositionManager.mint(INonfungiblePositionManager.MintParams) (src/periphery/NonfungiblePositionManager.sol#181-230)
+	- NonfungiblePositionManager.positions(uint256) (src/periphery/NonfungiblePositionManager.sol#127-163)
+	- position.feeGrowthInside1LastX128 = feeGrowthInside1LastX128 (src/periphery/NonfungiblePositionManager.sol#386)
+	NonfungiblePositionManager._positions (src/periphery/NonfungiblePositionManager.sol#80) can be used in cross function reentrancies:
+	- NonfungiblePositionManager._approve(address,uint256) (src/periphery/NonfungiblePositionManager.sol#430-433)
+	- NonfungiblePositionManager._getAndIncrementNonce(uint256) (src/periphery/NonfungiblePositionManager.sol#418-420)
+	- NonfungiblePositionManager.collect(INonfungiblePositionManager.CollectParams) (src/periphery/NonfungiblePositionManager.sol#347-416)
+	- NonfungiblePositionManager.decreaseLiquidity(INonfungiblePositionManager.DecreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#297-344)
+	- NonfungiblePositionManager.getApproved(uint256) (src/periphery/NonfungiblePositionManager.sol#423-427)
+	- NonfungiblePositionManager.increaseLiquidity(INonfungiblePositionManager.IncreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#246-294)
+	- NonfungiblePositionManager.mint(INonfungiblePositionManager.MintParams) (src/periphery/NonfungiblePositionManager.sol#181-230)
+	- NonfungiblePositionManager.positions(uint256) (src/periphery/NonfungiblePositionManager.sol#127-163)
+Reentrancy in NonfungiblePositionManager.collect(INonfungiblePositionManager.CollectParams) (src/periphery/NonfungiblePositionManager.sol#347-416):
+	External calls:
+	- pool.burn(position.tickLower,position.tickUpper,0) (src/periphery/NonfungiblePositionManager.sol#370)
+	- (amount0,amount1) = pool.collect(recipient,position.tickLower,position.tickUpper,amount0Collect,amount1Collect) (src/periphery/NonfungiblePositionManager.sol#396)
+	State variables written after the call(s):
+	- (position.tokensOwed0,position.tokensOwed1) = (tokensOwed0 - amount0Collect,tokensOwed1 - amount1Collect) (src/periphery/NonfungiblePositionManager.sol#407)
+	NonfungiblePositionManager._positions (src/periphery/NonfungiblePositionManager.sol#80) can be used in cross function reentrancies:
+	- NonfungiblePositionManager._approve(address,uint256) (src/periphery/NonfungiblePositionManager.sol#430-433)
+	- NonfungiblePositionManager._getAndIncrementNonce(uint256) (src/periphery/NonfungiblePositionManager.sol#418-420)
+	- NonfungiblePositionManager.collect(INonfungiblePositionManager.CollectParams) (src/periphery/NonfungiblePositionManager.sol#347-416)
+	- NonfungiblePositionManager.decreaseLiquidity(INonfungiblePositionManager.DecreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#297-344)
+	- NonfungiblePositionManager.getApproved(uint256) (src/periphery/NonfungiblePositionManager.sol#423-427)
+	- NonfungiblePositionManager.increaseLiquidity(INonfungiblePositionManager.IncreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#246-294)
+	- NonfungiblePositionManager.mint(INonfungiblePositionManager.MintParams) (src/periphery/NonfungiblePositionManager.sol#181-230)
+	- NonfungiblePositionManager.positions(uint256) (src/periphery/NonfungiblePositionManager.sol#127-163)
+	- delete _positions[params.tokenId] (src/periphery/NonfungiblePositionManager.sol#411)
+	NonfungiblePositionManager._positions (src/periphery/NonfungiblePositionManager.sol#80) can be used in cross function reentrancies:
+	- NonfungiblePositionManager._approve(address,uint256) (src/periphery/NonfungiblePositionManager.sol#430-433)
+	- NonfungiblePositionManager._getAndIncrementNonce(uint256) (src/periphery/NonfungiblePositionManager.sol#418-420)
+	- NonfungiblePositionManager.collect(INonfungiblePositionManager.CollectParams) (src/periphery/NonfungiblePositionManager.sol#347-416)
+	- NonfungiblePositionManager.decreaseLiquidity(INonfungiblePositionManager.DecreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#297-344)
+	- NonfungiblePositionManager.getApproved(uint256) (src/periphery/NonfungiblePositionManager.sol#423-427)
+	- NonfungiblePositionManager.increaseLiquidity(INonfungiblePositionManager.IncreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#246-294)
+	- NonfungiblePositionManager.mint(INonfungiblePositionManager.MintParams) (src/periphery/NonfungiblePositionManager.sol#181-230)
+	- NonfungiblePositionManager.positions(uint256) (src/periphery/NonfungiblePositionManager.sol#127-163)
+	- _burn(params.tokenId) (src/periphery/NonfungiblePositionManager.sol#412)
+		- _positions[tokenId].operator = to (src/periphery/NonfungiblePositionManager.sol#431)
+	NonfungiblePositionManager._positions (src/periphery/NonfungiblePositionManager.sol#80) can be used in cross function reentrancies:
+	- NonfungiblePositionManager._approve(address,uint256) (src/periphery/NonfungiblePositionManager.sol#430-433)
+	- NonfungiblePositionManager._getAndIncrementNonce(uint256) (src/periphery/NonfungiblePositionManager.sol#418-420)
+	- NonfungiblePositionManager.collect(INonfungiblePositionManager.CollectParams) (src/periphery/NonfungiblePositionManager.sol#347-416)
+	- NonfungiblePositionManager.decreaseLiquidity(INonfungiblePositionManager.DecreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#297-344)
+	- NonfungiblePositionManager.getApproved(uint256) (src/periphery/NonfungiblePositionManager.sol#423-427)
+	- NonfungiblePositionManager.increaseLiquidity(INonfungiblePositionManager.IncreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#246-294)
+	- NonfungiblePositionManager.mint(INonfungiblePositionManager.MintParams) (src/periphery/NonfungiblePositionManager.sol#181-230)
+	- NonfungiblePositionManager.positions(uint256) (src/periphery/NonfungiblePositionManager.sol#127-163)
+Reentrancy in NonfungiblePositionManager.decreaseLiquidity(INonfungiblePositionManager.DecreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#297-344):
+	External calls:
+	- (amount0,amount1) = pool.burn(position.tickLower,position.tickUpper,params.liquidity) (src/periphery/NonfungiblePositionManager.sol#313)
+	State variables written after the call(s):
+	- position.tokensOwed0 += uint128(amount0) + uint128(FullMath.mulDiv(feeGrowthInside0LastX128 - position.feeGrowthInside0LastX128,positionLiquidity,FixedPoint128.Q128)) (src/periphery/NonfungiblePositionManager.sol#325-330)
+	NonfungiblePositionManager._positions (src/periphery/NonfungiblePositionManager.sol#80) can be used in cross function reentrancies:
+	- NonfungiblePositionManager._approve(address,uint256) (src/periphery/NonfungiblePositionManager.sol#430-433)
+	- NonfungiblePositionManager._getAndIncrementNonce(uint256) (src/periphery/NonfungiblePositionManager.sol#418-420)
+	- NonfungiblePositionManager.collect(INonfungiblePositionManager.CollectParams) (src/periphery/NonfungiblePositionManager.sol#347-416)
+	- NonfungiblePositionManager.decreaseLiquidity(INonfungiblePositionManager.DecreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#297-344)
+	- NonfungiblePositionManager.getApproved(uint256) (src/periphery/NonfungiblePositionManager.sol#423-427)
+	- NonfungiblePositionManager.increaseLiquidity(INonfungiblePositionManager.IncreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#246-294)
+	- NonfungiblePositionManager.mint(INonfungiblePositionManager.MintParams) (src/periphery/NonfungiblePositionManager.sol#181-230)
+	- NonfungiblePositionManager.positions(uint256) (src/periphery/NonfungiblePositionManager.sol#127-163)
+	- position.tokensOwed1 += uint128(amount1) + uint128(FullMath.mulDiv(feeGrowthInside1LastX128 - position.feeGrowthInside1LastX128,positionLiquidity,FixedPoint128.Q128)) (src/periphery/NonfungiblePositionManager.sol#331-336)
+	NonfungiblePositionManager._positions (src/periphery/NonfungiblePositionManager.sol#80) can be used in cross function reentrancies:
+	- NonfungiblePositionManager._approve(address,uint256) (src/periphery/NonfungiblePositionManager.sol#430-433)
+	- NonfungiblePositionManager._getAndIncrementNonce(uint256) (src/periphery/NonfungiblePositionManager.sol#418-420)
+	- NonfungiblePositionManager.collect(INonfungiblePositionManager.CollectParams) (src/periphery/NonfungiblePositionManager.sol#347-416)
+	- NonfungiblePositionManager.decreaseLiquidity(INonfungiblePositionManager.DecreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#297-344)
+	- NonfungiblePositionManager.getApproved(uint256) (src/periphery/NonfungiblePositionManager.sol#423-427)
+	- NonfungiblePositionManager.increaseLiquidity(INonfungiblePositionManager.IncreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#246-294)
+	- NonfungiblePositionManager.mint(INonfungiblePositionManager.MintParams) (src/periphery/NonfungiblePositionManager.sol#181-230)
+	- NonfungiblePositionManager.positions(uint256) (src/periphery/NonfungiblePositionManager.sol#127-163)
+	- position.feeGrowthInside0LastX128 = feeGrowthInside0LastX128 (src/periphery/NonfungiblePositionManager.sol#338)
+	NonfungiblePositionManager._positions (src/periphery/NonfungiblePositionManager.sol#80) can be used in cross function reentrancies:
+	- NonfungiblePositionManager._approve(address,uint256) (src/periphery/NonfungiblePositionManager.sol#430-433)
+	- NonfungiblePositionManager._getAndIncrementNonce(uint256) (src/periphery/NonfungiblePositionManager.sol#418-420)
+	- NonfungiblePositionManager.collect(INonfungiblePositionManager.CollectParams) (src/periphery/NonfungiblePositionManager.sol#347-416)
+	- NonfungiblePositionManager.decreaseLiquidity(INonfungiblePositionManager.DecreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#297-344)
+	- NonfungiblePositionManager.getApproved(uint256) (src/periphery/NonfungiblePositionManager.sol#423-427)
+	- NonfungiblePositionManager.increaseLiquidity(INonfungiblePositionManager.IncreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#246-294)
+	- NonfungiblePositionManager.mint(INonfungiblePositionManager.MintParams) (src/periphery/NonfungiblePositionManager.sol#181-230)
+	- NonfungiblePositionManager.positions(uint256) (src/periphery/NonfungiblePositionManager.sol#127-163)
+	- position.feeGrowthInside1LastX128 = feeGrowthInside1LastX128 (src/periphery/NonfungiblePositionManager.sol#339)
+	NonfungiblePositionManager._positions (src/periphery/NonfungiblePositionManager.sol#80) can be used in cross function reentrancies:
+	- NonfungiblePositionManager._approve(address,uint256) (src/periphery/NonfungiblePositionManager.sol#430-433)
+	- NonfungiblePositionManager._getAndIncrementNonce(uint256) (src/periphery/NonfungiblePositionManager.sol#418-420)
+	- NonfungiblePositionManager.collect(INonfungiblePositionManager.CollectParams) (src/periphery/NonfungiblePositionManager.sol#347-416)
+	- NonfungiblePositionManager.decreaseLiquidity(INonfungiblePositionManager.DecreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#297-344)
+	- NonfungiblePositionManager.getApproved(uint256) (src/periphery/NonfungiblePositionManager.sol#423-427)
+	- NonfungiblePositionManager.increaseLiquidity(INonfungiblePositionManager.IncreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#246-294)
+	- NonfungiblePositionManager.mint(INonfungiblePositionManager.MintParams) (src/periphery/NonfungiblePositionManager.sol#181-230)
+	- NonfungiblePositionManager.positions(uint256) (src/periphery/NonfungiblePositionManager.sol#127-163)
+	- position.liquidity = positionLiquidity - params.liquidity (src/periphery/NonfungiblePositionManager.sol#341)
+	NonfungiblePositionManager._positions (src/periphery/NonfungiblePositionManager.sol#80) can be used in cross function reentrancies:
+	- NonfungiblePositionManager._approve(address,uint256) (src/periphery/NonfungiblePositionManager.sol#430-433)
+	- NonfungiblePositionManager._getAndIncrementNonce(uint256) (src/periphery/NonfungiblePositionManager.sol#418-420)
+	- NonfungiblePositionManager.collect(INonfungiblePositionManager.CollectParams) (src/periphery/NonfungiblePositionManager.sol#347-416)
+	- NonfungiblePositionManager.decreaseLiquidity(INonfungiblePositionManager.DecreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#297-344)
+	- NonfungiblePositionManager.getApproved(uint256) (src/periphery/NonfungiblePositionManager.sol#423-427)
+	- NonfungiblePositionManager.increaseLiquidity(INonfungiblePositionManager.IncreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#246-294)
+	- NonfungiblePositionManager.mint(INonfungiblePositionManager.MintParams) (src/periphery/NonfungiblePositionManager.sol#181-230)
+	- NonfungiblePositionManager.positions(uint256) (src/periphery/NonfungiblePositionManager.sol#127-163)
+Reentrancy in NonfungiblePositionManager.increaseLiquidity(INonfungiblePositionManager.IncreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#246-294):
+	External calls:
+	- (liquidity,amount0,amount1,pool) = addLiquidity(AddLiquidityParams({token0:poolKey.token0,token1:poolKey.token1,fee:poolKey.fee,tickLower:position.tickLower,tickUpper:position.tickUpper,amount0Desired:params.amount0Desired,amount1Desired:params.amount1Desired,amount0Min:params.amount0Min,amount1Min:params.amount1Min,recipient:address(this)})) (src/periphery/NonfungiblePositionManager.sol#258-271)
+		- (amount0,amount1) = pool.mint(params.recipient,params.tickLower,params.tickUpper,liquidity,abi.encode(MintCallbackData({poolKey:poolKey,payer:msg.sender}))) (src/periphery/base/LiquidityManagement.sol#67-73)
+	State variables written after the call(s):
+	- position.tokensOwed0 += uint128(FullMath.mulDiv(feeGrowthInside0LastX128 - position.feeGrowthInside0LastX128,position.liquidity,FixedPoint128.Q128)) (src/periphery/NonfungiblePositionManager.sol#278-282)
+	NonfungiblePositionManager._positions (src/periphery/NonfungiblePositionManager.sol#80) can be used in cross function reentrancies:
+	- NonfungiblePositionManager._approve(address,uint256) (src/periphery/NonfungiblePositionManager.sol#430-433)
+	- NonfungiblePositionManager._getAndIncrementNonce(uint256) (src/periphery/NonfungiblePositionManager.sol#418-420)
+	- NonfungiblePositionManager.collect(INonfungiblePositionManager.CollectParams) (src/periphery/NonfungiblePositionManager.sol#347-416)
+	- NonfungiblePositionManager.decreaseLiquidity(INonfungiblePositionManager.DecreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#297-344)
+	- NonfungiblePositionManager.getApproved(uint256) (src/periphery/NonfungiblePositionManager.sol#423-427)
+	- NonfungiblePositionManager.increaseLiquidity(INonfungiblePositionManager.IncreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#246-294)
+	- NonfungiblePositionManager.mint(INonfungiblePositionManager.MintParams) (src/periphery/NonfungiblePositionManager.sol#181-230)
+	- NonfungiblePositionManager.positions(uint256) (src/periphery/NonfungiblePositionManager.sol#127-163)
+	- position.tokensOwed1 += uint128(FullMath.mulDiv(feeGrowthInside1LastX128 - position.feeGrowthInside1LastX128,position.liquidity,FixedPoint128.Q128)) (src/periphery/NonfungiblePositionManager.sol#283-287)
+	NonfungiblePositionManager._positions (src/periphery/NonfungiblePositionManager.sol#80) can be used in cross function reentrancies:
+	- NonfungiblePositionManager._approve(address,uint256) (src/periphery/NonfungiblePositionManager.sol#430-433)
+	- NonfungiblePositionManager._getAndIncrementNonce(uint256) (src/periphery/NonfungiblePositionManager.sol#418-420)
+	- NonfungiblePositionManager.collect(INonfungiblePositionManager.CollectParams) (src/periphery/NonfungiblePositionManager.sol#347-416)
+	- NonfungiblePositionManager.decreaseLiquidity(INonfungiblePositionManager.DecreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#297-344)
+	- NonfungiblePositionManager.getApproved(uint256) (src/periphery/NonfungiblePositionManager.sol#423-427)
+	- NonfungiblePositionManager.increaseLiquidity(INonfungiblePositionManager.IncreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#246-294)
+	- NonfungiblePositionManager.mint(INonfungiblePositionManager.MintParams) (src/periphery/NonfungiblePositionManager.sol#181-230)
+	- NonfungiblePositionManager.positions(uint256) (src/periphery/NonfungiblePositionManager.sol#127-163)
+	- position.feeGrowthInside0LastX128 = feeGrowthInside0LastX128 (src/periphery/NonfungiblePositionManager.sol#289)
+	NonfungiblePositionManager._positions (src/periphery/NonfungiblePositionManager.sol#80) can be used in cross function reentrancies:
+	- NonfungiblePositionManager._approve(address,uint256) (src/periphery/NonfungiblePositionManager.sol#430-433)
+	- NonfungiblePositionManager._getAndIncrementNonce(uint256) (src/periphery/NonfungiblePositionManager.sol#418-420)
+	- NonfungiblePositionManager.collect(INonfungiblePositionManager.CollectParams) (src/periphery/NonfungiblePositionManager.sol#347-416)
+	- NonfungiblePositionManager.decreaseLiquidity(INonfungiblePositionManager.DecreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#297-344)
+	- NonfungiblePositionManager.getApproved(uint256) (src/periphery/NonfungiblePositionManager.sol#423-427)
+	- NonfungiblePositionManager.increaseLiquidity(INonfungiblePositionManager.IncreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#246-294)
+	- NonfungiblePositionManager.mint(INonfungiblePositionManager.MintParams) (src/periphery/NonfungiblePositionManager.sol#181-230)
+	- NonfungiblePositionManager.positions(uint256) (src/periphery/NonfungiblePositionManager.sol#127-163)
+	- position.feeGrowthInside1LastX128 = feeGrowthInside1LastX128 (src/periphery/NonfungiblePositionManager.sol#290)
+	NonfungiblePositionManager._positions (src/periphery/NonfungiblePositionManager.sol#80) can be used in cross function reentrancies:
+	- NonfungiblePositionManager._approve(address,uint256) (src/periphery/NonfungiblePositionManager.sol#430-433)
+	- NonfungiblePositionManager._getAndIncrementNonce(uint256) (src/periphery/NonfungiblePositionManager.sol#418-420)
+	- NonfungiblePositionManager.collect(INonfungiblePositionManager.CollectParams) (src/periphery/NonfungiblePositionManager.sol#347-416)
+	- NonfungiblePositionManager.decreaseLiquidity(INonfungiblePositionManager.DecreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#297-344)
+	- NonfungiblePositionManager.getApproved(uint256) (src/periphery/NonfungiblePositionManager.sol#423-427)
+	- NonfungiblePositionManager.increaseLiquidity(INonfungiblePositionManager.IncreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#246-294)
+	- NonfungiblePositionManager.mint(INonfungiblePositionManager.MintParams) (src/periphery/NonfungiblePositionManager.sol#181-230)
+	- NonfungiblePositionManager.positions(uint256) (src/periphery/NonfungiblePositionManager.sol#127-163)
+	- position.liquidity += liquidity (src/periphery/NonfungiblePositionManager.sol#291)
+	NonfungiblePositionManager._positions (src/periphery/NonfungiblePositionManager.sol#80) can be used in cross function reentrancies:
+	- NonfungiblePositionManager._approve(address,uint256) (src/periphery/NonfungiblePositionManager.sol#430-433)
+	- NonfungiblePositionManager._getAndIncrementNonce(uint256) (src/periphery/NonfungiblePositionManager.sol#418-420)
+	- NonfungiblePositionManager.collect(INonfungiblePositionManager.CollectParams) (src/periphery/NonfungiblePositionManager.sol#347-416)
+	- NonfungiblePositionManager.decreaseLiquidity(INonfungiblePositionManager.DecreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#297-344)
+	- NonfungiblePositionManager.getApproved(uint256) (src/periphery/NonfungiblePositionManager.sol#423-427)
+	- NonfungiblePositionManager.increaseLiquidity(INonfungiblePositionManager.IncreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#246-294)
+	- NonfungiblePositionManager.mint(INonfungiblePositionManager.MintParams) (src/periphery/NonfungiblePositionManager.sol#181-230)
+	- NonfungiblePositionManager.positions(uint256) (src/periphery/NonfungiblePositionManager.sol#127-163)
+Reentrancy in KatanaV3Pool.swap(address,bool,int256,uint160,bytes) (src/core/KatanaV3Pool.sol#552-744):
+	External calls:
+	- TransferHelper.safeTransfer(tokenOut,recipient,uint256(- amount1)) (src/core/KatanaV3Pool.sol#724)
+	- IKatanaV3SwapCallback(msg.sender).katanaV3SwapCallback(amount0,amount1,data) (src/core/KatanaV3Pool.sol#727)
+	- TransferHelper.safeTransfer(tokenOut,recipient,uint256(- amount0)) (src/core/KatanaV3Pool.sol#730)
+	- IKatanaV3SwapCallback(msg.sender).katanaV3SwapCallback(amount0,amount1,data) (src/core/KatanaV3Pool.sol#733)
+	- TransferHelper.safeTransfer(tokenIn,IKatanaV3Factory(factory).treasury(),state.protocolFee) (src/core/KatanaV3Pool.sol#739)
+	State variables written after the call(s):
+	- slot0.unlocked = true (src/core/KatanaV3Pool.sol#743)
+	KatanaV3Pool.slot0 (src/core/KatanaV3Pool.sol#61) can be used in cross function reentrancies:
+	- KatanaV3Pool._modifyPosition(KatanaV3Pool.ModifyPositionParams) (src/core/KatanaV3Pool.sol#284-335)
+	- KatanaV3Pool._updatePosition(address,int24,int24,int128,int24) (src/core/KatanaV3Pool.sol#342-408)
+	- KatanaV3Pool.flash(address,uint256,uint256,bytes) (src/core/KatanaV3Pool.sol#747-794)
+	- KatanaV3Pool.increaseObservationCardinalityNext(uint16) (src/core/KatanaV3Pool.sol#235-242)
+	- KatanaV3Pool.initialize(uint160) (src/core/KatanaV3Pool.sol#246-267)
+	- KatanaV3Pool.lock() (src/core/KatanaV3Pool.sol#104-109)
+	- KatanaV3Pool.observe(uint32[]) (src/core/KatanaV3Pool.sol#223-232)
+	- KatanaV3Pool.slot0 (src/core/KatanaV3Pool.sol#61)
+	- KatanaV3Pool.snapshotCumulativesInside(int24,int24) (src/core/KatanaV3Pool.sol#166-220)
+	- KatanaV3Pool.swap(address,bool,int256,uint160,bytes) (src/core/KatanaV3Pool.sol#552-744)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+INFO:Detectors:
+KatanaV3Pool.swap(address,bool,int256,uint160,bytes) (src/core/KatanaV3Pool.sol#552-744) uses tx.origin for authorization: tx.origin != address(0) (src/core/KatanaV3Pool.sol#560)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-usage-of-txorigin
+INFO:Detectors:
+KatanaV3Pool._updatePosition(address,int24,int24,int128,int24).flippedLower (src/core/KatanaV3Pool.sol#353) is a local variable never initialized
+KatanaV3Pool.mint(address,int24,int24,uint128,bytes).balance1Before (src/core/KatanaV3Pool.sol#433) is a local variable never initialized
+KatanaV3Pool._updatePosition(address,int24,int24,int128,int24).flippedUpper (src/core/KatanaV3Pool.sol#354) is a local variable never initialized
+NFTDescriptor.sigfigsRounded(uint256,uint8).extraDigit (src/periphery/libraries/NFTDescriptor.sol#246) is a local variable never initialized
+TickLens.getPopulatedTicksInWord(address,int16).numberOfPopulatedTicks (src/periphery/lens/TickLens.sol#22) is a local variable never initialized
+NFTDescriptor.feeToPercentString(uint24).params (src/periphery/libraries/NFTDescriptor.sol#371) is a local variable never initialized
+NFTDescriptor.fixedPointToDecimalString(uint160,uint8,uint8).params (src/periphery/libraries/NFTDescriptor.sol#325) is a local variable never initialized
+KatanaV3Pool.mint(address,int24,int24,uint128,bytes).balance0Before (src/core/KatanaV3Pool.sol#432) is a local variable never initialized
+SqrtPriceMath.getNextSqrtPriceFromAmount0RoundingUp(uint160,uint128,uint256,bool).product_scope_0 (src/core/libraries/SqrtPriceMath.sol#49) is a local variable never initialized
+SqrtPriceMath.getNextSqrtPriceFromAmount0RoundingUp(uint160,uint128,uint256,bool).product (src/core/libraries/SqrtPriceMath.sol#38) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+INFO:Detectors:
+KatanaV3Pool.observe(uint32[]) (src/core/KatanaV3Pool.sol#223-232) ignores return value by observations.observe(_blockTimestamp(),secondsAgos,slot0.tick,slot0.observationIndex,liquidity,slot0.observationCardinality) (src/core/KatanaV3Pool.sol#229-231)
+LiquidityManagement.katanaV3MintCallback(uint256,uint256,bytes) (src/periphery/base/LiquidityManagement.sol#25-31) ignores return value by CallbackValidation.verifyCallback(factory,decoded.poolKey) (src/periphery/base/LiquidityManagement.sol#27)
+LiquidityManagement.addLiquidity(LiquidityManagement.AddLiquidityParams) (src/periphery/base/LiquidityManagement.sol#47-76) ignores return value by (sqrtPriceX96,None,None,None,None,None,None,None) = pool.slot0() (src/periphery/base/LiquidityManagement.sol#58)
+PoolInitializer.createAndInitializePoolIfNecessary(address,address,uint24,uint160) (src/periphery/base/PoolInitializer.sol#15-35) ignores return value by (sqrtPriceX96Existing,None,None,None,None,None,None,None) = IKatanaV3Pool(pool).slot0() (src/periphery/base/PoolInitializer.sol#30)
+NonfungiblePositionManager.mint(INonfungiblePositionManager.MintParams) (src/periphery/NonfungiblePositionManager.sol#181-230) ignores return value by (None,feeGrowthInside0LastX128,feeGrowthInside1LastX128,None,None) = pool.positions(positionKey) (src/periphery/NonfungiblePositionManager.sol#209)
+NonfungiblePositionManager.increaseLiquidity(INonfungiblePositionManager.IncreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#246-294) ignores return value by (None,feeGrowthInside0LastX128,feeGrowthInside1LastX128,None,None) = pool.positions(positionKey) (src/periphery/NonfungiblePositionManager.sol#276)
+NonfungiblePositionManager.decreaseLiquidity(INonfungiblePositionManager.DecreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#297-344) ignores return value by (None,feeGrowthInside0LastX128,feeGrowthInside1LastX128,None,None) = pool.positions(positionKey) (src/periphery/NonfungiblePositionManager.sol#323)
+NonfungiblePositionManager.collect(INonfungiblePositionManager.CollectParams) (src/periphery/NonfungiblePositionManager.sol#347-416) ignores return value by pool.burn(position.tickLower,position.tickUpper,0) (src/periphery/NonfungiblePositionManager.sol#370)
+NonfungiblePositionManager.collect(INonfungiblePositionManager.CollectParams) (src/periphery/NonfungiblePositionManager.sol#347-416) ignores return value by (None,feeGrowthInside0LastX128,feeGrowthInside1LastX128,None,None) = pool.positions(PositionKey.compute(address(this),position.tickLower,position.tickUpper)) (src/periphery/NonfungiblePositionManager.sol#371-372)
+NonfungibleTokenPositionDescriptor.tokenURI(INonfungiblePositionManager,uint256) (src/periphery/NonfungibleTokenPositionDescriptor.sol#46-86) ignores return value by (None,None,token0,token1,fee,tickLower,tickUpper,None,None,None,None,None) = positionManager.positions(tokenId) (src/periphery/NonfungibleTokenPositionDescriptor.sol#52-53)
+NonfungibleTokenPositionDescriptor.tokenURI(INonfungiblePositionManager,uint256) (src/periphery/NonfungibleTokenPositionDescriptor.sol#46-86) ignores return value by (None,tick,None,None,None,None,None,None) = pool.slot0() (src/periphery/NonfungibleTokenPositionDescriptor.sol#64)
+SwapRouter.katanaV3SwapCallback(int256,int256,bytes) (src/periphery/SwapRouter.sol#53-74) ignores return value by CallbackValidation.verifyCallback(factory,tokenIn,tokenOut,fee) (src/periphery/SwapRouter.sol#57)
+V3Migrator.migrate(IV3Migrator.MigrateParams) (src/periphery/V3Migrator.sol#36-96) ignores return value by (None,None,amount0V3,amount1V3) = INonfungiblePositionManager(nonfungiblePositionManager).mint(INonfungiblePositionManager.MintParams({token0:params.token0,token1:params.token1,fee:params.fee,tickLower:params.tickLower,tickUpper:params.tickUpper,amount0Desired:amount0V2ToMigrate,amount1Desired:amount1V2ToMigrate,amount0Min:params.amount0Min,amount1Min:params.amount1Min,recipient:params.recipient,deadline:params.deadline})) (src/periphery/V3Migrator.sol#53-67)
+PairFlash.katanaV3FlashCallback(uint256,uint256,bytes) (src/periphery/examples/PairFlash.sol#42-97) ignores return value by CallbackValidation.verifyCallback(factory,decoded.poolKey) (src/periphery/examples/PairFlash.sol#44)
+MixedRouteQuoterV1.katanaV3SwapCallback(int256,int256,bytes) (src/periphery/lens/MixedRouteQuoterV1.sol#53-76) ignores return value by CallbackValidation.verifyCallback(factory,tokenIn,tokenOut,fee) (src/periphery/lens/MixedRouteQuoterV1.sol#56)
+MixedRouteQuoterV1.katanaV3SwapCallback(int256,int256,bytes) (src/periphery/lens/MixedRouteQuoterV1.sol#53-76) ignores return value by (v3SqrtPriceX96After,tickAfter,None,None,None,None,None,None) = pool.slot0() (src/periphery/lens/MixedRouteQuoterV1.sol#62)
+MixedRouteQuoterV1.handleV3Revert(bytes,IKatanaV3Pool,uint256) (src/periphery/lens/MixedRouteQuoterV1.sol#94-107) ignores return value by (None,tickBefore,None,None,None,None,None,None) = pool.slot0() (src/periphery/lens/MixedRouteQuoterV1.sol#101)
+MixedRouteQuoterV1.quoteExactInputSingleV3(IMixedRouteQuoterV1.QuoteExactInputSingleV3Params) (src/periphery/lens/MixedRouteQuoterV1.sol#110-131) ignores return value by pool.swap(address(this),zeroForOne,params.amountIn.toInt256(),params.sqrtPriceLimitX96,abi.encodePacked(params.tokenIn,params.fee,params.tokenOut)) (src/periphery/lens/MixedRouteQuoterV1.sol#119-130)
+MixedRouteQuoterV1.quoteExactInputSingleV3(IMixedRouteQuoterV1.QuoteExactInputSingleV3Params) (src/periphery/lens/MixedRouteQuoterV1.sol#110-131) ignores return value by pool.swap(address(this),zeroForOne,params.amountIn.toInt256(),TickMath.MIN_SQRT_RATIO + 1,abi.encodePacked(params.tokenIn,params.fee,params.tokenOut)) (src/periphery/lens/MixedRouteQuoterV1.sol#119-130)
+MixedRouteQuoterV1.quoteExactInputSingleV3(IMixedRouteQuoterV1.QuoteExactInputSingleV3Params) (src/periphery/lens/MixedRouteQuoterV1.sol#110-131) ignores return value by pool.swap(address(this),zeroForOne,params.amountIn.toInt256(),TickMath.MAX_SQRT_RATIO - 1,abi.encodePacked(params.tokenIn,params.fee,params.tokenOut)) (src/periphery/lens/MixedRouteQuoterV1.sol#119-130)
+MixedRouteQuoterV1Testnet.katanaV3SwapCallback(int256,int256,bytes) (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#53-76) ignores return value by CallbackValidation.verifyCallback(factory,tokenIn,tokenOut,fee) (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#56)
+MixedRouteQuoterV1Testnet.katanaV3SwapCallback(int256,int256,bytes) (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#53-76) ignores return value by (v3SqrtPriceX96After,tickAfter,None,None,None,None,None,None) = pool.slot0() (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#62)
+MixedRouteQuoterV1Testnet.handleV3Revert(bytes,IKatanaV3Pool,uint256) (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#94-107) ignores return value by (None,tickBefore,None,None,None,None,None,None) = pool.slot0() (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#101)
+MixedRouteQuoterV1Testnet.quoteExactInputSingleV3(IMixedRouteQuoterV1.QuoteExactInputSingleV3Params) (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#110-131) ignores return value by pool.swap(address(this),zeroForOne,params.amountIn.toInt256(),params.sqrtPriceLimitX96,abi.encodePacked(params.tokenIn,params.fee,params.tokenOut)) (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#119-130)
+MixedRouteQuoterV1Testnet.quoteExactInputSingleV3(IMixedRouteQuoterV1.QuoteExactInputSingleV3Params) (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#110-131) ignores return value by pool.swap(address(this),zeroForOne,params.amountIn.toInt256(),TickMath.MIN_SQRT_RATIO + 1,abi.encodePacked(params.tokenIn,params.fee,params.tokenOut)) (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#119-130)
+MixedRouteQuoterV1Testnet.quoteExactInputSingleV3(IMixedRouteQuoterV1.QuoteExactInputSingleV3Params) (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#110-131) ignores return value by pool.swap(address(this),zeroForOne,params.amountIn.toInt256(),TickMath.MAX_SQRT_RATIO - 1,abi.encodePacked(params.tokenIn,params.fee,params.tokenOut)) (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#119-130)
+Quoter.katanaV3SwapCallback(int256,int256,bytes) (src/periphery/lens/Quoter.sol#34-57) ignores return value by CallbackValidation.verifyCallback(factory,tokenIn,tokenOut,fee) (src/periphery/lens/Quoter.sol#37)
+Quoter.quoteExactInputSingle(address,address,uint24,uint256,uint160) (src/periphery/lens/Quoter.sol#72-92) ignores return value by getPool(tokenIn,tokenOut,fee).swap(address(this),zeroForOne,amountIn.toInt256(),sqrtPriceLimitX96,abi.encodePacked(tokenIn,fee,tokenOut)) (src/periphery/lens/Quoter.sol#81-91)
+Quoter.quoteExactInputSingle(address,address,uint24,uint256,uint160) (src/periphery/lens/Quoter.sol#72-92) ignores return value by getPool(tokenIn,tokenOut,fee).swap(address(this),zeroForOne,amountIn.toInt256(),TickMath.MIN_SQRT_RATIO + 1,abi.encodePacked(tokenIn,fee,tokenOut)) (src/periphery/lens/Quoter.sol#81-91)
+Quoter.quoteExactInputSingle(address,address,uint24,uint256,uint160) (src/periphery/lens/Quoter.sol#72-92) ignores return value by getPool(tokenIn,tokenOut,fee).swap(address(this),zeroForOne,amountIn.toInt256(),TickMath.MAX_SQRT_RATIO - 1,abi.encodePacked(tokenIn,fee,tokenOut)) (src/periphery/lens/Quoter.sol#81-91)
+Quoter.quoteExactOutputSingle(address,address,uint24,uint256,uint160) (src/periphery/lens/Quoter.sol#114-137) ignores return value by getPool(tokenIn,tokenOut,fee).swap(address(this),zeroForOne,- amountOut.toInt256(),sqrtPriceLimitX96,abi.encodePacked(tokenOut,fee,tokenIn)) (src/periphery/lens/Quoter.sol#125-136)
+Quoter.quoteExactOutputSingle(address,address,uint24,uint256,uint160) (src/periphery/lens/Quoter.sol#114-137) ignores return value by getPool(tokenIn,tokenOut,fee).swap(address(this),zeroForOne,- amountOut.toInt256(),TickMath.MIN_SQRT_RATIO + 1,abi.encodePacked(tokenOut,fee,tokenIn)) (src/periphery/lens/Quoter.sol#125-136)
+Quoter.quoteExactOutputSingle(address,address,uint24,uint256,uint160) (src/periphery/lens/Quoter.sol#114-137) ignores return value by getPool(tokenIn,tokenOut,fee).swap(address(this),zeroForOne,- amountOut.toInt256(),TickMath.MAX_SQRT_RATIO - 1,abi.encodePacked(tokenOut,fee,tokenIn)) (src/periphery/lens/Quoter.sol#125-136)
+QuoterV2.katanaV3SwapCallback(int256,int256,bytes) (src/periphery/lens/QuoterV2.sol#37-68) ignores return value by CallbackValidation.verifyCallback(factory,tokenIn,tokenOut,fee) (src/periphery/lens/QuoterV2.sol#40)
+QuoterV2.katanaV3SwapCallback(int256,int256,bytes) (src/periphery/lens/QuoterV2.sol#37-68) ignores return value by (sqrtPriceX96After,tickAfter,None,None,None,None,None,None) = pool.slot0() (src/periphery/lens/QuoterV2.sol#47)
+QuoterV2.handleRevert(bytes,IKatanaV3Pool,uint256) (src/periphery/lens/QuoterV2.sol#86-99) ignores return value by (None,tickBefore,None,None,None,None,None,None) = pool.slot0() (src/periphery/lens/QuoterV2.sol#93)
+QuoterV2.quoteExactInputSingle(IQuoterV2.QuoteExactInputSingleParams) (src/periphery/lens/QuoterV2.sol#101-122) ignores return value by pool.swap(address(this),zeroForOne,params.amountIn.toInt256(),params.sqrtPriceLimitX96,abi.encodePacked(params.tokenIn,params.fee,params.tokenOut)) (src/periphery/lens/QuoterV2.sol#110-121)
+QuoterV2.quoteExactInputSingle(IQuoterV2.QuoteExactInputSingleParams) (src/periphery/lens/QuoterV2.sol#101-122) ignores return value by pool.swap(address(this),zeroForOne,params.amountIn.toInt256(),TickMath.MIN_SQRT_RATIO + 1,abi.encodePacked(params.tokenIn,params.fee,params.tokenOut)) (src/periphery/lens/QuoterV2.sol#110-121)
+QuoterV2.quoteExactInputSingle(IQuoterV2.QuoteExactInputSingleParams) (src/periphery/lens/QuoterV2.sol#101-122) ignores return value by pool.swap(address(this),zeroForOne,params.amountIn.toInt256(),TickMath.MAX_SQRT_RATIO - 1,abi.encodePacked(params.tokenIn,params.fee,params.tokenOut)) (src/periphery/lens/QuoterV2.sol#110-121)
+QuoterV2.quoteExactOutputSingle(IQuoterV2.QuoteExactOutputSingleParams) (src/periphery/lens/QuoterV2.sol#168-192) ignores return value by pool.swap(address(this),zeroForOne,- params.amount.toInt256(),params.sqrtPriceLimitX96,abi.encodePacked(params.tokenOut,params.fee,params.tokenIn)) (src/periphery/lens/QuoterV2.sol#179-191)
+QuoterV2.quoteExactOutputSingle(IQuoterV2.QuoteExactOutputSingleParams) (src/periphery/lens/QuoterV2.sol#168-192) ignores return value by pool.swap(address(this),zeroForOne,- params.amount.toInt256(),TickMath.MIN_SQRT_RATIO + 1,abi.encodePacked(params.tokenOut,params.fee,params.tokenIn)) (src/periphery/lens/QuoterV2.sol#179-191)
+QuoterV2.quoteExactOutputSingle(IQuoterV2.QuoteExactOutputSingleParams) (src/periphery/lens/QuoterV2.sol#168-192) ignores return value by pool.swap(address(this),zeroForOne,- params.amount.toInt256(),TickMath.MAX_SQRT_RATIO - 1,abi.encodePacked(params.tokenOut,params.fee,params.tokenIn)) (src/periphery/lens/QuoterV2.sol#179-191)
+TickLens.getPopulatedTicksInWord(address,int16) (src/periphery/lens/TickLens.sol#12-38) ignores return value by (liquidityGross,liquidityNet,None,None,None,None,None,None) = IKatanaV3Pool(pool).ticks(populatedTick) (src/periphery/lens/TickLens.sol#33)
+KatanaV2Library.getReserves(address,address,address) (src/periphery/libraries/KatanaV2Library.sol#35-43) ignores return value by (reserve0,reserve1,None) = IKatanaV2Pair(pairFor(factory,tokenA,tokenB)).getReserves() (src/periphery/libraries/KatanaV2Library.sol#41)
+KatanaV2LibraryTestnet.getReserves(address,address,address) (src/periphery/libraries/KatanaV2LibraryTestnet.sol#35-43) ignores return value by (reserve0,reserve1,None) = IKatanaV2Pair(pairFor(factory,tokenA,tokenB)).getReserves() (src/periphery/libraries/KatanaV2LibraryTestnet.sol#41)
+OracleLibrary.getOldestObservationSecondsAgo(address) (src/periphery/libraries/OracleLibrary.sol#73-87) ignores return value by (None,None,observationIndex,observationCardinality,None,None,None,None) = IKatanaV3Pool(pool).slot0() (src/periphery/libraries/OracleLibrary.sol#74)
+OracleLibrary.getOldestObservationSecondsAgo(address) (src/periphery/libraries/OracleLibrary.sol#73-87) ignores return value by (observationTimestamp,None,None,initialized) = IKatanaV3Pool(pool).observations((observationIndex + 1) % observationCardinality) (src/periphery/libraries/OracleLibrary.sol#77-78)
+OracleLibrary.getOldestObservationSecondsAgo(address) (src/periphery/libraries/OracleLibrary.sol#73-87) ignores return value by (observationTimestamp,None,None,None) = IKatanaV3Pool(pool).observations(0) (src/periphery/libraries/OracleLibrary.sol#83)
+OracleLibrary.getBlockStartingTickAndLiquidity(address) (src/periphery/libraries/OracleLibrary.sol#92-124) ignores return value by (None,tick,observationIndex,observationCardinality,None,None,None,None) = IKatanaV3Pool(pool).slot0() (src/periphery/libraries/OracleLibrary.sol#93)
+OracleLibrary.getBlockStartingTickAndLiquidity(address) (src/periphery/libraries/OracleLibrary.sol#92-124) ignores return value by (observationTimestamp,tickCumulative,secondsPerLiquidityCumulativeX128,None) = IKatanaV3Pool(pool).observations(observationIndex) (src/periphery/libraries/OracleLibrary.sol#101-102)
+PositionValue.principal(INonfungiblePositionManager,uint256,uint160) (src/periphery/libraries/PositionValue.sol#39-49) ignores return value by (None,None,None,None,None,tickLower,tickUpper,liquidity,None,None,None,None) = positionManager.positions(tokenId) (src/periphery/libraries/PositionValue.sol#44)
+PositionValue.principal(INonfungiblePositionManager,uint256,uint160) (src/periphery/libraries/PositionValue.sol#39-49) ignores return value by LiquidityAmounts.getAmountsForLiquidity(sqrtRatioX96,TickMath.getSqrtRatioAtTick(tickLower),TickMath.getSqrtRatioAtTick(tickUpper),liquidity) (src/periphery/libraries/PositionValue.sol#46-48)
+PositionValue.fees(INonfungiblePositionManager,uint256) (src/periphery/libraries/PositionValue.sol#69-104) ignores return value by (None,None,token0,token1,fee,tickLower,tickUpper,liquidity,positionFeeGrowthInside0LastX128,positionFeeGrowthInside1LastX128,tokensOwed0,tokensOwed1) = positionManager.positions(tokenId) (src/periphery/libraries/PositionValue.sol#74-87)
+PositionValue._getFeeGrowthInside(IKatanaV3Pool,int24,int24) (src/periphery/libraries/PositionValue.sol#131-152) ignores return value by (None,tickCurrent,None,None,None,None,None,None) = pool.slot0() (src/periphery/libraries/PositionValue.sol#136)
+PositionValue._getFeeGrowthInside(IKatanaV3Pool,int24,int24) (src/periphery/libraries/PositionValue.sol#131-152) ignores return value by (None,None,lowerFeeGrowthOutside0X128,lowerFeeGrowthOutside1X128,None,None,None,None) = pool.ticks(tickLower) (src/periphery/libraries/PositionValue.sol#137)
+PositionValue._getFeeGrowthInside(IKatanaV3Pool,int24,int24) (src/periphery/libraries/PositionValue.sol#131-152) ignores return value by (None,None,upperFeeGrowthOutside0X128,upperFeeGrowthOutside1X128,None,None,None,None) = pool.ticks(tickUpper) (src/periphery/libraries/PositionValue.sol#138)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+INFO:Detectors:
+PoolTicksCounter.countInitializedTicksCrossed(IKatanaV3Pool,int24,int24).mask (src/periphery/libraries/PoolTicksCounter.sol#58) is written in both
+	mask = mask & (type()(uint256).max >> (255 - bitPosHigher)) (src/periphery/libraries/PoolTicksCounter.sol#63)
+	mask = type()(uint256).max (src/periphery/libraries/PoolTicksCounter.sol#70)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#write-after-write
+INFO:Detectors:
+SwapRouter.katanaV3SwapCallback(int256,int256,bytes) (src/periphery/SwapRouter.sol#53-74) should emit an event for: 
+	- amountInCached = amountToPay (src/periphery/SwapRouter.sol#69) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+INFO:Detectors:
+KatanaV3Pool.initializeImmutables(address,address,address,uint24,int24).factory_ (src/core/KatanaV3Pool.sol#117) lacks a zero-check on :
+		- (factory,token0,token1,fee,tickSpacing) = (factory_,token0_,token1_,fee_,tickSpacing_) (src/core/KatanaV3Pool.sol#124)
+		- governance = IKatanaV3Factory(factory_).owner() (src/core/KatanaV3Pool.sol#127)
+KatanaV3Pool.initializeImmutables(address,address,address,uint24,int24).token0_ (src/core/KatanaV3Pool.sol#117) lacks a zero-check on :
+		- (factory,token0,token1,fee,tickSpacing) = (factory_,token0_,token1_,fee_,tickSpacing_) (src/core/KatanaV3Pool.sol#124)
+KatanaV3Pool.initializeImmutables(address,address,address,uint24,int24).token1_ (src/core/KatanaV3Pool.sol#117) lacks a zero-check on :
+		- (factory,token0,token1,fee,tickSpacing) = (factory_,token0_,token1_,fee_,tickSpacing_) (src/core/KatanaV3Pool.sol#124)
+KatanaGovernanceMock.setRouter(address).router (src/external/KatanaGovernanceMock.sol#27) lacks a zero-check on :
+		- _router = router (src/external/KatanaGovernanceMock.sol#28)
+KatanaGovernanceMock.setPositionManager(address).positionManager (src/external/KatanaGovernanceMock.sol#31) lacks a zero-check on :
+		- _positionManager = positionManager (src/external/KatanaGovernanceMock.sol#32)
+KatanaGovernanceMock.setV3Factory(address).factory (src/external/KatanaGovernanceMock.sol#60) lacks a zero-check on :
+		- _v3Factory = factory (src/external/KatanaGovernanceMock.sol#61)
+NonfungiblePositionManager.constructor(address,address,address)._tokenDescriptor_ (src/periphery/NonfungiblePositionManager.sol#96) lacks a zero-check on :
+		- _tokenDescriptor = _tokenDescriptor_ (src/periphery/NonfungiblePositionManager.sol#100)
+NonfungibleTokenPositionDescriptor.constructor(address,bytes32)._WRON (src/periphery/NonfungibleTokenPositionDescriptor.sol#27) lacks a zero-check on :
+		- WRON = _WRON (src/periphery/NonfungibleTokenPositionDescriptor.sol#28)
+V3Migrator.constructor(address,address,address)._nonfungiblePositionManager (src/periphery/V3Migrator.sol#26) lacks a zero-check on :
+		- nonfungiblePositionManager = _nonfungiblePositionManager (src/periphery/V3Migrator.sol#29)
+KatanaInterfaceMulticall.multicall(KatanaInterfaceMulticall.Call[]).target (src/periphery/lens/KatanaInterfaceMulticall.sol#31) lacks a zero-check on :
+		- (success,ret) = target.call{gas: gasLimit}(callData) (src/periphery/lens/KatanaInterfaceMulticall.sol#34)
+MixedRouteQuoterV1.constructor(address,address,address)._factoryV2 (src/periphery/lens/MixedRouteQuoterV1.sol#38) lacks a zero-check on :
+		- factoryV2 = _factoryV2 (src/periphery/lens/MixedRouteQuoterV1.sol#39)
+MixedRouteQuoterV1Testnet.constructor(address,address,address)._factoryV2 (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#38) lacks a zero-check on :
+		- factoryV2 = _factoryV2 (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#39)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+INFO:Detectors:
+Multicall.multicall(bytes[]) (src/periphery/base/Multicall.sol#11-27) has external calls inside a loop: (success,result) = address(this).delegatecall(data[i]) (src/periphery/base/Multicall.sol#14)
+SwapRouter.exactInputInternal(uint256,address,uint160,SwapRouter.SwapCallbackData) (src/periphery/SwapRouter.sol#77-101) has external calls inside a loop: (amount0,amount1) = getPool(tokenIn,tokenOut,fee).swap(recipient,zeroForOne,amountIn.toInt256(),TickMath.MIN_SQRT_RATIO + 1,abi.encode(data)) (src/periphery/SwapRouter.sol#90-98)
+SwapRouter.exactInputInternal(uint256,address,uint160,SwapRouter.SwapCallbackData) (src/periphery/SwapRouter.sol#77-101) has external calls inside a loop: (amount0,amount1) = getPool(tokenIn,tokenOut,fee).swap(recipient,zeroForOne,amountIn.toInt256(),TickMath.MAX_SQRT_RATIO - 1,abi.encode(data)) (src/periphery/SwapRouter.sol#90-98)
+SwapRouter.exactInputInternal(uint256,address,uint160,SwapRouter.SwapCallbackData) (src/periphery/SwapRouter.sol#77-101) has external calls inside a loop: (amount0,amount1) = getPool(tokenIn,tokenOut,fee).swap(recipient,zeroForOne,amountIn.toInt256(),sqrtPriceLimitX96,abi.encode(data)) (src/periphery/SwapRouter.sol#90-98)
+KatanaInterfaceMulticall.multicall(KatanaInterfaceMulticall.Call[]) (src/periphery/lens/KatanaInterfaceMulticall.sol#27-38) has external calls inside a loop: (success,ret) = target.call{gas: gasLimit}(callData) (src/periphery/lens/KatanaInterfaceMulticall.sol#34)
+KatanaV2Library.getReserves(address,address,address) (src/periphery/libraries/KatanaV2Library.sol#35-43) has external calls inside a loop: (reserve0,reserve1,None) = IKatanaV2Pair(pairFor(factory,tokenA,tokenB)).getReserves() (src/periphery/libraries/KatanaV2Library.sol#41)
+MixedRouteQuoterV1.quoteExactInputSingleV3(IMixedRouteQuoterV1.QuoteExactInputSingleV3Params) (src/periphery/lens/MixedRouteQuoterV1.sol#110-131) has external calls inside a loop: pool.swap(address(this),zeroForOne,params.amountIn.toInt256(),TickMath.MIN_SQRT_RATIO + 1,abi.encodePacked(params.tokenIn,params.fee,params.tokenOut)) (src/periphery/lens/MixedRouteQuoterV1.sol#119-130)
+MixedRouteQuoterV1.handleV3Revert(bytes,IKatanaV3Pool,uint256) (src/periphery/lens/MixedRouteQuoterV1.sol#94-107) has external calls inside a loop: (None,tickBefore,None,None,None,None,None,None) = pool.slot0() (src/periphery/lens/MixedRouteQuoterV1.sol#101)
+PoolTicksCounter.countInitializedTicksCrossed(IKatanaV3Pool,int24,int24) (src/periphery/libraries/PoolTicksCounter.sol#11-82) has external calls inside a loop: tickAfterInitialized = ((self.tickBitmap(wordPosAfter) & (1 << bitPosAfter)) > 0) && ((tickAfter % self.tickSpacing()) == 0) && (tickBefore > tickAfter) (src/periphery/libraries/PoolTicksCounter.sol#35-36)
+PoolTicksCounter.countInitializedTicksCrossed(IKatanaV3Pool,int24,int24) (src/periphery/libraries/PoolTicksCounter.sol#11-82) has external calls inside a loop: tickBeforeInitialized = ((self.tickBitmap(wordPos) & (1 << bitPos)) > 0) && ((tickBefore % self.tickSpacing()) == 0) && (tickBefore < tickAfter) (src/periphery/libraries/PoolTicksCounter.sol#40-41)
+PoolTicksCounter.countInitializedTicksCrossed(IKatanaV3Pool,int24,int24) (src/periphery/libraries/PoolTicksCounter.sol#11-82) has external calls inside a loop: wordPos = int16((tickBefore / self.tickSpacing()) >> 8) (src/periphery/libraries/PoolTicksCounter.sol#25)
+PoolTicksCounter.countInitializedTicksCrossed(IKatanaV3Pool,int24,int24) (src/periphery/libraries/PoolTicksCounter.sol#11-82) has external calls inside a loop: masked = self.tickBitmap(wordPosLower) & mask (src/periphery/libraries/PoolTicksCounter.sol#66)
+PoolTicksCounter.countInitializedTicksCrossed(IKatanaV3Pool,int24,int24) (src/periphery/libraries/PoolTicksCounter.sol#11-82) has external calls inside a loop: bitPos = uint8((tickBefore / self.tickSpacing()) % 256) (src/periphery/libraries/PoolTicksCounter.sol#26)
+PoolTicksCounter.countInitializedTicksCrossed(IKatanaV3Pool,int24,int24) (src/periphery/libraries/PoolTicksCounter.sol#11-82) has external calls inside a loop: wordPosAfter = int16((tickAfter / self.tickSpacing()) >> 8) (src/periphery/libraries/PoolTicksCounter.sol#28)
+PoolTicksCounter.countInitializedTicksCrossed(IKatanaV3Pool,int24,int24) (src/periphery/libraries/PoolTicksCounter.sol#11-82) has external calls inside a loop: bitPosAfter = uint8((tickAfter / self.tickSpacing()) % 256) (src/periphery/libraries/PoolTicksCounter.sol#29)
+MixedRouteQuoterV1.quoteExactInputSingleV3(IMixedRouteQuoterV1.QuoteExactInputSingleV3Params) (src/periphery/lens/MixedRouteQuoterV1.sol#110-131) has external calls inside a loop: pool.swap(address(this),zeroForOne,params.amountIn.toInt256(),TickMath.MAX_SQRT_RATIO - 1,abi.encodePacked(params.tokenIn,params.fee,params.tokenOut)) (src/periphery/lens/MixedRouteQuoterV1.sol#119-130)
+MixedRouteQuoterV1.quoteExactInputSingleV3(IMixedRouteQuoterV1.QuoteExactInputSingleV3Params) (src/periphery/lens/MixedRouteQuoterV1.sol#110-131) has external calls inside a loop: pool.swap(address(this),zeroForOne,params.amountIn.toInt256(),params.sqrtPriceLimitX96,abi.encodePacked(params.tokenIn,params.fee,params.tokenOut)) (src/periphery/lens/MixedRouteQuoterV1.sol#119-130)
+KatanaV2LibraryTestnet.getReserves(address,address,address) (src/periphery/libraries/KatanaV2LibraryTestnet.sol#35-43) has external calls inside a loop: (reserve0,reserve1,None) = IKatanaV2Pair(pairFor(factory,tokenA,tokenB)).getReserves() (src/periphery/libraries/KatanaV2LibraryTestnet.sol#41)
+MixedRouteQuoterV1Testnet.quoteExactInputSingleV3(IMixedRouteQuoterV1.QuoteExactInputSingleV3Params) (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#110-131) has external calls inside a loop: pool.swap(address(this),zeroForOne,params.amountIn.toInt256(),TickMath.MIN_SQRT_RATIO + 1,abi.encodePacked(params.tokenIn,params.fee,params.tokenOut)) (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#119-130)
+MixedRouteQuoterV1Testnet.handleV3Revert(bytes,IKatanaV3Pool,uint256) (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#94-107) has external calls inside a loop: (None,tickBefore,None,None,None,None,None,None) = pool.slot0() (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#101)
+MixedRouteQuoterV1Testnet.quoteExactInputSingleV3(IMixedRouteQuoterV1.QuoteExactInputSingleV3Params) (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#110-131) has external calls inside a loop: pool.swap(address(this),zeroForOne,params.amountIn.toInt256(),TickMath.MAX_SQRT_RATIO - 1,abi.encodePacked(params.tokenIn,params.fee,params.tokenOut)) (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#119-130)
+MixedRouteQuoterV1Testnet.quoteExactInputSingleV3(IMixedRouteQuoterV1.QuoteExactInputSingleV3Params) (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#110-131) has external calls inside a loop: pool.swap(address(this),zeroForOne,params.amountIn.toInt256(),params.sqrtPriceLimitX96,abi.encodePacked(params.tokenIn,params.fee,params.tokenOut)) (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#119-130)
+Quoter.quoteExactInputSingle(address,address,uint24,uint256,uint160) (src/periphery/lens/Quoter.sol#72-92) has external calls inside a loop: getPool(tokenIn,tokenOut,fee).swap(address(this),zeroForOne,amountIn.toInt256(),TickMath.MIN_SQRT_RATIO + 1,abi.encodePacked(tokenIn,fee,tokenOut)) (src/periphery/lens/Quoter.sol#81-91)
+Quoter.quoteExactInputSingle(address,address,uint24,uint256,uint160) (src/periphery/lens/Quoter.sol#72-92) has external calls inside a loop: getPool(tokenIn,tokenOut,fee).swap(address(this),zeroForOne,amountIn.toInt256(),TickMath.MAX_SQRT_RATIO - 1,abi.encodePacked(tokenIn,fee,tokenOut)) (src/periphery/lens/Quoter.sol#81-91)
+Quoter.quoteExactInputSingle(address,address,uint24,uint256,uint160) (src/periphery/lens/Quoter.sol#72-92) has external calls inside a loop: getPool(tokenIn,tokenOut,fee).swap(address(this),zeroForOne,amountIn.toInt256(),sqrtPriceLimitX96,abi.encodePacked(tokenIn,fee,tokenOut)) (src/periphery/lens/Quoter.sol#81-91)
+Quoter.quoteExactOutputSingle(address,address,uint24,uint256,uint160) (src/periphery/lens/Quoter.sol#114-137) has external calls inside a loop: getPool(tokenIn,tokenOut,fee).swap(address(this),zeroForOne,- amountOut.toInt256(),TickMath.MIN_SQRT_RATIO + 1,abi.encodePacked(tokenOut,fee,tokenIn)) (src/periphery/lens/Quoter.sol#125-136)
+Quoter.quoteExactOutputSingle(address,address,uint24,uint256,uint160) (src/periphery/lens/Quoter.sol#114-137) has external calls inside a loop: getPool(tokenIn,tokenOut,fee).swap(address(this),zeroForOne,- amountOut.toInt256(),TickMath.MAX_SQRT_RATIO - 1,abi.encodePacked(tokenOut,fee,tokenIn)) (src/periphery/lens/Quoter.sol#125-136)
+Quoter.quoteExactOutputSingle(address,address,uint24,uint256,uint160) (src/periphery/lens/Quoter.sol#114-137) has external calls inside a loop: getPool(tokenIn,tokenOut,fee).swap(address(this),zeroForOne,- amountOut.toInt256(),sqrtPriceLimitX96,abi.encodePacked(tokenOut,fee,tokenIn)) (src/periphery/lens/Quoter.sol#125-136)
+QuoterV2.quoteExactInputSingle(IQuoterV2.QuoteExactInputSingleParams) (src/periphery/lens/QuoterV2.sol#101-122) has external calls inside a loop: pool.swap(address(this),zeroForOne,params.amountIn.toInt256(),TickMath.MIN_SQRT_RATIO + 1,abi.encodePacked(params.tokenIn,params.fee,params.tokenOut)) (src/periphery/lens/QuoterV2.sol#110-121)
+QuoterV2.handleRevert(bytes,IKatanaV3Pool,uint256) (src/periphery/lens/QuoterV2.sol#86-99) has external calls inside a loop: (None,tickBefore,None,None,None,None,None,None) = pool.slot0() (src/periphery/lens/QuoterV2.sol#93)
+QuoterV2.quoteExactInputSingle(IQuoterV2.QuoteExactInputSingleParams) (src/periphery/lens/QuoterV2.sol#101-122) has external calls inside a loop: pool.swap(address(this),zeroForOne,params.amountIn.toInt256(),TickMath.MAX_SQRT_RATIO - 1,abi.encodePacked(params.tokenIn,params.fee,params.tokenOut)) (src/periphery/lens/QuoterV2.sol#110-121)
+QuoterV2.quoteExactInputSingle(IQuoterV2.QuoteExactInputSingleParams) (src/periphery/lens/QuoterV2.sol#101-122) has external calls inside a loop: pool.swap(address(this),zeroForOne,params.amountIn.toInt256(),params.sqrtPriceLimitX96,abi.encodePacked(params.tokenIn,params.fee,params.tokenOut)) (src/periphery/lens/QuoterV2.sol#110-121)
+QuoterV2.quoteExactOutputSingle(IQuoterV2.QuoteExactOutputSingleParams) (src/periphery/lens/QuoterV2.sol#168-192) has external calls inside a loop: pool.swap(address(this),zeroForOne,- params.amount.toInt256(),TickMath.MIN_SQRT_RATIO + 1,abi.encodePacked(params.tokenOut,params.fee,params.tokenIn)) (src/periphery/lens/QuoterV2.sol#179-191)
+QuoterV2.quoteExactOutputSingle(IQuoterV2.QuoteExactOutputSingleParams) (src/periphery/lens/QuoterV2.sol#168-192) has external calls inside a loop: pool.swap(address(this),zeroForOne,- params.amount.toInt256(),TickMath.MAX_SQRT_RATIO - 1,abi.encodePacked(params.tokenOut,params.fee,params.tokenIn)) (src/periphery/lens/QuoterV2.sol#179-191)
+QuoterV2.quoteExactOutputSingle(IQuoterV2.QuoteExactOutputSingleParams) (src/periphery/lens/QuoterV2.sol#168-192) has external calls inside a loop: pool.swap(address(this),zeroForOne,- params.amount.toInt256(),params.sqrtPriceLimitX96,abi.encodePacked(params.tokenOut,params.fee,params.tokenIn)) (src/periphery/lens/QuoterV2.sol#179-191)
+TickLens.getPopulatedTicksInWord(address,int16) (src/periphery/lens/TickLens.sol#12-38) has external calls inside a loop: (liquidityGross,liquidityNet,None,None,None,None,None,None) = IKatanaV3Pool(pool).ticks(populatedTick) (src/periphery/lens/TickLens.sol#33)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+INFO:Detectors:
+Reentrancy in NonfungiblePositionManager.decreaseLiquidity(INonfungiblePositionManager.DecreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#297-344):
+	External calls:
+	- (amount0,amount1) = pool.burn(position.tickLower,position.tickUpper,params.liquidity) (src/periphery/NonfungiblePositionManager.sol#313)
+	State variables written after the call(s):
+	- burnedLiquidityOwed.token0 += uint128(amount0) (src/periphery/NonfungiblePositionManager.sol#318)
+	- burnedLiquidityOwed.token1 += uint128(amount1) (src/periphery/NonfungiblePositionManager.sol#319)
+Reentrancy in SwapRouter.exactOutput(ISwapRouter.ExactOutputParams) (src/periphery/SwapRouter.sol#211-227):
+	External calls:
+	- exactOutputInternal(params.amountOut,params.recipient,0,SwapCallbackData({path:params.path,payer:msg.sender})) (src/periphery/SwapRouter.sol#220-222)
+		- (amount0Delta,amount1Delta) = getPool(tokenIn,tokenOut,fee).swap(recipient,zeroForOne,- amountOut.toInt256(),sqrtPriceLimitX96,abi.encode(data)) (src/periphery/SwapRouter.sol#171-179)
+		- (amount0Delta,amount1Delta) = getPool(tokenIn,tokenOut,fee).swap(recipient,zeroForOne,- amountOut.toInt256(),TickMath.MIN_SQRT_RATIO + 1,abi.encode(data)) (src/periphery/SwapRouter.sol#171-179)
+		- (amount0Delta,amount1Delta) = getPool(tokenIn,tokenOut,fee).swap(recipient,zeroForOne,- amountOut.toInt256(),TickMath.MAX_SQRT_RATIO - 1,abi.encode(data)) (src/periphery/SwapRouter.sol#171-179)
+	State variables written after the call(s):
+	- amountInCached = DEFAULT_AMOUNT_IN_CACHED (src/periphery/SwapRouter.sol#226)
+Reentrancy in SwapRouter.exactOutputSingle(ISwapRouter.ExactOutputSingleParams) (src/periphery/SwapRouter.sol#190-208):
+	External calls:
+	- amountIn = exactOutputInternal(params.amountOut,params.recipient,params.sqrtPriceLimitX96,SwapCallbackData({path:abi.encodePacked(params.tokenOut,params.fee,params.tokenIn),payer:msg.sender})) (src/periphery/SwapRouter.sol#198-203)
+		- (amount0Delta,amount1Delta) = getPool(tokenIn,tokenOut,fee).swap(recipient,zeroForOne,- amountOut.toInt256(),sqrtPriceLimitX96,abi.encode(data)) (src/periphery/SwapRouter.sol#171-179)
+		- (amount0Delta,amount1Delta) = getPool(tokenIn,tokenOut,fee).swap(recipient,zeroForOne,- amountOut.toInt256(),TickMath.MIN_SQRT_RATIO + 1,abi.encode(data)) (src/periphery/SwapRouter.sol#171-179)
+		- (amount0Delta,amount1Delta) = getPool(tokenIn,tokenOut,fee).swap(recipient,zeroForOne,- amountOut.toInt256(),TickMath.MAX_SQRT_RATIO - 1,abi.encode(data)) (src/periphery/SwapRouter.sol#171-179)
+	State variables written after the call(s):
+	- amountInCached = DEFAULT_AMOUNT_IN_CACHED (src/periphery/SwapRouter.sol#207)
+Reentrancy in KatanaV3Pool.flash(address,uint256,uint256,bytes) (src/core/KatanaV3Pool.sol#747-794):
+	External calls:
+	- TransferHelper.safeTransfer(_token0,recipient,amount0) (src/core/KatanaV3Pool.sol#765)
+	- TransferHelper.safeTransfer(_token1,recipient,amount1) (src/core/KatanaV3Pool.sol#766)
+	- IKatanaV3FlashCallback(msg.sender).katanaV3FlashCallback(fee0,fee1,data) (src/core/KatanaV3Pool.sol#768)
+	- TransferHelper.safeTransfer(_token0,treasury,fees0) (src/core/KatanaV3Pool.sol#783)
+	State variables written after the call(s):
+	- feeGrowthGlobal0X128 += FullMath.mulDiv(paid0 - fees0,FixedPoint128.Q128,_liquidity) (src/core/KatanaV3Pool.sol#784)
+Reentrancy in KatanaV3Pool.flash(address,uint256,uint256,bytes) (src/core/KatanaV3Pool.sol#747-794):
+	External calls:
+	- TransferHelper.safeTransfer(_token0,recipient,amount0) (src/core/KatanaV3Pool.sol#765)
+	- TransferHelper.safeTransfer(_token1,recipient,amount1) (src/core/KatanaV3Pool.sol#766)
+	- IKatanaV3FlashCallback(msg.sender).katanaV3FlashCallback(fee0,fee1,data) (src/core/KatanaV3Pool.sol#768)
+	- TransferHelper.safeTransfer(_token0,treasury,fees0) (src/core/KatanaV3Pool.sol#783)
+	- TransferHelper.safeTransfer(_token1,treasury,fees1) (src/core/KatanaV3Pool.sol#788)
+	State variables written after the call(s):
+	- feeGrowthGlobal1X128 += FullMath.mulDiv(paid1 - fees1,FixedPoint128.Q128,_liquidity) (src/core/KatanaV3Pool.sol#789)
+Reentrancy in NonfungiblePositionManager.mint(INonfungiblePositionManager.MintParams) (src/periphery/NonfungiblePositionManager.sol#181-230):
+	External calls:
+	- (liquidity,amount0,amount1,pool) = addLiquidity(AddLiquidityParams({token0:params.token0,token1:params.token1,fee:params.fee,recipient:address(this),tickLower:params.tickLower,tickUpper:params.tickUpper,amount0Desired:params.amount0Desired,amount1Desired:params.amount1Desired,amount0Min:params.amount0Min,amount1Min:params.amount1Min})) (src/periphery/NonfungiblePositionManager.sol#191-204)
+		- (amount0,amount1) = pool.mint(params.recipient,params.tickLower,params.tickUpper,liquidity,abi.encode(MintCallbackData({poolKey:poolKey,payer:msg.sender}))) (src/periphery/base/LiquidityManagement.sol#67-73)
+	State variables written after the call(s):
+	- _mint(params.recipient,(tokenId = _nextId ++)) (src/periphery/NonfungiblePositionManager.sol#206)
+	- poolId = cachePoolKey(address(pool),PoolAddress.PoolKey({token0:params.token0,token1:params.token1,fee:params.fee})) (src/periphery/NonfungiblePositionManager.sol#212-214)
+		- _poolIds[pool] = (poolId = _nextPoolId ++) (src/periphery/NonfungiblePositionManager.sol#175)
+	- poolId = cachePoolKey(address(pool),PoolAddress.PoolKey({token0:params.token0,token1:params.token1,fee:params.fee})) (src/periphery/NonfungiblePositionManager.sol#212-214)
+		- _poolIdToPoolKey[poolId] = poolKey (src/periphery/NonfungiblePositionManager.sol#176)
+	- poolId = cachePoolKey(address(pool),PoolAddress.PoolKey({token0:params.token0,token1:params.token1,fee:params.fee})) (src/periphery/NonfungiblePositionManager.sol#212-214)
+		- _poolIds[pool] = (poolId = _nextPoolId ++) (src/periphery/NonfungiblePositionManager.sol#175)
+	- _positions[tokenId] = Position({nonce:0,operator:address(0),poolId:poolId,tickLower:params.tickLower,tickUpper:params.tickUpper,liquidity:liquidity,feeGrowthInside0LastX128:feeGrowthInside0LastX128,feeGrowthInside1LastX128:feeGrowthInside1LastX128,tokensOwed0:0,tokensOwed1:0}) (src/periphery/NonfungiblePositionManager.sol#216-227)
+Reentrancy in Quoter.quoteExactOutputSingle(address,address,uint24,uint256,uint160) (src/periphery/lens/Quoter.sol#114-137):
+	External calls:
+	- getPool(tokenIn,tokenOut,fee).swap(address(this),zeroForOne,- amountOut.toInt256(),sqrtPriceLimitX96,abi.encodePacked(tokenOut,fee,tokenIn)) (src/periphery/lens/Quoter.sol#125-136)
+	- getPool(tokenIn,tokenOut,fee).swap(address(this),zeroForOne,- amountOut.toInt256(),TickMath.MIN_SQRT_RATIO + 1,abi.encodePacked(tokenOut,fee,tokenIn)) (src/periphery/lens/Quoter.sol#125-136)
+	- getPool(tokenIn,tokenOut,fee).swap(address(this),zeroForOne,- amountOut.toInt256(),TickMath.MAX_SQRT_RATIO - 1,abi.encodePacked(tokenOut,fee,tokenIn)) (src/periphery/lens/Quoter.sol#125-136)
+	State variables written after the call(s):
+	- delete amountOutCached (src/periphery/lens/Quoter.sol#134)
+Reentrancy in QuoterV2.quoteExactOutputSingle(IQuoterV2.QuoteExactOutputSingleParams) (src/periphery/lens/QuoterV2.sol#168-192):
+	External calls:
+	- pool.swap(address(this),zeroForOne,- params.amount.toInt256(),params.sqrtPriceLimitX96,abi.encodePacked(params.tokenOut,params.fee,params.tokenIn)) (src/periphery/lens/QuoterV2.sol#179-191)
+	- pool.swap(address(this),zeroForOne,- params.amount.toInt256(),TickMath.MIN_SQRT_RATIO + 1,abi.encodePacked(params.tokenOut,params.fee,params.tokenIn)) (src/periphery/lens/QuoterV2.sol#179-191)
+	- pool.swap(address(this),zeroForOne,- params.amount.toInt256(),TickMath.MAX_SQRT_RATIO - 1,abi.encodePacked(params.tokenOut,params.fee,params.tokenIn)) (src/periphery/lens/QuoterV2.sol#179-191)
+	State variables written after the call(s):
+	- delete amountOutCached (src/periphery/lens/QuoterV2.sol#189)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+INFO:Detectors:
+Reentrancy in KatanaV3Pool.collect(address,int24,int24,uint128,uint128) (src/core/KatanaV3Pool.sol#444-467):
+	External calls:
+	- TransferHelper.safeTransfer(token0,recipient,amount0) (src/core/KatanaV3Pool.sol#459)
+	- TransferHelper.safeTransfer(token1,recipient,amount1) (src/core/KatanaV3Pool.sol#463)
+	Event emitted after the call(s):
+	- Collect(msg.sender,recipient,tickLower,tickUpper,amount0,amount1) (src/core/KatanaV3Pool.sol#466)
+Reentrancy in NonfungiblePositionManager.decreaseLiquidity(INonfungiblePositionManager.DecreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#297-344):
+	External calls:
+	- (amount0,amount1) = pool.burn(position.tickLower,position.tickUpper,params.liquidity) (src/periphery/NonfungiblePositionManager.sol#313)
+	Event emitted after the call(s):
+	- DecreaseLiquidity(params.tokenId,params.liquidity,amount0,amount1) (src/periphery/NonfungiblePositionManager.sol#343)
+Reentrancy in KatanaV3Pool.flash(address,uint256,uint256,bytes) (src/core/KatanaV3Pool.sol#747-794):
+	External calls:
+	- TransferHelper.safeTransfer(_token0,recipient,amount0) (src/core/KatanaV3Pool.sol#765)
+	- TransferHelper.safeTransfer(_token1,recipient,amount1) (src/core/KatanaV3Pool.sol#766)
+	- IKatanaV3FlashCallback(msg.sender).katanaV3FlashCallback(fee0,fee1,data) (src/core/KatanaV3Pool.sol#768)
+	- TransferHelper.safeTransfer(_token0,treasury,fees0) (src/core/KatanaV3Pool.sol#783)
+	- TransferHelper.safeTransfer(_token1,treasury,fees1) (src/core/KatanaV3Pool.sol#788)
+	Event emitted after the call(s):
+	- Flash(msg.sender,recipient,amount0,amount1,paid0,paid1) (src/core/KatanaV3Pool.sol#793)
+Reentrancy in NonfungiblePositionManager.increaseLiquidity(INonfungiblePositionManager.IncreaseLiquidityParams) (src/periphery/NonfungiblePositionManager.sol#246-294):
+	External calls:
+	- (liquidity,amount0,amount1,pool) = addLiquidity(AddLiquidityParams({token0:poolKey.token0,token1:poolKey.token1,fee:poolKey.fee,tickLower:position.tickLower,tickUpper:position.tickUpper,amount0Desired:params.amount0Desired,amount1Desired:params.amount1Desired,amount0Min:params.amount0Min,amount1Min:params.amount1Min,recipient:address(this)})) (src/periphery/NonfungiblePositionManager.sol#258-271)
+		- (amount0,amount1) = pool.mint(params.recipient,params.tickLower,params.tickUpper,liquidity,abi.encode(MintCallbackData({poolKey:poolKey,payer:msg.sender}))) (src/periphery/base/LiquidityManagement.sol#67-73)
+	Event emitted after the call(s):
+	- IncreaseLiquidity(params.tokenId,liquidity,amount0,amount1) (src/periphery/NonfungiblePositionManager.sol#293)
+Reentrancy in KatanaV3Pool.mint(address,int24,int24,uint128,bytes) (src/core/KatanaV3Pool.sol#411-441):
+	External calls:
+	- IKatanaV3MintCallback(msg.sender).katanaV3MintCallback(amount0,amount1,data) (src/core/KatanaV3Pool.sol#436)
+	Event emitted after the call(s):
+	- Mint(msg.sender,recipient,tickLower,tickUpper,amount,amount0,amount1) (src/core/KatanaV3Pool.sol#440)
+Reentrancy in KatanaV3Pool.swap(address,bool,int256,uint160,bytes) (src/core/KatanaV3Pool.sol#552-744):
+	External calls:
+	- TransferHelper.safeTransfer(tokenOut,recipient,uint256(- amount1)) (src/core/KatanaV3Pool.sol#724)
+	- IKatanaV3SwapCallback(msg.sender).katanaV3SwapCallback(amount0,amount1,data) (src/core/KatanaV3Pool.sol#727)
+	- TransferHelper.safeTransfer(tokenOut,recipient,uint256(- amount0)) (src/core/KatanaV3Pool.sol#730)
+	- IKatanaV3SwapCallback(msg.sender).katanaV3SwapCallback(amount0,amount1,data) (src/core/KatanaV3Pool.sol#733)
+	- TransferHelper.safeTransfer(tokenIn,IKatanaV3Factory(factory).treasury(),state.protocolFee) (src/core/KatanaV3Pool.sol#739)
+	Event emitted after the call(s):
+	- Swap(msg.sender,recipient,amount0,amount1,state.sqrtPriceX96,state.liquidity,state.tick) (src/core/KatanaV3Pool.sol#742)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+INFO:Detectors:
+KatanaInterfaceMulticall.multicall(KatanaInterfaceMulticall.Call[]) (src/periphery/lens/KatanaInterfaceMulticall.sol#27-38) tries to limit the gas of an external call that controls implicit decoding
+	(success,ret) = target.call{gas: gasLimit}(callData) (src/periphery/lens/KatanaInterfaceMulticall.sol#34)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#return-bomb
+INFO:Detectors:
+KatanaV3Pool.increaseObservationCardinalityNext(uint16) (src/core/KatanaV3Pool.sol#235-242) uses timestamp for comparisons
+	Dangerous comparisons:
+	- observationCardinalityNextOld != observationCardinalityNextNew (src/core/KatanaV3Pool.sol#239)
+KatanaV3Pool.initialize(uint160) (src/core/KatanaV3Pool.sol#246-267) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(slot0.sqrtPriceX96 == 0,AI) (src/core/KatanaV3Pool.sol#247)
+KatanaV3Pool.swap(address,bool,int256,uint160,bytes) (src/core/KatanaV3Pool.sol#552-744) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(slot0Start.unlocked,LOK) (src/core/KatanaV3Pool.sol#568)
+	- state.amountSpecifiedRemaining != 0 && state.sqrtPriceX96 != sqrtPriceLimitX96 (src/core/KatanaV3Pool.sol#603)
+	- step.tickNext < TickMath.MIN_TICK (src/core/KatanaV3Pool.sol#612)
+	- step.tickNext > TickMath.MAX_TICK (src/core/KatanaV3Pool.sol#614)
+	- cache.feeProtocolNum > 0 (src/core/KatanaV3Pool.sol#641)
+	- state.liquidity > 0 (src/core/KatanaV3Pool.sol#648)
+	- state.sqrtPriceX96 == step.sqrtPriceNextX96 (src/core/KatanaV3Pool.sol#653)
+	- state.sqrtPriceX96 != step.sqrtPriceStartX96 (src/core/KatanaV3Pool.sol#685)
+	- state.tick != slot0Start.tick (src/core/KatanaV3Pool.sol#692)
+	- cache.liquidityStart != state.liquidity (src/core/KatanaV3Pool.sol#709)
+	- amount1 < 0 (src/core/KatanaV3Pool.sol#724)
+	- require(bool,string)(balance0Before.add(uint256(amount0)) <= balance0(),IIA) (src/core/KatanaV3Pool.sol#728)
+	- amount0 < 0 (src/core/KatanaV3Pool.sol#730)
+	- require(bool,string)(balance1Before.add(uint256(amount1)) <= balance1(),IIA) (src/core/KatanaV3Pool.sol#734)
+	- state.protocolFee > 0 (src/core/KatanaV3Pool.sol#738)
+	- require(bool,string)(sqrtPriceLimitX96 < slot0Start.sqrtPriceX96 && sqrtPriceLimitX96 > TickMath.MIN_SQRT_RATIO,SPL) (src/core/KatanaV3Pool.sol#569-574)
+	- require(bool,string)(sqrtPriceLimitX96 > slot0Start.sqrtPriceX96 && sqrtPriceLimitX96 < TickMath.MAX_SQRT_RATIO,SPL) (src/core/KatanaV3Pool.sol#569-574)
+	- (step.sqrtPriceNextX96 < sqrtPriceLimitX96) (src/core/KatanaV3Pool.sol#622-630)
+	- (step.sqrtPriceNextX96 > sqrtPriceLimitX96) (src/core/KatanaV3Pool.sol#622-630)
+KatanaV3Pool.flash(address,uint256,uint256,bytes) (src/core/KatanaV3Pool.sol#747-794) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(_liquidity > 0,L) (src/core/KatanaV3Pool.sol#751)
+	- fees0 > 0 (src/core/KatanaV3Pool.sol#783)
+	- fees1 > 0 (src/core/KatanaV3Pool.sol#788)
+ERC721Permit.permit(address,uint256,uint256,uint8,bytes32,bytes32) (src/periphery/base/ERC721Permit.sol#49-75) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(_blockTimestamp() <= deadline,Permit expired) (src/periphery/base/ERC721Permit.sol#54)
+PairFlash.katanaV3FlashCallback(uint256,uint256,bytes) (src/periphery/examples/PairFlash.sol#42-97) uses timestamp for comparisons
+	Dangerous comparisons:
+	- amountOut0 > amount0Min (src/periphery/examples/PairFlash.sol#89)
+	- amountOut1 > amount1Min (src/periphery/examples/PairFlash.sol#93)
+OracleLibrary.getBlockStartingTickAndLiquidity(address) (src/periphery/libraries/OracleLibrary.sol#92-124) uses timestamp for comparisons
+	Dangerous comparisons:
+	- observationTimestamp != uint32(block.timestamp) (src/periphery/libraries/OracleLibrary.sol#103)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+INFO:Detectors:
+FullMath.mulDiv(uint256,uint256,uint256) (src/core/libraries/FullMath.sol#14-102) uses assembly
+	- INLINE ASM (src/core/libraries/FullMath.sol#22-26)
+	- INLINE ASM (src/core/libraries/FullMath.sol#31-33)
+	- INLINE ASM (src/core/libraries/FullMath.sol#48-50)
+	- INLINE ASM (src/core/libraries/FullMath.sol#52-55)
+	- INLINE ASM (src/core/libraries/FullMath.sol#62-64)
+	- INLINE ASM (src/core/libraries/FullMath.sol#67-69)
+	- INLINE ASM (src/core/libraries/FullMath.sol#73-75)
+TickMath.getTickAtSqrtRatio(uint160) (src/core/libraries/TickMath.sol#61-204) uses assembly
+	- INLINE ASM (src/core/libraries/TickMath.sol#69-73)
+	- INLINE ASM (src/core/libraries/TickMath.sol#74-78)
+	- INLINE ASM (src/core/libraries/TickMath.sol#79-83)
+	- INLINE ASM (src/core/libraries/TickMath.sol#84-88)
+	- INLINE ASM (src/core/libraries/TickMath.sol#89-93)
+	- INLINE ASM (src/core/libraries/TickMath.sol#94-98)
+	- INLINE ASM (src/core/libraries/TickMath.sol#99-103)
+	- INLINE ASM (src/core/libraries/TickMath.sol#104-107)
+	- INLINE ASM (src/core/libraries/TickMath.sol#114-119)
+	- INLINE ASM (src/core/libraries/TickMath.sol#120-125)
+	- INLINE ASM (src/core/libraries/TickMath.sol#126-131)
+	- INLINE ASM (src/core/libraries/TickMath.sol#132-137)
+	- INLINE ASM (src/core/libraries/TickMath.sol#138-143)
+	- INLINE ASM (src/core/libraries/TickMath.sol#144-149)
+	- INLINE ASM (src/core/libraries/TickMath.sol#150-155)
+	- INLINE ASM (src/core/libraries/TickMath.sol#156-161)
+	- INLINE ASM (src/core/libraries/TickMath.sol#162-167)
+	- INLINE ASM (src/core/libraries/TickMath.sol#168-173)
+	- INLINE ASM (src/core/libraries/TickMath.sol#174-179)
+	- INLINE ASM (src/core/libraries/TickMath.sol#180-185)
+	- INLINE ASM (src/core/libraries/TickMath.sol#186-191)
+	- INLINE ASM (src/core/libraries/TickMath.sol#192-196)
+UnsafeMath.divRoundingUp(uint256,uint256) (src/core/libraries/UnsafeMath.sol#12-16) uses assembly
+	- INLINE ASM (src/core/libraries/UnsafeMath.sol#13-15)
+Multicall.multicall(bytes[]) (src/periphery/base/Multicall.sol#11-27) uses assembly
+	- INLINE ASM (src/periphery/base/Multicall.sol#19-21)
+MixedRouteQuoterV1.katanaV3SwapCallback(int256,int256,bytes) (src/periphery/lens/MixedRouteQuoterV1.sol#53-76) uses assembly
+	- INLINE ASM (src/periphery/lens/MixedRouteQuoterV1.sol#65-71)
+MixedRouteQuoterV1.parseRevertReason(bytes) (src/periphery/lens/MixedRouteQuoterV1.sol#79-92) uses assembly
+	- INLINE ASM (src/periphery/lens/MixedRouteQuoterV1.sol#86-88)
+MixedRouteQuoterV1Testnet.katanaV3SwapCallback(int256,int256,bytes) (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#53-76) uses assembly
+	- INLINE ASM (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#65-71)
+MixedRouteQuoterV1Testnet.parseRevertReason(bytes) (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#79-92) uses assembly
+	- INLINE ASM (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#86-88)
+Quoter.katanaV3SwapCallback(int256,int256,bytes) (src/periphery/lens/Quoter.sol#34-57) uses assembly
+	- INLINE ASM (src/periphery/lens/Quoter.sol#43-47)
+	- INLINE ASM (src/periphery/lens/Quoter.sol#51-55)
+Quoter.parseRevertReason(bytes) (src/periphery/lens/Quoter.sol#60-69) uses assembly
+	- INLINE ASM (src/periphery/lens/Quoter.sol#63-65)
+QuoterV2.katanaV3SwapCallback(int256,int256,bytes) (src/periphery/lens/QuoterV2.sol#37-68) uses assembly
+	- INLINE ASM (src/periphery/lens/QuoterV2.sol#50-56)
+	- INLINE ASM (src/periphery/lens/QuoterV2.sol#60-66)
+QuoterV2.parseRevertReason(bytes) (src/periphery/lens/QuoterV2.sol#71-84) uses assembly
+	- INLINE ASM (src/periphery/lens/QuoterV2.sol#78-80)
+BytesLib.slice(bytes,uint256,uint256) (src/periphery/libraries/BytesLib.sol#12-70) uses assembly
+	- INLINE ASM (src/periphery/libraries/BytesLib.sol#19-67)
+BytesLib.toAddress(bytes,uint256) (src/periphery/libraries/BytesLib.sol#72-82) uses assembly
+	- INLINE ASM (src/periphery/libraries/BytesLib.sol#77-79)
+BytesLib.toUint24(bytes,uint256) (src/periphery/libraries/BytesLib.sol#84-94) uses assembly
+	- INLINE ASM (src/periphery/libraries/BytesLib.sol#89-91)
+ChainId.get() (src/periphery/libraries/ChainId.sol#8-12) uses assembly
+	- INLINE ASM (src/periphery/libraries/ChainId.sol#9-11)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+INFO:Detectors:
+Quoter.quoteExactOutputSingle(address,address,uint24,uint256,uint160) (src/periphery/lens/Quoter.sol#114-137) has costly operations inside a loop:
+	- amountOutCached = amountOut (src/periphery/lens/Quoter.sol#124)
+Quoter.quoteExactOutputSingle(address,address,uint24,uint256,uint160) (src/periphery/lens/Quoter.sol#114-137) has costly operations inside a loop:
+	- delete amountOutCached (src/periphery/lens/Quoter.sol#134)
+QuoterV2.quoteExactOutputSingle(IQuoterV2.QuoteExactOutputSingleParams) (src/periphery/lens/QuoterV2.sol#168-192) has costly operations inside a loop:
+	- amountOutCached = params.amount (src/periphery/lens/QuoterV2.sol#177)
+QuoterV2.quoteExactOutputSingle(IQuoterV2.QuoteExactOutputSingleParams) (src/periphery/lens/QuoterV2.sol#168-192) has costly operations inside a loop:
+	- delete amountOutCached (src/periphery/lens/QuoterV2.sol#189)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+INFO:Detectors:
+KatanaV3Pool.swap(address,bool,int256,uint160,bytes) (src/core/KatanaV3Pool.sol#552-744) has a high cyclomatic complexity (29).
+SwapMath.computeSwapStep(uint160,uint160,uint128,int256,uint24) (src/core/libraries/SwapMath.sol#21-85) has a high cyclomatic complexity (13).
+TickMath.getSqrtRatioAtTick(int24) (src/core/libraries/TickMath.sol#23-54) has a high cyclomatic complexity (24).
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#cyclomatic-complexity
+INFO:Detectors:
+Version constraint =0.7.6 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- FullInlinerNonExpressionSplitArgumentEvaluationOrder
+	- MissingSideEffectsOnSelectorAccess
+	- AbiReencodingHeadOverflowWithStaticArrayCleanup
+	- DirtyBytesArrayToStorage
+	- DataLocationChangeInInternalOverride
+	- NestedCalldataArrayAbiReencodingSizeValidation
+	- SignedImmutables
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching.
+It is used by:
+	- =0.7.6 (src/core/KatanaV3Factory.sol#2)
+	- =0.7.6 (src/core/KatanaV3Pool.sol#2)
+	- =0.7.6 (src/core/KatanaV3PoolBeacon.sol#2)
+	- =0.7.6 (src/core/KatanaV3PoolDeployer.sol#2)
+	- =0.7.6 (src/core/KatanaV3PoolProxy.sol#2)
+	- =0.7.6 (src/external/KatanaGovernanceMock.sol#2)
+	- =0.7.6 (src/periphery/NonfungiblePositionManager.sol#2)
+	- =0.7.6 (src/periphery/NonfungibleTokenPositionDescriptor.sol#2)
+	- =0.7.6 (src/periphery/SwapRouter.sol#2)
+	- =0.7.6 (src/periphery/V3Migrator.sol#2)
+	- =0.7.6 (src/periphery/base/BlockTimestamp.sol#2)
+	- =0.7.6 (src/periphery/base/ERC721Permit.sol#2)
+	- =0.7.6 (src/periphery/base/LiquidityManagement.sol#2)
+	- =0.7.6 (src/periphery/base/Multicall.sol#2)
+	- =0.7.6 (src/periphery/base/PeripheryImmutableState.sol#2)
+	- =0.7.6 (src/periphery/base/PeripheryValidation.sol#2)
+	- =0.7.6 (src/periphery/base/PoolInitializer.sol#2)
+	- =0.7.6 (src/periphery/examples/PairFlash.sol#2)
+	- =0.7.6 (src/periphery/interfaces/external/IWETH9.sol#2)
+	- =0.7.6 (src/periphery/lens/KatanaInterfaceMulticall.sol#2)
+	- =0.7.6 (src/periphery/lens/MixedRouteQuoterV1.sol#2)
+	- =0.7.6 (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#2)
+	- =0.7.6 (src/periphery/lens/Quoter.sol#2)
+	- =0.7.6 (src/periphery/lens/QuoterV2.sol#2)
+	- =0.7.6 (src/periphery/libraries/CallbackValidation.sol#2)
+	- =0.7.6 (src/periphery/libraries/HexStrings.sol#2)
+	- =0.7.6 (src/periphery/libraries/TokenRatioSortOrder.sol#2)
+Version constraint >=0.4.0 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- IncorrectEventSignatureInLibraries_0.4.x
+	- ExpExponentCleanup
+	- NestedArrayFunctionCallDecoder
+	- ZeroFunctionSelector
+	- DelegateCallReturnValue
+	- ECRecoverMalformedInput
+	- SkipEmptyStringLiteral
+	- ConstantOptimizerSubtraction
+	- IdentityPrecompileReturnIgnored
+	- HighOrderByteCleanStorage
+	- OptimizerStaleKnowledgeAboutSHA3
+	- LibrariesNotCallableFromPayableFunctions.
+It is used by:
+	- >=0.4.0 (src/core/libraries/FixedPoint128.sol#2)
+	- >=0.4.0 (src/core/libraries/FixedPoint96.sol#2)
+Version constraint >=0.4.0<0.8.0 is too complex.
+It is used by:
+	- >=0.4.0<0.8.0 (src/core/libraries/FullMath.sol#2)
+Version constraint >=0.7.0 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- FullInlinerNonExpressionSplitArgumentEvaluationOrder
+	- MissingSideEffectsOnSelectorAccess
+	- AbiReencodingHeadOverflowWithStaticArrayCleanup
+	- DirtyBytesArrayToStorage
+	- DataLocationChangeInInternalOverride
+	- NestedCalldataArrayAbiReencodingSizeValidation
+	- SignedImmutables
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup.
+It is used by:
+	- >=0.7.0 (src/core/libraries/LowGasSafeMath.sol#2)
+	- >=0.7.0 (src/periphery/libraries/ChainId.sol#2)
+	- >=0.7.0 (src/periphery/libraries/NFTDescriptor.sol#2)
+Version constraint >=0.5.0<0.8.0 is too complex.
+It is used by:
+	- >=0.5.0<0.8.0 (src/core/libraries/Oracle.sol#2)
+	- >=0.5.0<0.8.0 (src/core/libraries/Position.sol#2)
+	- >=0.5.0<0.8.0 (src/core/libraries/Tick.sol#2)
+	- >=0.5.0<0.8.0 (src/core/libraries/TickMath.sol#2)
+	- >=0.5.0<0.8.0 (src/periphery/libraries/BytesLib.sol#9)
+	- >=0.5.0<0.8.0 (src/periphery/libraries/OracleLibrary.sol#2)
+Version constraint >=0.6.0 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- AbiReencodingHeadOverflowWithStaticArrayCleanup
+	- DirtyBytesArrayToStorage
+	- NestedCalldataArrayAbiReencodingSizeValidation
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- MissingEscapingInFormatting
+	- ArraySliceDynamicallyEncodedBaseType
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- YulOptimizerRedundantAssignmentBreakContinue.
+It is used by:
+	- >=0.6.0 (src/core/libraries/TransferHelper.sol#2)
+	- >=0.6.0 (src/periphery/libraries/Path.sol#2)
+	- >=0.6.0 (src/periphery/libraries/PoolTicksCounter.sol#2)
+	- >=0.6.0 (src/periphery/libraries/TransferHelper.sol#2)
+Version constraint >=0.5.17<0.9.0 is too complex.
+It is used by:
+	- >=0.5.17<0.9.0 (src/external/interfaces/IKatanaGovernance.sol#2)
+Version constraint >=0.7.6<0.9.0 is too complex.
+It is used by:
+	- >=0.7.6<0.9.0 (src/external/libraries/AuthorizationLib.sol#2)
+Version constraint >=0.7.5 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- FullInlinerNonExpressionSplitArgumentEvaluationOrder
+	- MissingSideEffectsOnSelectorAccess
+	- AbiReencodingHeadOverflowWithStaticArrayCleanup
+	- DirtyBytesArrayToStorage
+	- DataLocationChangeInInternalOverride
+	- NestedCalldataArrayAbiReencodingSizeValidation
+	- SignedImmutables
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching.
+It is used by:
+	- >=0.7.5 (src/periphery/base/PeripheryPayments.sol#2)
+	- >=0.7.5 (src/periphery/base/PeripheryPaymentsWithFee.sol#2)
+	- >=0.7.5 (src/periphery/interfaces/IERC721Permit.sol#2)
+	- >=0.7.5 (src/periphery/interfaces/IMixedRouteQuoterV1.sol#2)
+	- >=0.7.5 (src/periphery/interfaces/IMulticall.sol#2)
+	- >=0.7.5 (src/periphery/interfaces/INonfungiblePositionManager.sol#2)
+	- >=0.7.5 (src/periphery/interfaces/IPeripheryPayments.sol#2)
+	- >=0.7.5 (src/periphery/interfaces/IPeripheryPaymentsWithFee.sol#2)
+	- >=0.7.5 (src/periphery/interfaces/IPoolInitializer.sol#2)
+	- >=0.7.5 (src/periphery/interfaces/IQuoter.sol#2)
+	- >=0.7.5 (src/periphery/interfaces/IQuoterV2.sol#2)
+	- >=0.7.5 (src/periphery/interfaces/ISelfPermit.sol#2)
+	- >=0.7.5 (src/periphery/interfaces/ISwapRouter.sol#2)
+	- >=0.7.5 (src/periphery/interfaces/ITickLens.sol#2)
+	- >=0.7.5 (src/periphery/interfaces/IV3Migrator.sol#2)
+Version constraint >=0.7.6 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- FullInlinerNonExpressionSplitArgumentEvaluationOrder
+	- MissingSideEffectsOnSelectorAccess
+	- AbiReencodingHeadOverflowWithStaticArrayCleanup
+	- DirtyBytesArrayToStorage
+	- DataLocationChangeInInternalOverride
+	- NestedCalldataArrayAbiReencodingSizeValidation
+	- SignedImmutables
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching.
+It is used by:
+	- >=0.7.6 (src/periphery/libraries/NFTSVG.sol#2)
+Version constraint >=0.6.8<0.8.0 is too complex.
+It is used by:
+	- >=0.6.8<0.8.0 (src/periphery/libraries/PositionValue.sol#2)
+solc-0.7.6 is an outdated solc version. Use a more recent version (at least 0.8.0), if possible.
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+INFO:Detectors:
+Low level call in KatanaV3Pool.balance0() (src/core/KatanaV3Pool.sol#148-153):
+	- (success,data) = token0.staticcall(abi.encodeWithSelector(IERC20Minimal.balanceOf.selector,address(this))) (src/core/KatanaV3Pool.sol#149-150)
+Low level call in KatanaV3Pool.balance1() (src/core/KatanaV3Pool.sol#158-163):
+	- (success,data) = token1.staticcall(abi.encodeWithSelector(IERC20Minimal.balanceOf.selector,address(this))) (src/core/KatanaV3Pool.sol#159-160)
+Low level call in TransferHelper.safeTransfer(address,address,uint256) (src/core/libraries/TransferHelper.sol#14-17):
+	- (success,data) = token.call(abi.encodeWithSelector(IERC20Minimal.transfer.selector,to,value)) (src/core/libraries/TransferHelper.sol#15)
+Low level call in Multicall.multicall(bytes[]) (src/periphery/base/Multicall.sol#11-27):
+	- (success,result) = address(this).delegatecall(data[i]) (src/periphery/base/Multicall.sol#14)
+Low level call in KatanaInterfaceMulticall.multicall(KatanaInterfaceMulticall.Call[]) (src/periphery/lens/KatanaInterfaceMulticall.sol#27-38):
+	- (success,ret) = target.call{gas: gasLimit}(callData) (src/periphery/lens/KatanaInterfaceMulticall.sol#34)
+Low level call in TransferHelper.safeTransferFrom(address,address,address,uint256) (src/periphery/libraries/TransferHelper.sol#13-17):
+	- (success,data) = token.call(abi.encodeWithSelector(IERC20.transferFrom.selector,from,to,value)) (src/periphery/libraries/TransferHelper.sol#14-15)
+Low level call in TransferHelper.safeTransfer(address,address,uint256) (src/periphery/libraries/TransferHelper.sol#24-27):
+	- (success,data) = token.call(abi.encodeWithSelector(IERC20.transfer.selector,to,value)) (src/periphery/libraries/TransferHelper.sol#25)
+Low level call in TransferHelper.safeApprove(address,address,uint256) (src/periphery/libraries/TransferHelper.sol#34-37):
+	- (success,data) = token.call(abi.encodeWithSelector(IERC20.approve.selector,to,value)) (src/periphery/libraries/TransferHelper.sol#35)
+Low level call in TransferHelper.safeTransferETH(address,uint256) (src/periphery/libraries/TransferHelper.sol#43-46):
+	- (success,None) = to.call{value: value}(new bytes(0)) (src/periphery/libraries/TransferHelper.sol#44)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls
+INFO:Detectors:
+Parameter KatanaV3Factory.setTreasury(address)._treasury (src/core/KatanaV3Factory.sol#93) is not in mixedCase
+Function IKatanaV3PoolBeaconImmutables.POOL_PROXY_INIT_CODE() (src/core/interfaces/IKatanaV3PoolBeaconImmutables.sol#7) is not in mixedCase
+Function IKatanaV3PoolBeaconImmutables.POOL_PROXY_INIT_CODE_HASH() (src/core/interfaces/IKatanaV3PoolBeaconImmutables.sol#10) is not in mixedCase
+Variable NonfungibleTokenPositionDescriptor.WRON (src/periphery/NonfungibleTokenPositionDescriptor.sol#23) is not in mixedCase
+Parameter SwapRouter.katanaV3SwapCallback(int256,int256,bytes)._data (src/periphery/SwapRouter.sol#53) is not in mixedCase
+Function ERC721Permit.DOMAIN_SEPARATOR() (src/periphery/base/ERC721Permit.sol#31-42) is not in mixedCase
+Variable PeripheryImmutableState.WETH9 (src/periphery/base/PeripheryImmutableState.sol#15) is not in mixedCase
+Function IERC721Permit.PERMIT_TYPEHASH() (src/periphery/interfaces/IERC721Permit.sol#11) is not in mixedCase
+Function IERC721Permit.DOMAIN_SEPARATOR() (src/periphery/interfaces/IERC721Permit.sol#15) is not in mixedCase
+Function IKatanaV2Pair.DOMAIN_SEPARATOR() (src/periphery/interfaces/IKatanaV2Pair.sol#19) is not in mixedCase
+Function IKatanaV2Pair.PERMIT_TYPEHASH() (src/periphery/interfaces/IKatanaV2Pair.sol#20) is not in mixedCase
+Function IKatanaV2Pair.MINIMUM_LIQUIDITY() (src/periphery/interfaces/IKatanaV2Pair.sol#38) is not in mixedCase
+Function IPeripheryImmutableState.WETH9() (src/periphery/interfaces/IPeripheryImmutableState.sol#14) is not in mixedCase
+Constant MixedRouteQuoterV1.flagBitmask (src/periphery/lens/MixedRouteQuoterV1.sol#33) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant MixedRouteQuoterV1Testnet.flagBitmask (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#33) is not in UPPER_CASE_WITH_UNDERSCORES
+Parameter BytesLib.slice(bytes,uint256,uint256)._bytes (src/periphery/libraries/BytesLib.sol#12) is not in mixedCase
+Parameter BytesLib.slice(bytes,uint256,uint256)._start (src/periphery/libraries/BytesLib.sol#12) is not in mixedCase
+Parameter BytesLib.slice(bytes,uint256,uint256)._length (src/periphery/libraries/BytesLib.sol#12) is not in mixedCase
+Parameter BytesLib.toAddress(bytes,uint256)._bytes (src/periphery/libraries/BytesLib.sol#72) is not in mixedCase
+Parameter BytesLib.toAddress(bytes,uint256)._start (src/periphery/libraries/BytesLib.sol#72) is not in mixedCase
+Parameter BytesLib.toUint24(bytes,uint256)._bytes (src/periphery/libraries/BytesLib.sol#84) is not in mixedCase
+Parameter BytesLib.toUint24(bytes,uint256)._start (src/periphery/libraries/BytesLib.sol#84) is not in mixedCase
+Constant NFTDescriptor.sqrt10X128 (src/periphery/libraries/NFTDescriptor.sol#25) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant NFTSVG.curve1 (src/periphery/libraries/NFTSVG.sol#13) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant NFTSVG.curve2 (src/periphery/libraries/NFTSVG.sol#14) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant NFTSVG.curve3 (src/periphery/libraries/NFTSVG.sol#15) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant NFTSVG.curve4 (src/periphery/libraries/NFTSVG.sol#16) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant NFTSVG.curve5 (src/periphery/libraries/NFTSVG.sol#17) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant NFTSVG.curve6 (src/periphery/libraries/NFTSVG.sol#18) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant NFTSVG.curve7 (src/periphery/libraries/NFTSVG.sol#19) is not in UPPER_CASE_WITH_UNDERSCORES
+Constant NFTSVG.curve8 (src/periphery/libraries/NFTSVG.sol#20) is not in UPPER_CASE_WITH_UNDERSCORES
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+INFO:Detectors:
+KatanaV3Factory.enableFeeAmount(uint24,int24,uint8,uint8) (src/core/KatanaV3Factory.sol#105-119) uses literals with too many digits:
+	- require(bool,string)(fee < 1000000,KatanaV3Factory: FEE_TOO_HIGH) (src/core/KatanaV3Factory.sol#110)
+BitMath.mostSignificantBit(uint256) (src/core/libraries/BitMath.sol#13-45) uses literals with too many digits:
+	- x >= 0x100000000000000000000000000000000 (src/core/libraries/BitMath.sol#16)
+BitMath.mostSignificantBit(uint256) (src/core/libraries/BitMath.sol#13-45) uses literals with too many digits:
+	- x >= 0x10000000000000000 (src/core/libraries/BitMath.sol#20)
+BitMath.mostSignificantBit(uint256) (src/core/libraries/BitMath.sol#13-45) uses literals with too many digits:
+	- x >= 0x100000000 (src/core/libraries/BitMath.sol#24)
+FixedPoint128.slitherConstructorConstantVariables() (src/core/libraries/FixedPoint128.sol#6-8) uses literals with too many digits:
+	- Q128 = 0x100000000000000000000000000000000 (src/core/libraries/FixedPoint128.sol#7)
+FixedPoint96.slitherConstructorConstantVariables() (src/core/libraries/FixedPoint96.sol#7-10) uses literals with too many digits:
+	- Q96 = 0x1000000000000000000000000 (src/core/libraries/FixedPoint96.sol#9)
+TickMath.getSqrtRatioAtTick(int24) (src/core/libraries/TickMath.sol#23-54) uses literals with too many digits:
+	- ratio = 0x100000000000000000000000000000000 (src/core/libraries/TickMath.sol#27)
+BytesLib.toAddress(bytes,uint256) (src/periphery/libraries/BytesLib.sol#72-82) uses literals with too many digits:
+	- tempAddress = mload(uint256)(_bytes + 0x20 + _start) / 0x1000000000000000000000000 (src/periphery/libraries/BytesLib.sol#78)
+NFTDescriptor.sigfigsRounded(uint256,uint8) (src/periphery/libraries/NFTDescriptor.sol#245-261) uses literals with too many digits:
+	- value == 100000 (src/periphery/libraries/NFTDescriptor.sol#256)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+INFO:Detectors:
+The following unused import(s) in src/core/KatanaV3Pool.sol should be removed:
+	-import "./interfaces/IKatanaV3PoolDeployer.sol"; (src/core/KatanaV3Pool.sol#21)
+The following unused import(s) in src/external/KatanaGovernanceMock.sol should be removed:
+	-import { Address } from "@openzeppelin/contracts/utils/Address.sol"; (src/external/KatanaGovernanceMock.sol#5)
+The following unused import(s) in src/periphery/interfaces/INonfungiblePositionManager.sol should be removed:
+	-import "../libraries/PoolAddress.sol"; (src/periphery/interfaces/INonfungiblePositionManager.sol#12)
+The following unused import(s) in src/periphery/base/LiquidityManagement.sol should be removed:
+	-import "src/core/interfaces/IKatanaV3Factory.sol"; (src/periphery/base/LiquidityManagement.sol#5)
+The following unused import(s) in src/periphery/libraries/NFTDescriptor.sol should be removed:
+	-import "src/core/interfaces/IKatanaV3Pool.sol"; (src/periphery/libraries/NFTDescriptor.sol#5)
+
+	-import "src/core/libraries/BitMath.sol"; (src/periphery/libraries/NFTDescriptor.sol#7)
+The following unused import(s) in src/periphery/SwapRouter.sol should be removed:
+	-import "./interfaces/external/IWETH9.sol"; (src/periphery/SwapRouter.sol#18)
+The following unused import(s) in src/periphery/lens/MixedRouteQuoterV1.sol should be removed:
+	-import "src/core/libraries/TickBitmap.sol"; (src/periphery/lens/MixedRouteQuoterV1.sol#7)
+The following unused import(s) in src/periphery/lens/MixedRouteQuoterV1Testnet.sol should be removed:
+	-import "src/core/libraries/TickBitmap.sol"; (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#7)
+The following unused import(s) in src/periphery/lens/QuoterV2.sol should be removed:
+	-import "src/core/libraries/TickBitmap.sol"; (src/periphery/lens/QuoterV2.sol#7)
+The following unused import(s) in src/periphery/libraries/PositionValue.sol should be removed:
+	-import "./PositionKey.sol"; (src/periphery/libraries/PositionValue.sol#11)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-imports
+INFO:Detectors:
+MixedRouteQuoterV1.amountOutCached (src/periphery/lens/MixedRouteQuoterV1.sol#36) is never used in MixedRouteQuoterV1 (src/periphery/lens/MixedRouteQuoterV1.sol#24-193)
+MixedRouteQuoterV1Testnet.amountOutCached (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#36) is never used in MixedRouteQuoterV1Testnet (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#24-193)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-state-variable
+INFO:Detectors:
+MixedRouteQuoterV1.amountOutCached (src/periphery/lens/MixedRouteQuoterV1.sol#36) should be constant 
+MixedRouteQuoterV1Testnet.amountOutCached (src/periphery/lens/MixedRouteQuoterV1Testnet.sol#36) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+INFO:Slither:. analyzed (121 contracts with 94 detectors), 281 result(s) found

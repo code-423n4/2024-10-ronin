@@ -9,9 +9,12 @@
 - Starts October 11, 2024 20:00 UTC
 - Ends October 25, 2024 20:00 UTC
 
-## Publicly Known Issues
+## Automated Findings / Publicly Known Issues
 
-_Note for C4 wardens: Anything included in this `Publicly Known Issues` section is considered a publicly known issue and is ineligible for awards._
+The 4naly3er report can be found [here](https://github.com/code-423n4/2024-10-ronin/blob/main/4naly3er-report.md).
+The Slither outputs can be found [here](https://github.com/code-423n4/2024-10-ronin/blob/main/slither-katana-operation-contracts.txt) and [here](https://github.com/code-423n4/2024-10-ronin/blob/main/slither-katana-v3-contracts.txt)
+
+*Note for C4 wardens: Anything included in this `Automated Findings / Publicly Known Issues` section is considered a publicly known issue and is ineligible for awards.*
 
 - Centralization risk. Sky Mavis is responsible for maintaining the Katana V3 contracts and will able to upgrade the contract if necessary, as well as specify additional fee tiers.
 - All public known issues, including public audit reports of Uniswap V3 that affect Katana V3
