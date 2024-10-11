@@ -197,6 +197,29 @@ N/A
 
 N/A
 
+
+## Assumptions
+As [Uniswap V3](https://github.com/Uniswap/v3-core/blob/main/bug-bounty.md#assumptions), Katana V3 was developed with the following assumptions, and thus any bug must also adhere to the following assumptions to be valid:
+- The total supply of any token does not exceed 2<sup>128</sup> - 1, i.e. `type(uint128).max`.
+- The `transfer` and `transferFrom` methods of any token strictly decrease the balance of the token sender by the transfer amount and increases the balance of token recipient by the transfer amount, i.e. fee on transfer tokens are excluded.
+- The token balance of an address can only change due to a call to `transfer` by the sender or `transferFrom` by an approved address, i.e. rebase tokens and interest bearing tokens are excluded.
+- If a liquidity pool (pair of tokens) is already open for liquidity provision on Katana V2, liquidity providers are expected to be able to migrate their liquidity to the corresponding pool on Katana V3 when it is created, without being restricted by the authorization function of the Governance.
+
+
+## Testnet deploy
+All contracts are deployed on Saigon testnet. Note that these on-chain contracts are provided for testing purpose and not considered as in-scope assets.
+- KatanaGovernance [0x247F12836A421CDC5e22B93Bf5A9AAa0f521f986](https://saigon-app.roninchain.com/address/0x247F12836A421CDC5e22B93Bf5A9AAa0f521f986)
+- KatanaV3PoolBeacon [0xCd198eaa03ffaB139c1350c91A8a9D8ce95354C5](https://saigon-app.roninchain.com/address/0xCd198eaa03ffaB139c1350c91A8a9D8ce95354C5)
+- AggregateRouter [0x8Cd8F15E956636e6527d2EC2ea669675A74153CF](https://saigon-app.roninchain.com/address/0x8Cd8F15E956636e6527d2EC2ea669675A74153CF)
+- KatanaV3Factory [0x4E7236ff45d69395DDEFE1445040A8f3C7CD8819](https://saigon-app.roninchain.com/address/0x4E7236ff45d69395DDEFE1445040A8f3C7CD8819)
+- NonfungiblePositionManager [0x7C2716803c09cd5eeD78Ba40117084af3c803565](https://saigon-app.roninchain.com/address/0x7C2716803c09cd5eeD78Ba40117084af3c803565)
+- V3Migrator [0x8cF4743642acF849eff54873e24d46D0f3437593](https://saigon-app.roninchain.com/address/0x8cF4743642acF849eff54873e24d46D0f3437593)
+- TickLens [0x812F9B77473D8847767cfFF087B49b628458fc65](https://saigon-app.roninchain.com/address/0x812F9B77473D8847767cfFF087B49b628458fc65)
+- QuoterV2 [0xB2Cc117Ed42cBE07710C90903bE46D2822bcde45](https://saigon-app.roninchain.com/address/0xB2Cc117Ed42cBE07710C90903bE46D2822bcde45)
+- KatanaInterfaceMulticall [0x5938EF96F0C7c75CED7132D083ff08362C7FF70a](https://saigon-app.roninchain.com/address/0x5938EF96F0C7c75CED7132D083ff08362C7FF70a)
+- MixedRouteQuoterV1Testnet [0x9FC1eaBd6C8fCFbd2c43c3641DC612Ffa61fcACd](https://saigon-app.roninchain.com/address/0x9FC1eaBd6C8fCFbd2c43c3641DC612Ffa61fcACd)
+- Permit2 [0xCcf4a457E775f317e0Cf306EFDda14Cc8084F82C](https://saigon-app.roninchain.com/address/0xCcf4a457E775f317e0Cf306EFDda14Cc8084F82C)
+
 ## Running tests
 
 katana-v3-contracts:
