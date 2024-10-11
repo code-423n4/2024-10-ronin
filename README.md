@@ -1,4 +1,5 @@
 # Ronin audit details
+
 - Total Prize Pool: $50,000 in USDC
   - HM awards: $39,800 in USDC
   - QA awards: $1,700 in USDC
@@ -8,17 +9,13 @@
 - Starts October 11, 2024 20:00 UTC
 - Ends October 25, 2024 20:00 UTC
 
-## Automated Findings / Publicly Known Issues
+## Publicly Known Issues
 
-The 4naly3er report can be found [here](https://github.com/code-423n4/2024-10-axie-infinity/blob/main/4naly3er-report.md).
-
-_Note for C4 wardens: Anything included in this `Automated Findings / Publicly Known Issues` section is considered a publicly known issue and is ineligible for awards._
+_Note for C4 wardens: Anything included in this `Publicly Known Issues` section is considered a publicly known issue and is ineligible for awards._
 
 - Centralization risk. Sky Mavis is responsible for maintaining the Katana V3 contracts and will able to upgrade the contract if necessary, as well as specify additional fee tiers.
 - All public known issues, including public audit reports of Uniswap V3 that affect Katana V3
 - If a liquidity pool (pair of tokens) is already open for liquidity provision on Katana V2, liquidity providers are expected to be able to migrate their liquidity to the corresponding pool on Katana V3 when it is created, without being restricted by the authorization function of the Governance.
-
-✅ SCOUTS: Please format the response above 👆 so its not a wall of text and its readable.
 
 # Overview
 
@@ -26,8 +23,7 @@ _Note for C4 wardens: Anything included in this `Automated Findings / Publicly K
 
 ## Links
 
-- **Previous audits:**  
-  - ✅ SCOUTS: If there are multiple report links, please format them in a list.
+- **Previous audits:** None
 - **Documentation:** [docs.roninchain.com/apps/katana](https://docs.roninchain.com/apps/katana) (Please note, this documentation is for the current version (Katana V2), not the version in scope for this audit. However, reading the docs is recommended for context.)
 - **Website:** [welcome.skymavis.com](https://welcome.skymavis.com/)
 - **X/Twitter:** [AxieInfinity](https://x.com/AxieInfinity)
@@ -37,60 +33,105 @@ _Note for C4 wardens: Anything included in this `Automated Findings / Publicly K
 
 # Scope
 
-[ ✅ SCOUTS: add scoping and technical details here ]
-
 ### Files in scope
-- ✅ This should be completed using the `metrics.md` file
-- ✅ Last row of the table should be Total: SLOC
-- ✅ SCOUTS: Have the sponsor review and and confirm in text the details in the section titled "Scoping Q amp; A"
 
-*For sponsors that don't use the scoping tool: list all files in scope in the table below (along with hyperlinks) -- and feel free to add notes to emphasize areas of focus.*
+|File                                                                                       |      code
+|-------------------------------------------------------------------------------------------|----------
+|katana-v3-contracts/src/core/KatanaV3Pool.sol                                              |       566
+|katana-v3-contracts/src/periphery/NonfungiblePositionManager.sol                           |       320
+|katana-operation-contracts/src/governance/KatanaGovernance.sol                             |       227
+|katana-operation-contracts/src/aggregate-router/base/Dispatcher.sol                        |       176
+|katana-v3-contracts/src/periphery/lens/MixedRouteQuoterV1.sol                              |       150
+|katana-operation-contracts/src/aggregate-router/modules/katana/v3/V3SwapRouter.sol         |       126
+|katana-v3-contracts/src/periphery/NonfungibleTokenPositionDescriptor.sol                   |        91
+|katana-v3-contracts/src/periphery/V3Migrator.sol                                           |        85
+|katana-v3-contracts/src/core/KatanaV3Factory.sol                                           |        77
+|katana-operation-contracts/src/aggregate-router/modules/Payments.sol                       |        73
+|katana-operation-contracts/src/aggregate-router/modules/katana/v2/V2SwapRouter.sol         |        71
+|katana-v3-contracts/src/periphery/libraries/KatanaV2Library.sol                            |        71
+|katana-v3-contracts/src/periphery/libraries/KatanaV2LibraryTestnet.sol                     |        71
+|katana-operation-contracts/src/aggregate-router/AggregateRouter.sol                        |        49
+|katana-v3-contracts/src/core/interfaces/pool/IKatanaV3PoolEvents.sol                       |        49
+|katana-v3-contracts/src/core/interfaces/pool/IKatanaV3PoolState.sol                        |        47
+|katana-v3-contracts/src/periphery/interfaces/IKatanaV2Pair.sol                             |        44
+|katana-v3-contracts/src/external/interfaces/IKatanaGovernance.sol                          |        43
+|katana-v3-contracts/src/periphery/interfaces/IMixedRouteQuoterV1.sol                       |        28
+|katana-v3-contracts/src/periphery/base/PoolInitializer.sol                                 |        27
+|katana-v3-contracts/src/periphery/libraries/PoolAddress.sol                                |        26
+|katana-v3-contracts/src/core/KatanaV3PoolDeployer.sol                                      |        25
+|katana-operation-contracts/src/aggregate-router/modules/katana/KatanaImmutables.sol        |        22
+|katana-operation-contracts/src/aggregate-router/libraries/Commands.sol                     |        20
+|katana-v3-contracts/src/core/interfaces/IKatanaV3Factory.sol                               |        19
+|katana-operation-contracts/src/governance/interfaces/IKatanaV2Factory.sol                  |        16
+|katana-v3-contracts/src/core/KatanaV3PoolProxy.sol                                         |        16
+|katana-operation-contracts/src/aggregate-router/modules/PaymentsImmutables.sol             |        15
+|katana-v3-contracts/src/core/interfaces/IKatanaV3Pool.sol                                  |        13
+|katana-v3-contracts/src/core/interfaces/pool/IKatanaV3PoolImmutables.sol                   |        13
+|katana-v3-contracts/src/periphery/base/PeripheryImmutableState.sol                         |        13
+|katana-operation-contracts/src/aggregate-router/base/RouterImmutables.sol                  |        10
+|katana-v3-contracts/src/external/libraries/AuthorizationLib.sol                            |        10
+|katana-v3-contracts/src/core/KatanaV3PoolBeacon.sol                                        |         9
+|katana-v3-contracts/src/core/interfaces/IKatanaV3PoolDeployer.sol                          |         8
+|katana-v3-contracts/src/periphery/interfaces/IPeripheryImmutableState.sol                  |         6
+|katana-v3-contracts/src/core/interfaces/IKatanaV3PoolBeaconImmutables.sol                  |         5
+|SUM:                                                                                       |      2637
 
-| Contract | SLOC | Purpose | Libraries used |  
-| ----------- | ----------- | ----------- | ----------- |
-| [contracts/folder/sample.sol](https://github.com/code-423n4/repo-name/blob/contracts/folder/sample.sol) | 123 | This contract does XYZ | [`@openzeppelin/*`](https://openzeppelin.com/contracts/) |
+If you discover a bug in any contract or library outside of the files listed above that impact following contracts, we will consider the issue valid:
+
+- KatanaGovernance
+- AggregateRouter
+- KatanaV3Factory
+- NonfungiblePositionManager
+- V3Migrator
+- KatanaV3PoolBeacon
+- KatanaV3Pool
+
+`KatanaGovernance`, `KatanaV3Factory`, `NonfungiblePositionManager` contracts are deployed with transparent proxy. 
+
+**All vulnerabilities in the `KatanaGovernance` contract that do not affect user funds will have their severity downgraded by one level.**
+
+#### Priority files
+
+katana-v3-contracts:
+
+```
+src/core/KatanaV3PoolProxy.sol
+src/core/KatanaV3Pool.sol
+src/core/KatanaV3Factory.sol
+src/periphery/NonfungiblePositionManager.sol
+src/periphery/V3Migrator.sol
+```
+
+katana-operation-contracts:
+
+```
+src/aggregate-router/AggregateRouter.sol
+src/aggregate-router/modules/katana/v2/V2SwapRouter.sol
+src/aggregate-router/modules/katana/v3/V3SwapRouter.sol
+```
 
 ### Files out of scope
-✅ SCOUTS: List files/directories out of scope
+
+These files are explicitly out of scope:
+
+```
+katana-v3-contracts/src/periphery/SwapRouter.sol
+katana-v3-contracts/src/periphery/examples/PairFlash.sol
+katana-v3-contracts/src/periphery/libraries/KatanaV2LibraryTestnet.sol
+katana-v3-contracts/src/periphery/lens/MixedRouteQuoterV1Testnet.sol
+```
 
 ## Scoping Q &amp; A
 
 ### General questions
-### Are there any ERC20's in scope?: Yes
-
-✅ SCOUTS: If the answer above 👆 is "Yes", please add the tokens below 👇 to the table. Otherwise, update the column with "None".
-
-Any (all possible ERC20s)
-
-
-### Are there any ERC777's in scope?: No
-
-✅ SCOUTS: If the answer above 👆 is "Yes", please add the tokens below 👇 to the table. Otherwise, update the column with "None".
-
-
-
-### Are there any ERC721's in scope?: No
-
-✅ SCOUTS: If the answer above 👆 is "Yes", please add the tokens below 👇 to the table. Otherwise, update the column with "None".
-
-The protocol itself contains a ERC721 token
-
-### Are there any ERC1155's in scope?: No
-
-✅ SCOUTS: If the answer above 👆 is "Yes", please add the tokens below 👇 to the table. Otherwise, update the column with "None".
-
-
-
-✅ SCOUTS: Once done populating the table below, please remove all the Q/A data above.
 
 | Question                                | Answer                       |
 | --------------------------------------- | ---------------------------- |
-| ERC20 used by the protocol              |       🖊️             |
-| Test coverage                           | ✅ SCOUTS: Please populate this after running the test coverage command                          |
-| ERC721 used  by the protocol            |            🖊️              |
-| ERC777 used by the protocol             |           🖊️                |
-| ERC1155 used by the protocol            |              🖊️            |
-| Chains the protocol will be deployed on | OtherRonin  |
+| ERC20 used by the protocol              |       Any (all possible ERC20s)             |
+| ERC721 used  by the protocol            |           N/A           |
+| ERC777 used by the protocol             |           N/A            |
+| ERC1155 used by the protocol            |           N/A           |
+| Chains the protocol will be deployed on | Ronin  |
 
 ### ERC20 token behaviors in scope
 
@@ -114,8 +155,7 @@ The protocol itself contains a ERC721 token
 | [High decimals ( > 18)](https://github.com/d-xo/weird-erc20?tab=readme-ov-file#high-decimals)                                                              | Out of scope    |
 | [Blocklists](https://github.com/d-xo/weird-erc20?tab=readme-ov-file#tokens-with-blocklists)                                                                | Out of scope    |
 
-### External integrations (e.g., Uniswap) behavior in scope:
-
+### External integrations (e.g., Uniswap) behavior in scope
 
 | Question                                                  | Answer |
 | --------------------------------------------------------- | ------ |
@@ -123,17 +163,9 @@ The protocol itself contains a ERC721 token
 | Pausability (e.g. Uniswap pool gets paused)               |  Yes   |
 | Upgradeability (e.g. Uniswap gets upgraded)               |   Yes  |
 
-
 ### EIP compliance checklist
+
 N/A
-
-✅ SCOUTS: Please format the response above 👆 using the template below👇
-
-| Question                                | Answer                       |
-| --------------------------------------- | ---------------------------- |
-| src/Token.sol                           | ERC20, ERC721                |
-| src/NFT.sol                             | ERC721                       |
-
 
 # Additional context
 
@@ -143,9 +175,8 @@ N/A
 - Only owner can add fee tier as well as enable flash loan feature
 - Protocol fees will be directly transferred to the treasury without fee-collecting operations needed
 
-✅ SCOUTS: Please format the response above 👆 so its not a wall of text and its readable.
-
 ## Attack ideas (where to focus for bugs)
+
 - Funds blocking
 - Stealing of funds
 - Protocol insolvency
@@ -153,70 +184,39 @@ N/A
 - Access control on pool contract
 - Contract upgradability patterns
 
-✅ SCOUTS: Please format the response above 👆 so its not a wall of text and its readable.
-
 ## All trusted roles in the protocol
 
-Proxy Admin
-Governance Owner
-Beacon Owner
-Factory Owner (i.e. the Governance contract)
+| Role                                |
+| --------------------------------------- |
+| Proxy Admin                          |
+| Governance Owner                             |
+| Beacon Owner                          |
+| Factory Owner (i.e. the Governance contract)                       |
 
-✅ SCOUTS: Please format the response above 👆 using the template below👇
-
-| Role                                | Description                       |
-| --------------------------------------- | ---------------------------- |
-| Owner                          | Has superpowers                |
-| Administrator                             | Can change fees                       |
-
-## Describe any novel or unique curve logic or mathematical models implemented in the contracts:
+## Describe any novel or unique curve logic or mathematical models implemented in the contracts
 
 N/A
-
-✅ SCOUTS: Please format the response above 👆 so its not a wall of text and its readable.
 
 ## Running tests
 
 katana-v3-contracts:
+
 ```
-git clone https://github.com/ronin-chain/katana-v3-contracts
+git clone https://github.com/ronin-chain/katana-v3-contracts --recurse
 cd katana-v3-contracts && git checkout release/v1.0.0
 forge build
 ```
+
 katana-operation-contracts:
+
 ```
-git clone https://github.com/ronin-chain/katana-operation-contracts
+git clone https://github.com/ronin-chain/katana-operation-contracts --recurse
 cd katana-operation-contracts && git checkout release/v1.0.0
 forge build
 ```
 
-✅ SCOUTS: Please format the response above 👆 using the template below👇
-
-```bash
-git clone https://github.com/code-423n4/2023-08-arbitrum
-git submodule update --init --recursive
-cd governance
-foundryup
-make install
-make build
-make sc-election-test
-```
-To run code coverage
-```bash
-make coverage
-```
-To run gas benchmarks
-```bash
-make gas
-```
-
-✅ SCOUTS: Add a screenshot of your terminal showing the gas report
-✅ SCOUTS: Add a screenshot of your terminal showing the test coverage
-
 ## Miscellaneous
+
 Employees of Sky Mavis / Ronin and employees' family members are ineligible to participate in this audit.
 
 Code4rena's rules cannot be overridden by the contents of this README. In case of doubt, please check with C4 staff.
-
-
-
