@@ -19,7 +19,12 @@ _Note for C4 wardens: Anything included in this `Publicly Known Issues` section 
 
 # Overview
 
-[ ⭐️ SPONSORS: add info here ]
+Katana v3 is a decentralized exchange (DEX) protocol built on the foundations of Uniswap V3. It retains core features like concentrated liquidity, protocol fees, and the integrated price oracle mechanism. However, Katana v3 introduces key modifications to better align with specific project objectives.
+
+### Key Changes from Uniswap V3
+- **Customizable Protocol Fee Tiers**: Katana v3 allows for flexible fee structures with multiple protocol fee tiers, improving adaptability across different market conditions and asset types.
+- **Authorized Protocol Actions**: Certain actions within the protocol are managed more systematically through authorization, improving operational integrity and efficiency.
+- **Feature Simplification**: Unused features from Uniswap V3, such as NFT trading and protocol fee collection, were removed to streamline functionality and reduce complexity.
 
 ## Links
 
