@@ -1,0 +1,826 @@
+==============================================================
+Guild: Code4rena
+Channel: ARCHIVE-PUBLIC / ronin-oct16
+==============================================================
+
+[10/16/2024 14:42] itsmetechjay (pinned)
+👋 Hello and welcome to the **$50,000 in USDC Ronin** audit channel!
+
+📆 Audit opens Wednesday, 16 October 2024 20:00 (20:00 UTC) and runs through Wednesday, 30 October 2024 20:00 (20:00 UTC) (14 days).
+
+Please give a warm welcome to the Ronin team, particularly @doublevkay, who will be available for questions either here in the channel or via a PRIVATE thread in the ICT (UTC+7) timezone. 
+
+🤖 **Documentation bot assistance:** For general questions about the codebase, give our documentation bot a try, by tagging `@Docs Wolf` in any thread (private or public) and asking your question. The bot will make its best attempt to answer based on the codebase and documentation, and link you to relevant resources.  
+
+We'll be posting relevant links, documentation, etc. here, so if you intend to participate in this audit, consider enabling notifications for this channel. 🐺 ⏰
+
+Audit Page: https://code4rena.com/audits/2024-10-ronin
+
+
+[10/16/2024 14:42] itsmetechjay
+Pinned a message.
+
+
+[10/16/2024 20:12] kyosi2963
+is this contest includes rolling triage rule?
+
+
+[10/16/2024 20:18] itsmetechjay
+No.  If an audit has rolling triage we'll definitely let you know.
+
+{Reactions}
+👍 (2) 
+
+[10/16/2024 20:30] s.n9627
+Am I the only one who receive this error?
+
+{Attachments}
+Code4rena - ARCHIVE-PUBLIC - ronin-oct16 [1293741388055449651].txt_Files/image-A3A1D.png
+
+
+[10/16/2024 23:11] ribarcheto
+i am getting os error from the foundry.toml at operation-contracts repo
+
+
+[10/17/2024 00:45] zmj4107
+$ git checkout release/v1.0.0
+error: invalid path 'logs/storage/KatanaV3Factory.sol:KatanaV3Factory.log'
+error: invalid path 'logs/storage/KatanaV3PoolDeployer.sol:KatanaV3PoolDeployer.log'
+
+
+[10/17/2024 01:36] guy_in0xnito
+When cloning why does the solidity files not get cloned ?
+Anyone knows ?
+
+
+[10/17/2024 01:42] doublevkay
+Hi there, to those get the error `No such file or directory (os error 2); check configured remappings...@openzeppelin-contracts-4.7.0` while building `katana-operation-contracts`, please run `forge soldeer update` to update the dependencies.
+
+{Reactions}
+👍 (3) ❤️ 
+
+[10/17/2024 01:55] zmj4107
+change to the right branch first
+
+
+[10/17/2024 02:02] guy_in0xnito
+Isn't the c4 one right brach ?
+
+
+[10/17/2024 02:29] zmj4107
+
+
+{Attachments}
+Code4rena - ARCHIVE-PUBLIC - ronin-oct16 [1293741388055449651].txt_Files/image-DC151.png
+
+
+[10/17/2024 03:03] tqkve
+what steps you did?
+
+
+[10/17/2024 04:05] tqkve
+can't reproduce the error from my end
+
+
+[10/17/2024 04:05] tqkve
+even tried with a fresh machine
+
+
+[10/17/2024 04:07] tqkve
+what operating system are you using?
+
+
+[10/17/2024 04:08] tqkve
+can you still build the project with the checkout errors?
+
+
+[10/17/2024 04:28] satanic_angel_
+anyone has the tree view of the files in scope?
+
+
+[10/17/2024 04:30] satanic_angel_
+how can all ERC20 be in-scope and weird-ec20 behaviors be out-of-scope simultaneously?
+
+{Attachments}
+Code4rena - ARCHIVE-PUBLIC - ronin-oct16 [1293741388055449651].txt_Files/Screenshot_2024-10-17_at_9.59.46_AM-0ACD3.png
+
+
+[10/17/2024 04:35] tqkve
+Apologize for your confusion, actually when select ERC-20 token option in C4 setup form, I didn't fully understand it as the description quite obscure for me. From our view, it simply mean the protocol interact with ERC-20 tokens.
+
+
+[10/17/2024 04:36] satanic_angel_
+Thanks for the clarity @kve , so would it be fair to assume that all weird-erc20 issues with the protocol (given that it's within the file-scope of the contest) will be judged and not considered as OOS?
+
+
+[10/17/2024 04:39] tqkve
+Weird ERC-20 issues are out of scope. If the two options are mutual exclusive, I'll try to add clarification or ask C4 to update on this. Katana V3 is permissioned, we review all tokens before adding them, at least for now.
+
+{Reactions}
+👍 (5) 
+
+[10/17/2024 05:30] samuselderg
+I could be wrong but the way I tend to read the "general questions" section is informational to do with how the protocol might be used/deployed (not necessarily a scoping outline but rather just helpful context at a glance) and the erc20 behaviours in scope is more-so what I tend to expect as more of a rigid statement on scope
+
+So in this instance, I'd expect that the protocol has exposure to ERC20 tokens, but not ERC721 etc, and that the ERC20 behaviours are out of scope
+
+Again I'm not 100% on it all, just giving my personal view on how I've always read that section
+
+{Reactions}
+👍🏻 (2) 👍 
+
+[10/17/2024 05:45] satanic_angel_
+Yeah that makes sense, at a first glance, it puzzled me as it’s not quite clear why would you have all erc20 without taking into consideration the weird issues that can happen but on a second-pass I was taking an assumption that erc20, which only gets approved by the team might be the reason why they are fine with having the weirdness list out of scope which thanks to @kve was confirmed
+
+{Reactions}
+hi5 (2) 
+
+[10/17/2024 10:47] unnamedeth.lens
+@kartoonjoy | C4🎇🎇  can't clone the repo directly from code4rena ??
+
+
+[10/17/2024 12:30] samuselderg (pinned)
+Id assume you are on windows/wsl? I had the same issue, its because of the `:` in files in `/logs/storage` of both repos.
+
+Only way i was able to get around it on windows was to fork the repos in github web interface and remove those files within github web interface then clone that instead
+
+Otherwise if you use WSL + git cli within WSL you should be able to
+
+
+[10/17/2024 12:38] pkabhi
+is it soldeer or soldier?
+
+
+[10/17/2024 12:48] samuselderg
+I just read above sorry missed a few of you had this issue earlier too @s_wannabe @zhanmingjing @MSaptarshi 
+
+@kve its a filesystem compatibility issue in that some files (in the `logs/` dir of each repo) have a `:` in them, windows users wont be able to pull the repos in without forking and merging the branch into `main` or using WSL (i think in theory) would be the other solution
+
+{Reactions}
+thankyou (3) 
+
+[10/17/2024 14:00] s.n9627
+Yes, I installed wsl and everything went smoothly. Thank you!
+
+P.S.: Windows is shit! With first big enough award I am going to buy a MacBook!!!
+
+{Reactions}
+🚀 (7) hi5 
+
+[10/17/2024 14:02] tqkve
+Yes, soldeer 🙂
+
+{Reactions}
+❤️ 
+
+[10/17/2024 14:21] doublevkay
+my bad. `soldeer` for sure 🙏
+
+{Reactions}
+👍 
+
+[10/17/2024 14:27] samuselderg
+Ahh glad to hear WSL worked!
+
+
+[10/17/2024 15:09] kyosi2963
+Can someone from the dev team share some graph with the protocol flow or to mention here the  entry points of the protocol ?
+
+
+[10/17/2024 15:15] doublevkay
+it’s pretty similar to Uniswap V3, with some additional governance features and adjustments for Ronin. Therefore, it’s hard for us to completely “re-document” the entire Uniswap V3 protocol. I recommend reading the Uniswap V3 white paper or its official documentation as an entry point.
+
+{Reactions}
+👍 (3) 
+
+[10/17/2024 15:52] welith
+> If you discover a bug in any contract or library outside of the files listed above that impact following contracts, we will consider the issue valid:
+
+So basically every single file is in scope? 😄
+
+
+[10/17/2024 15:55] doublevkay
+If you think the bug is related to the protocol or if we missed it in scope and it could impact users, pls don't hesitate to submit
+
+
+[10/18/2024 01:58] pro_king1
+Is there some to help  solve the problem of merging repositories? Commands?
+
+
+[10/18/2024 02:04] doublevkay
+I don't think they should be merged, as the two repos have distinct roles and are built with different Solidity versions
+
+{Reactions}
+👍 
+
+[10/18/2024 02:19] tigerfrake
+Okay I don't know how y'all did it but I am having issues with cloning. The `src` folder comes out blank every time. Any help here?
+
+
+[10/18/2024 02:22] pro_king1
+Branch release/v1.0.0 ok?
+
+
+[10/18/2024 02:25] tigerfrake
+You mean this?, I am hitting the same dead end
+
+{Attachments}
+Code4rena - ARCHIVE-PUBLIC - ronin-oct16 [1293741388055449651].txt_Files/image-CD98B.png
+
+
+[10/18/2024 02:28] pro_king1
+Yes by my idea it is correct but still i have problem with dependencies because my internet speed is so slow
+
+
+[10/18/2024 03:55] doublevkay
+did you follow the running tests section https://github.com/code-423n4/2024-10-ronin?tab=readme-ov-file#running-tests ?
+
+
+[10/18/2024 03:56] tigerfrake
+Just figured it out, thanks
+
+{Reactions}
+👌 
+
+[10/18/2024 10:02] mo1055
+Hi
+ Was there a walkthrough on YouTube or discord for this codebase. If available , I'll appreciate the link
+
+
+[10/18/2024 10:22] tqkve
+Unfortunately, there is no such thing available.
+
+{Reactions}
+✊ 
+
+[10/18/2024 13:41] kartoonjoy
+Started a thread.
+
+
+[10/18/2024 13:47] katrixrldd
+`katana-v3-contracts` uses 0.7.6?!
+
+
+[10/18/2024 13:57] kartoonjoy
+Pinned a message.
+
+
+[10/18/2024 14:30] doublevkay
+Yes
+
+
+[10/18/2024 22:05] ollam5434
+Hello - what's the rationale for making pool functions permissioned? Is the idea to authorize only the operation contracts to interact with the pool?
+
+
+[10/19/2024 01:58] doublevkay
+Hi, there are some things I would like to talk about the **Governance feature**.
+
+The governance features are primarily designed to support the initialization of liquidity in V2. This is intended to help prevent chaos from arbitrary swaps and mints when initializing pairs/pools. Additionally, these features open a use case where pools can only be interactable (for minting and swapping) once certain conditions are met - such as liquidity being available and any mistakes being checked.
+
+Governance features have also been integrated into V3. It’s important to note that both V2 and V3 are built on top of the Uniswap foundation, which is expected to operate effectively without governance, ensuring that users do not incur losses even if the permissioned features are bypassed.
+
+We also have a vision of removing the entire governance feature in the future to make Katana fully permissionless. 
+
+These are parts of the reason behind the severity downgrading of the Governance contract.
+
+> All vulnerabilities in the KatanaGovernance contract that do not affect user funds will have their severity downgraded by one level.
+
+{Reactions}
+👍 (2) 
+
+[10/19/2024 02:00] doublevkay
+@ollam ^pls have a look
+
+
+[10/19/2024 02:46] 0x46_dustin_22270
+katana-operation-contracts forge build error, help!
+
+{Attachments}
+Code4rena - ARCHIVE-PUBLIC - ronin-oct16 [1293741388055449651].txt_Files/image-BC0B7.png
+
+
+[10/19/2024 02:50] doublevkay
+Please run forge soldeer update
+
+{Reactions}
+✅ 
+
+[10/19/2024 03:10] weebad_
+Still getting the error
+
+
+[10/19/2024 03:13] weebad_
+After running forge soldeer update, I guess the build should proceed successfully, right?
+
+
+[10/19/2024 03:14] 0x46_dustin_22270
+ofc
+
+
+[10/19/2024 03:16] doublevkay
+Hey ensure you run it in the operation folder. Do you get the same error?
+
+
+[10/19/2024 03:18] weebad_
+
+
+{Attachments}
+Code4rena - ARCHIVE-PUBLIC - ronin-oct16 [1293741388055449651].txt_Files/20241019_031710-96CAB.jpg
+
+
+[10/19/2024 03:19] weebad_
+That's the error message. Yeah, I'm running it inside the operation folder
+
+
+[10/19/2024 03:21] weebad_
+The forge soldeer update command seems to run correctly too.
+
+{Attachments}
+Code4rena - ARCHIVE-PUBLIC - ronin-oct16 [1293741388055449651].txt_Files/20241019_032003-D81B4.jpg
+
+
+[10/19/2024 03:25] doublevkay
+Oh please recheck the remappings file, and make sure you dont override it
+
+
+[10/19/2024 03:28] tqkve
+Can you list the lib/ directory? Expect forge should pull submodules here
+
+
+[10/19/2024 03:28] weebad_
+I don't think, I have overwritten the remapping file.
+
+{Attachments}
+Code4rena - ARCHIVE-PUBLIC - ronin-oct16 [1293741388055449651].txt_Files/rn_image_picker_lib_temp_1fa8a5a6-7e44-4bb-1FCF4.jpg
+
+
+[10/19/2024 03:30] tqkve
+May be you cloned the repo without recursion?
+
+
+[10/19/2024 03:32] tqkve
+You can ls the last remapping entry, which is forge-std directory to see whether it exists. i.e lib/katana-v3-contracts/lib/forge-std/src
+
+
+[10/19/2024 03:35] weebad_
+I ran with recursion, however, I was getting some fatal errors during the download. So I don't know if that's the cause.  I'm re-downloading the entire repo again, to see if everything will check out.
+
+{Reactions}
+👌 
+
+[10/19/2024 03:36] weebad_
+I think that one exists.
+
+{Attachments}
+Code4rena - ARCHIVE-PUBLIC - ronin-oct16 [1293741388055449651].txt_Files/rn_image_picker_lib_temp_cf3864d0-d365-442-2E1F8.jpg
+
+
+[10/19/2024 03:51] weebad_
+Everything run successful now, after re-downloading the entire repo. Thanks @kve @doublevkay
+
+{Reactions}
+🙏 
+
+[10/19/2024 04:27] naties29
+I am still having these damn cloning issues.
+
+
+[10/19/2024 04:34] naties29
+Using WSL, tried the CLI method mentioned above
+
+
+[10/19/2024 04:34] naties29
+Just get this error
+```
+Cloning into 'katana-v3-contracts'...
+warning: templates not found /usr/share/git-core/templates
+fatal: Unable to find remote helper for 'https'
+exit status 128
+```
+
+
+[10/19/2024 04:39] tqkve
+I think this is not specific to our repo. Please try this https://stackoverflow.com/a/13018777
+
+{Embed}
+https://stackoverflow.com/a/13018777
+"Unable to find remote helper for 'https'" during git clone
+I am unable to clone HTTPS repositories. I can clone SSH repos fine, but not HTTPS repos. I cannot test the GIT protocol since I am behind a corporate firewall.
+
+This is what I am trying to do:
+
+$ ...
+Code4rena - ARCHIVE-PUBLIC - ronin-oct16 [1293741388055449651].txt_Files/apple-touch-icon%402-C50E4.png
+
+
+[10/19/2024 04:44] naties29
+Yeah tough one mate, never had this issue before. Tried basically everything to get it to work 😂
+
+
+[10/19/2024 04:45] naties29
+Ill just come back to it later, banging me head against the keyboard here lol.
+
+
+[10/19/2024 04:56] samuselderg
+Id guess its to do with git config *within* WSL as its not shared with your windows git config?
+
+
+[10/19/2024 04:57] naties29
+Yeah Samus, been down the rabbit whole of troubleshooting that now. Still no luck unfortunately.
+
+
+[10/19/2024 04:57] naties29
+Hole*
+
+
+[10/19/2024 05:00] samuselderg
+Errrgh sorry about that, i feel your pain!
+
+
+[10/19/2024 05:42] tqkve
+What do you mean when saying native token in scope?
+
+
+[10/19/2024 06:22] naties29
+Got it mate, god that was fun 😂
+
+
+[10/19/2024 07:59] guy_in0xnito
+@Samus | C4  do we have yo fork both the katana repo and remove the : files ?
+
+
+[10/19/2024 08:23] 0xjoichiro
+hey is it just me or with the coverage you get stack too deep error
+
+
+[10/19/2024 08:23] 0xjoichiro
+tried it on mac and then linux same issue
+
+
+[10/19/2024 08:23] 0xjoichiro
+```[⠊] Compiling...
+[⠔] Compiling 157 files with Solc 0.7.6
+[⠑] Solc 0.7.6 finished in 3.55s
+Error:
+Compiler run failed:
+Error: Compiler error (/Users/distiller/project/libyul/backends/evm/AsmCodeGen.cpp:253):Stack too deep when compiling inline assembly: Variable headStart is 1 slot(s) too deep inside the stack.
+CompilerError: Stack too deep when compiling inline assembly: Variable headStart is 1 slot(s) too deep inside the stack.
+```
+
+
+[10/19/2024 08:50] tqkve
+You’re correct. We don’t provide the test cases in the scoped commit. So I think getting coverage information is nonsense.
+
+
+[10/19/2024 08:50] stryder1496
+there are some checks in the contracts that are added but i am not sure what purpose they are added for , for example "" if (tx.origin != address(0))" . Is there any scenario where tx.origin can be null ?
+
+
+[10/19/2024 08:52] tqkve
+It’s related to quoting and our added authorization. tx.origin is 0 when you call (read) with rpc.
+
+
+[10/19/2024 08:52] 0xjoichiro
+my bad sir,so no tests then:thisisfine:
+
+{Reactions}
+thisisfine 
+
+[10/19/2024 08:54] stryder1496
+@kve can you please  check your dms
+
+{Reactions}
+👌 
+
+[10/19/2024 15:32] kyosi2963
+Hey, guys, wanted to ask can we consider bugs based on UniSwap v3 as known or to ask it in different way - can we consider UniSwap v3 related code is secure ?
+
+
+[10/19/2024 15:47] doublevkay
+Uniswap's known issues are out of scope (please see the audit scope). However, if bugs arise during integration or as a result of our changes to Uniswap, they should be valid. About the question, "Should we consider Uniswap v3 related code to be secure?" - we hope so, but we all know that there is nothing that can guarantee there are no security issues. Therefore, yes, any bugs that have an impact should be deemed valid. Ref from the contest details:
+> All public known issues, including public audit reports of Uniswap V3 that affect Katana V3
+
+
+[10/19/2024 15:48] doublevkay
+^ > is ineligible for awards.
+
+
+[10/19/2024 15:49] guy_in0xnito
+I forked the two repos but still the src folders are missing
+Means in the forked repo also they are missing!
+
+
+[10/19/2024 16:31] doublevkay
+Im sorry, but its hard for me to help without further info. I also don't have WSL along with me. Maybe retrying the Samus pinned msg carefully could help!
+
+
+[10/19/2024 16:39] guy_in0xnito
+I forked the two katana repos in my github 
+But the src files are missing even in the forked version also
+
+
+[10/19/2024 18:35] waydoum
+checkout to the branch release and you'll be able to see them, if you can't see the branch then it means you didn't fork all the branches redoit properly
+
+
+[10/20/2024 03:12] samuselderg
+Sorry to be clear if you are trying to fork them instead of the WSL method, will need to do quite a bit via the GitHub web interface:
+• Fork each repo
+• Create a branch in each at the specific commit in scope for the audit
+• Remove the `/logs` folder in each repo (in the new branch that matches the audit commits)
+• Make a PR targeting `main` in each forked repo
+• Merge them in (so `main` is now the branch that matches the audit repo -- minus the logs folders)
+• Now you should be able to pull in the forked repos locally, but be careful not to change the branch after you do
+
+
+[10/20/2024 07:37] 0xdanielc
+as a new auditor I'm a little lost, am I basically auditing uniswap? like 95% of this code is uniswap 😕
+
+{Reactions}
+👍 (8) 
+
+[10/20/2024 11:09] kyosi2963
+It also seems to me as UniSwap v3 with little changes in terms of fees and stuff
+
+
+[10/20/2024 17:01] ollam5434
+new as well, the lack of documentation/walkthrough and fact that it's built on top of a very mature protocol makes it pretty hard to dig into/know where to bother looking. Maybe that's where the money is tho?
+
+
+[10/20/2024 17:36] guy_in0xnito
+Thanks
+
+
+[10/20/2024 20:19] skid0016
+Please can someone help me where to see where all the errors were defined in, like AII,TLM, FOK, etc
+
+
+[10/21/2024 01:54] tqkve
+You are correct, Katana V3 is a fork of Uniswap V3. We have a few changes but we don't want to underestimate  the importance of the such changes regarding security. That's why we need auditors look into it.
+
+{Reactions}
+✅ (3) hi5 👍 
+
+[10/21/2024 11:29] pro_king1
+is there someone who can help with me because i stack for few hours in one function 🥹
+
+
+[10/21/2024 11:46] ilyabelikin
+we about to release a package, maybe it will help
+
+
+[10/21/2024 12:07] web3tycoon
+can someone clarify to me what this function does in `KatanaV3Pool.sol`
+```javascript
+ /// @inheritdoc IKatanaV3PoolActions
+    function mint(
+        address recipient,
+        int24 tickLower,
+        int24 tickUpper,
+        uint128 amount,
+        bytes calldata data
+    ) external override lock returns (uint256 amount0, uint256 amount1) {
+```
+
+
+[10/21/2024 12:17] web3tycoon
+@doublevkay
+
+
+[10/21/2024 12:33] 0xastronatey
+you should probably learn the basics of uniswapv3 first if you are have no idea what that function does
+
+{Reactions}
+🙏 
+
+[10/21/2024 13:11] modey__
+I’ve successfully built the katana V3. But I keep running into this error in the katana-operations
+Any fixes ??
+
+{Attachments}
+Code4rena - ARCHIVE-PUBLIC - ronin-oct16 [1293741388055449651].txt_Files/IMG_3563-4C8FB.jpg
+
+
+[10/21/2024 13:37] doublevkay
+Pls run forge soldeer update
+
+{Reactions}
+🔥 
+
+[10/21/2024 13:41] doublevkay
+You can check this out https://docs.uniswap.org/contracts/v3/reference/core/UniswapV3Pool#mint
+
+
+[10/21/2024 14:04] pro_king1
+Is there someone to help?
+
+
+[10/21/2024 14:09] jkoppel
+Hello all! I've started writing explainers on how this protocol works. You might have seen similar ones I did for the Uniswap V4 and Liquid Staking contests
+
+I'm starting off with an explainer of the KatanaV3Factory. 
+
+https://x.com/0xjimmyk/status/1848357655577825652
+
+{Attachments}
+Code4rena - ARCHIVE-PUBLIC - ronin-oct16 [1293741388055449651].txt_Files/Screenshot_by_Dropbox_Capture-B8511.png
+
+{Embed}
+https://twitter.com/0xjimmyk/status/1848357655577825652
+0xJimmy (@0xjimmyk) on X
+Let's explore the KatanaV3Factory, where Katana pool creation starts\. 
+
+It's based on UniswapV3Factory, naturally\.
+
+But Katana is not UniswapV3\. There's a lot of new stuff\.
+Twitter
+
+{Reactions}
+🙏 (3) 🚀 (5) ❤️ 
+
+[10/21/2024 14:10] jkoppel
+@pro_king  I'm about to go to sleep, but DM me on Twitter (assuming that's kosher)
+
+
+[10/21/2024 14:13] doublevkay
+appreciate your work Jimmy!
+
+
+[10/21/2024 14:34] 0x46_dustin_22270
+Started a thread.
+
+
+[10/22/2024 08:50] jkoppel
+Thread on KatanaV3Pool, particularly its changes from Uniswap v3
+
+
+https://x.com/0xjimmyk/status/1848641762115326001
+
+{Attachments}
+Code4rena - ARCHIVE-PUBLIC - ronin-oct16 [1293741388055449651].txt_Files/Screenshot_by_Dropbox_Capture-54735.png
+
+{Embed}
+https://twitter.com/0xjimmyk/status/1848641762115326001
+0xJimmy (@0xjimmyk) on X
+Katana pools are a lot like Uniswap V3 pools
+
+A lot
+
+Yes, there are some changes to account for the extra protocol state and centralization\. But also some unexpected ones
+
+Let's dive in
+Twitter
+
+{Reactions}
+🙌 (3) 👍 
+
+[10/22/2024 14:41] jkoppel
+https://x.com/0xjimmyk/status/1848732357110743131
+
+Thread on pool creation
+
+{Attachments}
+Code4rena - ARCHIVE-PUBLIC - ronin-oct16 [1293741388055449651].txt_Files/Screenshot_by_Dropbox_Capture-1AD94.png
+
+{Embed}
+https://twitter.com/0xjimmyk/status/1848732357110743131
+0xJimmy (@0xjimmyk) on X
+In Katana, all pool initializations must go through the position manager
+
+Let's see how it works
+Twitter
+
+{Reactions}
+❤️ (5) 
+
+[10/25/2024 11:11] jkoppel
+Someone on Twitter requested an explainer on Dispatcher, so here it is:
+
+https://x.com/0xjimmyk/status/1849765076669989180
+
+{Attachments}
+Code4rena - ARCHIVE-PUBLIC - ronin-oct16 [1293741388055449651].txt_Files/Screenshot_by_Dropbox_Capture-537AF.png
+
+{Embed}
+https://twitter.com/0xjimmyk/status/1849765076669989180
+0xJimmy (@0xjimmyk) on X
+Let's learn how command dispatch works in Katana
+Twitter
+
+{Reactions}
+ethereumcolor 
+
+[10/30/2024 02:16] doublevkay
+Hi wardens,  👋 
+Today is the final day to get your reports in. Don’t forget to submit them!
+
+{Reactions}
+👍 
+
+[10/30/2024 20:02] C4
+**🚨 AUDIT ALERT**
+
+@🐺Wardens The **Ronin** audit is now closed! Huge thanks to everyone who participated 🔍, whether you submitted a finding or not.
+
+What's next: The sponsor team and judge will review the findings over the next couple of weeks.
+
+{Reactions}
+thankyou (3) 
+
+[11/05/2024 12:01] codexnature
+can someone suggest where I can up my Fuzzing with foundry knowledge, preferably YT???
+
+
+[11/05/2024 15:05] ihtishamsudo
+Fuzzing playlist of TrailofBits on YT
+
+
+[11/05/2024 15:39] codexnature
+Yea, thought about that, I was looking to focus on a framework I am already comfortable with Foundry and I don't know if Echidna is widely accepted?
+
+
+[11/05/2024 15:40] ihtishamsudo
+focus on learning fundamentals. switching from framework won't be difficult.
+And echidna is widely accepted and being used
+
+
+[11/05/2024 15:41] codexnature
+Ok then. Thanks
+
+
+[11/19/2024 06:22] 0xdanielc
+Is the report out for this audit yet, I didn't find anything but want to learn from seeing what I missed 🙃
+
+
+[11/19/2024 14:37] enami_el
+No net yet you can ask someone with backstage access to tell you the progress
+
+
+[11/19/2024 19:59] 0xdanielc
+Oh that makes sense, one guy I was talking to spoke of the audit results so he'll have backstage, I just need to get better to qualify for the backstage role lol
+
+
+[11/21/2024 18:02] thebrittfactor
+🤑 🎉  Awards for **Ronin**:
+
+$19,657.89 USDC » PolarizedLight (@ChaseTheLight and @Auditor-Nate) 
+$13,105.26 USDC » @rbserver 
+$8,736.84 USDC » @K42 Ψ
+
+🏁 Findings summary
+-------------------------------------
+0 High risk findings
+0 Med risk findings
+71 wardens contributed
+
+Top QA report: PolarizedLight
+
+Awards will be distributed on Polygon within the next week. Congratulations all!  💸 💸 💸
+
+⚠️ Awardees, be sure to [complete your tax reporting info](https://docs.code4rena.com/awarding/incentive-model-and-awards/awarding-process#tax-information-for-code4rena-contributors-wardens-judges-etc) if you haven't already. This must be completed within 30 days (i.e. before Saturday, 21 December 2024) to receive your award distribution for this audit.
+
+*Note: If you participated in this audit and don’t see your name on this list, please wait until the report is published and the findings repo is made public to check on your submissions.*
+
+{Reactions}
+thankyou ❤️ ✅ 🔥 
+
+[11/21/2024 18:26] dadekuma
+@ChaseTheLight @Auditor-Nate congrats! 🚀
+
+{Reactions}
+🔥 (5) 🚀 (5) 
+
+[11/21/2024 19:00] enami_el
+Can we access to our issues ? To see the comments why they are invalid?
+
+
+[11/21/2024 21:58] chasethelight
+Thank you very much ^^. We're super thrilled! ^^
+
+
+[11/21/2024 22:10] naties29
+Thank you Mr Dade!
+
+
+[11/22/2024 04:07] doublevkay
+Thank you to all the @**Wardens** who participated in the contest. We deeply appreciate your hard work and dedication in auditing and contributing to the Katana V3 :thankyou:
+
+{Reactions}
+❤️ (5) 
+
+[11/22/2024 04:59] naties29
+A pleasure mate, thank you for letting us audit your protocol!
+
+
+[12/05/2024 23:09] itsmetechjay
+ℹ️ This channel is pending archive.   As a result, any private threads will be permanently deleted 12/13/2024 23:08. Please make sure to grab anything you might need before then.
+
+
+[12/12/2024 18:22] itsmetechjay
+ℹ️ Reminder: this channel will be deleted after 24 hours.
+
+
+==============================================================
+Exported 140 message(s)
+==============================================================
